@@ -30,6 +30,7 @@ public class App extends Application {
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
         primaryStage.centerOnScreen();
+        primaryStage.setResizable(false);
         primaryStage.setTitle(getGreeting());
         primaryStage.setScene(scene);
         primaryStage.show();

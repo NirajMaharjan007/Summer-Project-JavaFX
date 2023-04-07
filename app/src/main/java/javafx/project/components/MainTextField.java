@@ -11,7 +11,7 @@ public class MainTextField extends MFXTextField {
     }
 
     private void initialize() {
-        this.borderGapProperty().set(10.45);
+        this.borderGapProperty().set(12.45);
         this.prefColumnCountProperty().set(20);
         this.prefHeightProperty().set(USE_PREF_SIZE);
         this.prefWidthProperty().set(USE_COMPUTED_SIZE);

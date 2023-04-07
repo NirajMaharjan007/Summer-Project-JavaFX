@@ -10,7 +10,7 @@ public class MainPasswordField extends MFXPasswordField {
     }
 
     private void init() {
-        this.borderGapProperty().set(10.45);
+        this.borderGapProperty().set(12.45);
         this.prefColumnCountProperty().set(17);
         this.prefHeightProperty().set(USE_PREF_SIZE);
         this.prefWidthProperty().set(USE_COMPUTED_SIZE);

@@ -8,14 +8,22 @@ import javafx.scene.paint.Color;
 import javafx.project.components.*;
 
 public class MainLogin extends VBox {
+    MainPasswordField passwordField;
+    MainTextField adminField;
 
     public MainLogin() {
         super();
         super.setPadding(new Insets(8, 16, 8, 16));
+
+        passwordField = new MainPasswordField();
+        adminField = new MainTextField();
+
         init();
     }
 
     private void init() {
+        this.setStyle("-fx-background-color: #eee");
+
         Grid grid = new Grid();
 
         HBox hlayout = new HBox();
@@ -63,14 +71,12 @@ public class MainLogin extends VBox {
             this.setHgap(4);
             this.setVgap(10);
 
-            MainTextField mfxTextField = new MainTextField();
-            mfxTextField.floatingTextProperty().set("Enter a Admin name");
+            adminField.floatingTextProperty().set("Enter a Admin name");
 
-            MainPasswordField mfxPasswordField = new MainPasswordField();
-            mfxPasswordField.floatingTextProperty().set("Enter a Password");
+            passwordField.floatingTextProperty().set("Enter a Password");
 
-            this.add(mfxTextField, 1, 0);
-            this.add(mfxPasswordField, 1, 1);
+            this.add(adminField, 1, 0);
+            this.add(passwordField, 1, 1);
         }
     }
 
