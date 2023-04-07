@@ -8,12 +8,12 @@ import io.github.palexdev.materialfx.css.themes.Themes;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.project.panels.MainLogin;
 
 public class App extends Application {
     public String getGreeting() {
-        return "Hello World!";
+        return "Login Page";
     }
 
     public static void main(String[] args) {
@@ -23,7 +23,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         MainLogin login_layout = new MainLogin();
-        AnchorPane root = new AnchorPane();
+        Pane root = new Pane();
         root.getChildren().add(login_layout);
 
         Scene scene = new Scene(root);

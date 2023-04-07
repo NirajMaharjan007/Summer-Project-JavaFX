@@ -27,7 +27,7 @@ public class MainLogin extends VBox {
         btn.setTextColor("White");
         btn.setRippleColor(Color.web("#45df15"));
 
-        MainBtn cancle = new MainBtn("Cancle");
+        MainBtn cancle = new MainBtn("Cancel");
         cancle.setBgColor("#ef2000");
         cancle.setTextColor("White");
         cancle.setRippleColor(Color.web("#f05152"));
