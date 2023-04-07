@@ -8,6 +8,4 @@ Gradle Javafx
 - [Java](https://www.java.com/en/)
 - [VsCode](https://code.visualstudio.com/)
 
-`Note: use gradle run or gradlew run to build program `
-
-`Then use gradle run or gradlew run to run program `
+`Note: use gradle run or gradlew run to build program Then use gradle run or gradlew run to run program `
