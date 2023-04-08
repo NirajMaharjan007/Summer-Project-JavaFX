@@ -6,6 +6,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.project.components.*;
+import javafx.project.database.AdminDatabase;
 
 public class MainLogin extends VBox {
     MainPasswordField passwordField;
@@ -46,6 +47,12 @@ public class MainLogin extends VBox {
             a.setContentText("hello");
             a.setTitle("hello");
             a.show();
+
+            AdminDatabase admin = new AdminDatabase();
+            if (admin.setLogin(adminField.getText(), adminField.getText()))
+                System.out.println("Wow");
+            else
+                System.out.println("Sad");
         });
 
         cancle.setOnAction(e -> {

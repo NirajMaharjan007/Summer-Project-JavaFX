@@ -27,7 +27,7 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.1-jre'
-
+    implementation 'mysql:mysql-connector-java:8.0.15'
     implementation 'io.github.palexdev:materialfx:11.15.0'
 }
 
