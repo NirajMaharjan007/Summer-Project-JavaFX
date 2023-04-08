@@ -41,6 +41,14 @@ testing {
     }
 }
 
+tasks.withType(Test) { 
+  testLogging {
+    exceptionFormat "full"
+    events "started", "skipped", "passed", "failed"
+    showStandardStreams true
+  }
+}
+
 application {
     // Define the main class for the application.
     mainClass = 'javafx.project.App'

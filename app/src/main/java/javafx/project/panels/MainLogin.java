@@ -52,10 +52,9 @@ public class MainLogin extends VBox {
 
         btn.setOnAction(e -> {
             if (admin.setLogin(adminField.getText(), adminField.getText())) {
+                new Dashboard(new Stage());
                 System.out.println("Login");
                 stage.close();
-
-                new Dashboard(new Stage());
             } else if (Database.getConnection() == null) {
                 System.err.println("Can't connect to the database");
                 Alert alert = new Alert(AlertType.WARNING);
