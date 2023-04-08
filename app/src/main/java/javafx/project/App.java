@@ -12,6 +12,9 @@ import javafx.scene.layout.Pane;
 import javafx.project.panels.MainLogin;
 
 public class App extends Application {
+    Scene scene;
+    Stage stage;
+
     public String getGreeting() {
         return "Login Page";
     }
@@ -22,17 +25,20 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        MainLogin login_layout = new MainLogin();
+        stage = primaryStage;
+
+        MainLogin login_layout = new MainLogin(stage);
         Pane root = new Pane();
         root.getChildren().add(login_layout);
 
-        Scene scene = new Scene(root);
+        scene = new Scene(root);
+
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
-        primaryStage.centerOnScreen();
-        primaryStage.setResizable(false);
-        primaryStage.setTitle(getGreeting());
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.centerOnScreen();
+        stage.setResizable(false);
+        stage.setTitle(getGreeting());
+        stage.setScene(scene);
+        stage.show();
     }
 }

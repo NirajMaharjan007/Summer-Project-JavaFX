@@ -5,16 +5,24 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.project.components.*;
 import javafx.project.database.AdminDatabase;
+import javafx.project.database.Database;
 
 public class MainLogin extends VBox {
     MainPasswordField passwordField;
     MainTextField adminField;
 
-    public MainLogin() {
+    AdminDatabase admin = new AdminDatabase();
+
+    Stage stage;
+
+    public MainLogin(Stage stage) {
         super();
         super.setPadding(new Insets(8, 16, 8, 16));
+
+        this.stage = stage;
 
         passwordField = new MainPasswordField();
         adminField = new MainTextField();
@@ -43,16 +51,26 @@ public class MainLogin extends VBox {
         HBox.setMargin(cancle, new Insets(0, 0, 0, 8));
 
         btn.setOnAction(e -> {
-            Alert a = new Alert(AlertType.INFORMATION);
-            a.setContentText("hello");
-            a.setTitle("hello");
-            a.show();
+            if (admin.setLogin(adminField.getText(), adminField.getText())) {
+                System.out.println("Login");
+                stage.close();
 
-            AdminDatabase admin = new AdminDatabase();
-            if (admin.setLogin(adminField.getText(), adminField.getText()))
-                System.out.println("Wow");
-            else
-                System.out.println("Sad");
+                new Dashboard(new Stage());
+            } else if (Database.getConnection() == null) {
+                System.err.println("Can't connect to the database");
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Error!");
+                alert.setHeaderText("Cannot connect to the database");
+                alert.setContentText("Please try in another time");
+                alert.show();
+            } else {
+                System.err.println("Not Logged In");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid Credentials");
+                alert.setContentText("Please try again");
+                alert.show();
+            }
         });
 
         cancle.setOnAction(e -> {
@@ -64,6 +82,10 @@ public class MainLogin extends VBox {
 
         this.getChildren().add(grid);
         this.getChildren().add(hlayout);
+    }
+
+    public boolean getLogin() {
+        return admin.setLogin(adminField.getText(), adminField.getText());
     }
 
     protected class Grid extends GridPane {

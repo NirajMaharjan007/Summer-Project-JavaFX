@@ -7,12 +7,12 @@ import java.sql.Statement;
 public class AdminDatabase {
     private Connection conn = Database.getConnection();
 
-    private int id;
-    private String name, password;
+    // private int id;
+    // private String name, password;
 
     public boolean setLogin(String name, String password) {
-        this.name = name;
-        this.password = password;
+        // this.name = name;
+        // this.password = password;
 
         String n = null, p = null;
         try {
