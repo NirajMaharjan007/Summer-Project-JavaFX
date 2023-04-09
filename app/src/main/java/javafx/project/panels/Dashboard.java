@@ -3,7 +3,10 @@ package javafx.project.panels;
 import javafx.scene.control.ScrollPane;
 import io.github.palexdev.materialfx.css.themes.*;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.project.components.Card;
 import javafx.project.components.ScrollPanel;
+import javafx.project.enuma.Elements;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -14,6 +17,8 @@ public class Dashboard extends BorderPane {
 
     public Dashboard(Stage stage) {
         super();
+        this.stage = stage;
+
         super.autosize();
         super.setPadding(new Insets(6, 12, 6, 12));
 
@@ -45,7 +50,19 @@ public class Dashboard extends BorderPane {
         }
 
         private void init() {
-            this.getChildren().add(new Label("Dashboard"));
+            Card card = new Card();
+
+            Label header = new Label("Header");
+            header.setStyle(Elements.HEADER1.getName());
+            header.setAlignment(Pos.CENTER);
+
+            VBox container = new VBox();
+            container.autosize();
+
+            card.setPrefHeight(stage.getWidth());
+            card.getChildren().addAll(header, container);
+
+            this.getChildren().add(card);
         }
     }
 
@@ -70,13 +87,12 @@ public class Dashboard extends BorderPane {
                     "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.31), 20, 0.1, 4, 8);");
 
             Label headerLabel = new Label("Side Bar");
-            headerLabel.setStyle("-fx-font-size: 24;" +
-                    "-fx-text-fill: Black;");
+            headerLabel.setStyle(Elements.HEADER1.getName());
             // headerLabel.setGraphicTextGap(4);
             this.getChildren().add(headerLabel);
 
             Label menuLabel = new Label("Components");
-            menuLabel.setStyle("-fx-font-size: 14;-fx-text-fill: Black;");
+            menuLabel.setStyle(Elements.HEADER2.getName());
             menuLabel.setPadding(new Insets(20, 8, 2, 8));
             this.getChildren().add(menuLabel);
 
