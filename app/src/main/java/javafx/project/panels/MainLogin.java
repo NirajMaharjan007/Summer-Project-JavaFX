@@ -1,5 +1,7 @@
 package javafx.project.panels;
 
+import java.sql.Connection;
+
 import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.control.*;
@@ -12,10 +14,13 @@ import javafx.stage.Stage;
 import javafx.project.components.*;
 import javafx.project.database.AdminDatabase;
 import javafx.project.database.Database;
+import javafx.project.enuma.Elements;
 
 public class MainLogin extends VBox {
     MainPasswordField passwordField;
     MainTextField adminField;
+
+    Connection data = Database.getConnection();
 
     AdminDatabase admin = new AdminDatabase();
 
@@ -30,7 +35,33 @@ public class MainLogin extends VBox {
         passwordField = new MainPasswordField();
         adminField = new MainTextField();
 
-        init();
+        if (data != null)
+            init();
+        else
+            failed();
+    }
+
+    private void failed() {
+        stage.setTitle("Error ");
+        stage.toFront();
+        stage.setAlwaysOnTop(true);
+
+        MainBtn cancel = new MainBtn("Cancel");
+        cancel.setBgColor("#ef2000");
+        cancel.setTextColor("White");
+        cancel.setRippleColor(Color.web("#f05152"));
+
+        VBox.setMargin(cancel, new Insets(16, 0, 4, 0));
+
+        cancel.setOnAction(e -> {
+            System.exit(0);
+        });
+
+        Label l = new Label("Error; while connecting to the database");
+        l.setStyle(Elements.HEADER2.getName());
+
+        this.getChildren().add(l);
+        this.getChildren().add(cancel);
     }
 
     private void init() {
@@ -47,11 +78,11 @@ public class MainLogin extends VBox {
         btn.setTextColor("White");
         btn.setRippleColor(Color.web("#45df15"));
 
-        MainBtn cancle = new MainBtn("Cancel");
-        cancle.setBgColor("#ef2000");
-        cancle.setTextColor("White");
-        cancle.setRippleColor(Color.web("#f05152"));
-        HBox.setMargin(cancle, new Insets(0, 0, 0, 8));
+        MainBtn cancel = new MainBtn("Cancel");
+        cancel.setBgColor("#ef2000");
+        cancel.setTextColor("White");
+        cancel.setRippleColor(Color.web("#f05152"));
+        HBox.setMargin(cancel, new Insets(0, 0, 0, 8));
 
         KeyEventHandler keyEventHandler = new KeyEventHandler();
         adminField.setOnKeyPressed(keyEventHandler);
@@ -59,12 +90,14 @@ public class MainLogin extends VBox {
 
         btn.setOnAction(new ActionEventHandler());
 
-        cancle.setOnAction(e -> {
+        cancel.setOnAction(e -> {
             System.exit(0);
         });
 
         hlayout.getChildren().add(btn);
-        hlayout.getChildren().add(cancle);
+        hlayout.getChildren().add(cancel);
+
+        stage.setTitle("Login Page");
 
         this.getChildren().add(grid);
         this.getChildren().add(hlayout);
@@ -78,7 +111,7 @@ public class MainLogin extends VBox {
                     new Dashboard(new Stage());
                     System.out.println("Login");
                     stage.close();
-                } else if (Database.getConnection() == null) {
+                } else if (data == null) {
                     System.err.println("Can't connect to the database");
                     Alert alert = new Alert(AlertType.WARNING);
                     alert.setTitle("Error!");
@@ -105,7 +138,7 @@ public class MainLogin extends VBox {
                 new Dashboard(new Stage());
                 System.out.println("Login");
                 stage.close();
-            } else if (Database.getConnection() == null) {
+            } else if (data == null) {
                 System.err.println("Can't connect to the database");
                 Alert alert = new Alert(AlertType.WARNING);
                 alert.setTitle("Error!");
