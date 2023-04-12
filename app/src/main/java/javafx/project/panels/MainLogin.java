@@ -12,8 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javafx.project.components.*;
-import javafx.project.database.AdminDatabase;
-import javafx.project.database.Database;
+import javafx.project.database.*;
 import javafx.project.enuma.Elements;
 
 public class MainLogin extends VBox {
@@ -50,18 +49,22 @@ public class MainLogin extends VBox {
         cancel.setBgColor("#ef2000");
         cancel.setTextColor("White");
         cancel.setRippleColor(Color.web("#f05152"));
-
-        VBox.setMargin(cancel, new Insets(16, 0, 4, 0));
-
+        cancel.setAlignment(Pos.CENTER_RIGHT);
         cancel.setOnAction(e -> {
             System.exit(0);
         });
+
+        HBox box = new HBox();
+        box.setAlignment(Pos.CENTER_RIGHT);
+        box.getChildren().add(cancel);
+
+        VBox.setMargin(box, new Insets(16, 0, 4, 0));
 
         Label l = new Label("Error; while connecting to the database");
         l.setStyle(Elements.HEADER2.getName());
 
         this.getChildren().add(l);
-        this.getChildren().add(cancel);
+        this.getChildren().add(box);
     }
 
     private void init() {

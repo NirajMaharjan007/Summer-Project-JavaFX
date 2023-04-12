@@ -31,7 +31,7 @@ public class MainBtn extends MFXButton {
     public void init() {
         this.setRippleAnimateBackground(true);
         this.buttonTypeProperty().set(ButtonType.RAISED);
-        this.depthLevelProperty().set(DepthLevel.LEVEL1);
+        this.depthLevelProperty().set(DepthLevel.LEVEL2);
         this.setRippleAnimationSpeed(0.70);
         this.setRippleBackgroundOpacity(0.35);
         this.setRippleRadius(25);
