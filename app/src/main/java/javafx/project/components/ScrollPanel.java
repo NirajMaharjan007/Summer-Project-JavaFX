@@ -13,7 +13,6 @@ public class ScrollPanel extends MFXScrollPane {
     }
 
     private void init() {
-        this.setFitToHeight(true);
         this.setFitToWidth(true);
         this.setPadding(new Insets(12, 8, 10, 8));
     }

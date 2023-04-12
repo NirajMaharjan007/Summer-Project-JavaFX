@@ -102,24 +102,22 @@ public class Dashboard extends BorderPane {
             VBox.setVgrow(scrollPane, Priority.ALWAYS);
             Insets scrollPaneMargin = new Insets(0, 5, 10, 5);
             VBox.setMargin(scrollPane, scrollPaneMargin);
-            scrollPane.setContent(new VBox());
 
             VBox navBar = new VBox();
             navBar.setStyle("-fx-background-color: #dedede;" +
                     "-fx-background-radius: 0;" +
                     "-fx-border-color: transparent;" +
                     "-fx-border-radius: 0;" +
-                    "-fx-pref-height: 42;" +
-                    "-fx-font-size: 13;" +
+                    "-fx-pref-height: 40;" +
+                    "-fx-font-size: 12;" +
                     "-fx-text-fill: black;");
-            navBar.setSpacing(5);
+            navBar.setSpacing(10);
             navBar.setMaxWidth(Double.MAX_VALUE);
             navBar.setMaxHeight(Double.MAX_VALUE);
 
-            navBar.getChildren().addAll(
-                    new Label("1"),
-                    new Label("2"),
-                    new Label("3"));
+            for (int i = 1; i <= 20; i++) {
+                navBar.getChildren().add(new Label(i + ". label"));
+            }
 
             scrollPane.setContent(navBar);
 
