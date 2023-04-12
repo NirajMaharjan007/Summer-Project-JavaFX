@@ -15,10 +15,6 @@ public class App extends Application {
     Scene scene;
     Stage stage;
 
-    public String getGreeting() {
-        return "Login Page";
-    }
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -35,10 +31,11 @@ public class App extends Application {
 
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
+        stage.setScene(scene);
+
         stage.centerOnScreen();
         stage.setResizable(false);
-        stage.setTitle(getGreeting());
-        stage.setScene(scene);
         stage.show();
+
     }
 }
