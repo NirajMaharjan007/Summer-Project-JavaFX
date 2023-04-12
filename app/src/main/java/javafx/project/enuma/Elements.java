@@ -5,7 +5,15 @@ public enum Elements {
             "-fx-text-fill: Black;-fx-font-weight:bold;"),
 
     HEADER2("-fx-font-size: 16;" +
-            "-fx-text-fill: Black;-fx-font-weight:bold;");
+            "-fx-text-fill: Black;-fx-font-weight:bold;"),
+
+    DANGER_COLOR("#f53b3b"),
+
+    DANGER_ALT_COLOR("#d21d1d"),
+
+    SUCCESS_COLOR("#54B435"),
+
+    SUCCESS_ALT_COLOR("#82CD47"),;
 
     public final String label;
 

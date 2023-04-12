@@ -8,7 +8,7 @@ public class Card extends VBox {
     public Card() {
         super();
         super.setSpacing(10);
-        VBox.setMargin(this, new Insets(16, 10, 8, 10));
+        VBox.setMargin(this, new Insets(12, 4, 8, 4));
         this.init();
     }
 

@@ -77,14 +77,14 @@ public class MainLogin extends VBox {
         hlayout.setPadding(new Insets(10, 4, 8, 4));
 
         MainBtn btn = new MainBtn("Login");
-        btn.setBgColor("#2f921f");
+        btn.setBgColor(Elements.SUCCESS_COLOR.getName());
         btn.setTextColor("White");
-        btn.setRippleColor(Color.web("#45df15"));
+        btn.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
 
         MainBtn cancel = new MainBtn("Cancel");
-        cancel.setBgColor("#ef2000");
+        cancel.setBgColor(Elements.DANGER_COLOR.getName());
         cancel.setTextColor("White");
-        cancel.setRippleColor(Color.web("#f05152"));
+        cancel.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
         HBox.setMargin(cancel, new Insets(0, 0, 0, 8));
 
         KeyEventHandler keyEventHandler = new KeyEventHandler();
@@ -100,7 +100,7 @@ public class MainLogin extends VBox {
         hlayout.getChildren().add(btn);
         hlayout.getChildren().add(cancel);
 
-        stage.setTitle("Login Page");
+        stage.setTitle("Login Panel");
 
         this.getChildren().add(grid);
         this.getChildren().add(hlayout);
@@ -110,8 +110,10 @@ public class MainLogin extends VBox {
         @Override
         public void handle(KeyEvent e) {
             if (e.getCode() == KeyCode.ENTER) {
-                if (admin.setLogin(adminField.getText(), adminField.getText())) {
-                    new Dashboard(new Stage());
+                if (admin.setLogin(adminField.getText(), passwordField.getText())) {
+                    adminField.setText("");
+                    passwordField.setText("");
+                    new Dashboard(stage);
                     System.out.println("Login");
                     stage.close();
                 } else if (data == null) {
@@ -137,10 +139,12 @@ public class MainLogin extends VBox {
 
         @Override
         public void handle(ActionEvent event) {
-            if (admin.setLogin(adminField.getText(), adminField.getText())) {
-                new Dashboard(new Stage());
-                System.out.println("Login");
+            if (admin.setLogin(adminField.getText(), passwordField.getText())) {
+                adminField.setText("");
+                passwordField.setText("");
+                new Dashboard(stage);
                 stage.close();
+                System.out.println("Login");
             } else if (data == null) {
                 System.err.println("Can't connect to the database");
                 Alert alert = new Alert(AlertType.WARNING);

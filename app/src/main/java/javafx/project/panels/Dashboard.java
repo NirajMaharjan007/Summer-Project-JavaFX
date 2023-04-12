@@ -5,19 +5,23 @@ import io.github.palexdev.materialfx.css.themes.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.project.components.Card;
+import javafx.project.components.MainBtn;
 import javafx.project.components.ScrollPanel;
 import javafx.project.enuma.Elements;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 public class Dashboard extends BorderPane {
-    Stage stage;
+    Stage stage, newStage;
 
     public Dashboard(Stage stage) {
         super();
         this.stage = stage;
+
+        this.newStage = new Stage();
 
         super.autosize();
         super.setPadding(new Insets(6, 12, 6, 12));
@@ -27,11 +31,11 @@ public class Dashboard extends BorderPane {
 
         init();
 
-        stage.centerOnScreen();
-        stage.setResizable(false);
-        stage.setTitle("Dashboard");
-        stage.setScene(scene);
-        stage.show();
+        newStage.centerOnScreen();
+        newStage.setResizable(false);
+        newStage.setTitle("Dashboard");
+        newStage.setScene(scene);
+        newStage.show();
     }
 
     private void init() {
@@ -56,11 +60,25 @@ public class Dashboard extends BorderPane {
             header.setStyle(Elements.HEADER1.getName());
             header.setAlignment(Pos.CENTER);
 
+            MainBtn logout = new MainBtn("Logout");
+            logout.setBgColor(Elements.DANGER_COLOR.getName());
+            logout.setTextColor("White");
+            logout.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
+
+            logout.setOnAction(event -> {
+                stage.setTitle("Login Panel");
+                stage.show();
+                newStage.close();
+            });
+
             VBox container = new VBox();
+            VBox.setMargin(container, new Insets(8));
             container.autosize();
 
-            card.setPrefHeight(stage.getWidth());
-            card.getChildren().addAll(header, container);
+            container.getChildren().addAll(header, logout);
+
+            card.setPrefHeight(newStage.getWidth());
+            card.getChildren().add(container);
 
             this.getChildren().add(card);
         }
