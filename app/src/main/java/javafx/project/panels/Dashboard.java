@@ -1,12 +1,11 @@
 package javafx.project.panels;
 
-import javafx.scene.control.ScrollPane;
+import javafx.project.components.*;
+
 import io.github.palexdev.materialfx.css.themes.*;
+import javafx.scene.control.ScrollPane;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.project.components.Card;
-import javafx.project.components.MainBtn;
-import javafx.project.components.ScrollPanel;
 import javafx.project.enuma.Elements;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -48,7 +47,7 @@ public class Dashboard extends BorderPane {
             super();
             super.autosize();
             super.setSpacing(10);
-            super.setPadding(new Insets(8, 12, 4, 32));
+            super.setPadding(new Insets(8, 16, 4, 32));
 
             this.init();
         }
@@ -73,6 +72,7 @@ public class Dashboard extends BorderPane {
 
             VBox container = new VBox();
             VBox.setMargin(container, new Insets(8));
+            container.setPadding(new Insets(4, 8, 2, 8));
             container.autosize();
 
             container.getChildren().addAll(header, logout);
@@ -87,30 +87,27 @@ public class Dashboard extends BorderPane {
     private class SideBar extends VBox {
         public SideBar() {
             super();
+            super.setSpacing(12);
+            super.setPrefHeight(newStage.getMaxHeight());
             super.autosize();
-            super.setPadding(new Insets(6, 12, 6, 12));
-            super.setSpacing(10);
-            super.setLayoutX(225);
-            super.setLayoutY(50);
-            super.setPrefWidth(150);
 
             this.init();
         }
 
         private void init() {
             this.setPadding(new Insets(18, 8, 12, 8));
-            this.setStyle("-fx-background-color: #dedede;" +
+            this.setStyle("-fx-background-color: #454545;" +
                     "-fx-background-insets: -1 -5 -1 -1;" +
                     "-fx-background-radius: 0 20 20 0;" +
                     "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.31), 20, 0.1, 4, 8);");
 
             Label headerLabel = new Label("Side Bar");
-            headerLabel.setStyle(Elements.HEADER1.getName());
-            // headerLabel.setGraphicTextGap(4);
+            headerLabel.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#FFE6C7");
+            headerLabel.setGraphicTextGap(4);
             this.getChildren().add(headerLabel);
 
             Label menuLabel = new Label("Components");
-            menuLabel.setStyle(Elements.HEADER2.getName());
+            menuLabel.setStyle(Elements.HEADER2.getName() + "-fx-text-fill:#FFE6C7");
             menuLabel.setPadding(new Insets(20, 8, 2, 8));
             this.getChildren().add(menuLabel);
 
@@ -122,19 +119,20 @@ public class Dashboard extends BorderPane {
             VBox.setMargin(scrollPane, scrollPaneMargin);
 
             VBox navBar = new VBox();
-            navBar.setStyle("-fx-background-color: #dedede;" +
+            navBar.setStyle("-fx-background-color: #454545;" +
                     "-fx-background-radius: 0;" +
                     "-fx-border-color: transparent;" +
                     "-fx-border-radius: 0;" +
-                    "-fx-pref-height: 40;" +
-                    "-fx-font-size: 12;" +
-                    "-fx-text-fill: black;");
+                    "-fx-pref-height: 42;" +
+                    "-fx-font-size: 12;");
             navBar.setSpacing(10);
             navBar.setMaxWidth(Double.MAX_VALUE);
             navBar.setMaxHeight(Double.MAX_VALUE);
 
             for (int i = 1; i <= 20; i++) {
-                navBar.getChildren().add(new Label(i + ". label"));
+                Label l = new Label(i + ". label");
+                l.setStyle("-fx-text-fill: #FFE6C7");
+                navBar.getChildren().add(l);
             }
 
             scrollPane.setContent(navBar);
