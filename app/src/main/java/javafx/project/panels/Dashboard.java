@@ -23,7 +23,7 @@ public class Dashboard extends BorderPane {
         this.newStage = new Stage();
 
         super.autosize();
-        super.setPadding(new Insets(6, 12, 6, 12));
+        // super.setPadding(new Insets(6, 12, 6, 12));
 
         Scene scene = new Scene(this, 600, 400);
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
@@ -98,8 +98,8 @@ public class Dashboard extends BorderPane {
             this.setPadding(new Insets(18, 8, 12, 8));
             this.setStyle("-fx-background-color: #454545;" +
                     "-fx-background-insets: -1 -5 -1 -1;" +
-                    "-fx-background-radius: 0 20 20 0;" +
-                    "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.31), 20, 0.1, 4, 8);");
+                    "-fx-background-radius: 0 16 8 0;" +
+                    "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.05, 6, 4);");
 
             Label headerLabel = new Label("Side Bar");
             headerLabel.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#FFE6C7");

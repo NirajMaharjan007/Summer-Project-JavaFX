@@ -14,12 +14,12 @@ public class Card extends VBox {
 
     void init() {
         // -fx-background-radius: <top-left> <top-right> <bottom-right> <bottom-left>;
-        this.setStyle("-fx-background-color: #efefef;" +
+        this.setStyle("-fx-background-color: #eee;" +
                 "-fx-pref-height: 100%;" +
                 "-fx-pref-width: 100%;" +
                 "-fx-background-insets: -1 -5 -1 -1;" +
-                "-fx-background-radius: 10 10 8 8;" +
-                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 20, 0.05, 2, 4);");
+                "-fx-background-radius: 8 8 4 4;" +
+                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 16, 0.05, 4, 8);");
         this.setAlignment(Pos.TOP_CENTER);
     }
 
