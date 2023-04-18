@@ -7,7 +7,7 @@ public class ScrollPanel extends MFXScrollPane {
     public ScrollPanel() {
         super();
         super.autosize();
-        super.setStyle("-fx-background-color: #454545;");
+        super.setStyle("-fx-background-color: #fafafa;");
 
         this.init();
     }

@@ -14,7 +14,7 @@ public class Card extends VBox {
 
     void init() {
         // -fx-background-radius: <top-left> <top-right> <bottom-right> <bottom-left>;
-        this.setStyle("-fx-background-color: #eee;" +
+        this.setStyle("-fx-background-color: #fafafa;" +
                 "-fx-pref-height: 100%;" +
                 "-fx-pref-width: 100%;" +
                 "-fx-background-insets: -1 -5 -1 -1;" +

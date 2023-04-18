@@ -96,18 +96,18 @@ public class Dashboard extends BorderPane {
 
         private void init() {
             this.setPadding(new Insets(18, 8, 12, 8));
-            this.setStyle("-fx-background-color: #454545;" +
+            this.setStyle("-fx-background-color: #fafafa;" +
                     "-fx-background-insets: -1 -5 -1 -1;" +
                     "-fx-background-radius: 0 16 8 0;" +
-                    "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.05, 6, 4);");
+                    "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 16, 0.05, 4, 8);");
 
             Label headerLabel = new Label("Side Bar");
-            headerLabel.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#FFE6C7");
+            headerLabel.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a");
             headerLabel.setGraphicTextGap(4);
             this.getChildren().add(headerLabel);
 
             Label menuLabel = new Label("Components");
-            menuLabel.setStyle(Elements.HEADER2.getName() + "-fx-text-fill:#FFE6C7");
+            menuLabel.setStyle(Elements.HEADER2.getName() + "-fx-text-fill:#484b6a");
             menuLabel.setPadding(new Insets(20, 8, 2, 8));
             this.getChildren().add(menuLabel);
 
@@ -119,19 +119,19 @@ public class Dashboard extends BorderPane {
             VBox.setMargin(scrollPane, scrollPaneMargin);
 
             VBox navBar = new VBox();
-            navBar.setStyle("-fx-background-color: #454545;" +
+            navBar.setStyle("-fx-background-color: #fafafa;" +
                     "-fx-background-radius: 0;" +
                     "-fx-border-color: transparent;" +
                     "-fx-border-radius: 0;" +
                     "-fx-pref-height: 42;" +
                     "-fx-font-size: 12;");
-            navBar.setSpacing(10);
+            navBar.setSpacing(12);
             navBar.setMaxWidth(Double.MAX_VALUE);
             navBar.setMaxHeight(Double.MAX_VALUE);
 
             for (int i = 1; i <= 20; i++) {
                 Label l = new Label(i + ". label");
-                l.setStyle("-fx-text-fill: #FFE6C7");
+                l.setStyle("-fx-text-fill: #484b6a");
                 navBar.getChildren().add(l);
             }
 
