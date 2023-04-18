@@ -76,6 +76,7 @@ gradle-app.setting
 *.iws
 
 ## Plugin-specific files:
+.idea/
 
 # IntelliJ
 /out/
