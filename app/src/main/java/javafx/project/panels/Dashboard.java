@@ -5,7 +5,6 @@ import javafx.project.components.*;
 import io.github.palexdev.materialfx.css.themes.*;
 import javafx.scene.control.ScrollPane;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.project.enuma.Elements;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -45,7 +44,7 @@ public class Dashboard extends BorderPane {
     private class MainDash extends VBox {
         public MainDash() {
             super();
-            super.autosize();
+            // super.autosize();
             super.setSpacing(10);
             super.setPadding(new Insets(8, 16, 4, 32));
 
@@ -54,12 +53,14 @@ public class Dashboard extends BorderPane {
 
         private void init() {
             Card card = new Card();
-
-            Label header = new Label("Header");
-            header.setStyle(Elements.HEADER1.getName());
-            header.setAlignment(Pos.CENTER);
-
             MainBtn logout = new MainBtn("Logout");
+            ScrollPanel panel = new ScrollPanel();
+            VBox.setVgrow(panel, Priority.ALWAYS);
+            VBox.setMargin(panel, new Insets(8, 4, 8, 4));
+
+            panel.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            panel.setMaxHeight(card.getMaxHeight());
+
             logout.setBgColor(Elements.DANGER_COLOR.getName());
             logout.setTextColor("White");
             logout.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
@@ -71,14 +72,30 @@ public class Dashboard extends BorderPane {
             });
 
             VBox container = new VBox();
-            VBox.setMargin(container, new Insets(8));
+            container.setStyle("-fx-background-color: #fafafa;" +
+                    "-fx-background-radius: 0;" +
+                    "-fx-border-color: transparent;" +
+                    "-fx-border-radius: 0;" +
+                    "-fx-pref-height: 42;" +
+                    "-fx-font-size: 12;");
+            container.setSpacing(12);
+            container.setMaxWidth(Double.MAX_VALUE);
+            container.setMaxHeight(Double.MAX_VALUE);
             container.setPadding(new Insets(4, 8, 2, 8));
-            container.autosize();
+            VBox.setMargin(container, new Insets(8));
 
-            container.getChildren().addAll(header, logout);
+            Label label = new Label("GG");
+            label.autosize();
+            label.setStyle(Elements.HEADER1.getName());
 
-            card.setPrefHeight(newStage.getWidth());
-            card.getChildren().add(container);
+            container.getChildren().addAll(logout);
+
+            panel.setContent(container);
+
+            card.setMaxWidth(newStage.getMaxWidth());
+            card.setMaxHeight(600);
+            card.getChildren().add(label);
+            card.getChildren().add(panel);
 
             this.getChildren().add(card);
         }
