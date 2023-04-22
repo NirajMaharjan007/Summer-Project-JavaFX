@@ -1,18 +1,12 @@
 package javafx.project.panels;
 
-import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
-import io.github.palexdev.materialfx.css.themes.Themes;
+import io.github.palexdev.materialfx.css.themes.*;
 import javafx.geometry.Insets;
-import javafx.project.components.Card;
-import javafx.project.components.MainBtn;
-import javafx.project.components.ScrollPanel;
+import javafx.project.components.*;
 import javafx.project.enuma.Elements;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -92,7 +86,7 @@ public class Dashboard extends BorderPane {
             label.setStyle(Elements.HEADER1.getName());
 
             container.getChildren().addAll(label, logout);
-            
+
             card.setMaxWidth(newStage.getMaxWidth());
             card.getChildren().add(container);
 
