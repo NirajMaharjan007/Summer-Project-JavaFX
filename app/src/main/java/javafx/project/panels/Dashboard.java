@@ -1,16 +1,20 @@
 package javafx.project.panels;
 
-import javafx.project.components.*;
-
-import io.github.palexdev.materialfx.css.themes.*;
-import javafx.scene.control.ScrollPane;
+import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
+import io.github.palexdev.materialfx.css.themes.Themes;
 import javafx.geometry.Insets;
+import javafx.project.components.Card;
+import javafx.project.components.MainBtn;
+import javafx.project.components.ScrollPanel;
 import javafx.project.enuma.Elements;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.scene.layout.*;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 public class Dashboard extends BorderPane {
     Stage stage, newStage;
@@ -44,7 +48,6 @@ public class Dashboard extends BorderPane {
     private class MainDash extends VBox {
         public MainDash() {
             super();
-            // super.autosize();
             super.setSpacing(10);
             super.setPadding(new Insets(8, 16, 4, 32));
 
@@ -88,14 +91,10 @@ public class Dashboard extends BorderPane {
             label.autosize();
             label.setStyle(Elements.HEADER1.getName());
 
-            container.getChildren().addAll(logout);
-
-            panel.setContent(container);
-
+            container.getChildren().addAll(label, logout);
+            
             card.setMaxWidth(newStage.getMaxWidth());
-            card.setMaxHeight(600);
-            card.getChildren().add(label);
-            card.getChildren().add(panel);
+            card.getChildren().add(container);
 
             this.getChildren().add(card);
         }
