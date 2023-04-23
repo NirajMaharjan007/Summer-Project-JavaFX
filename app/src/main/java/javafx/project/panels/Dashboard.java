@@ -2,6 +2,7 @@ package javafx.project.panels;
 
 import io.github.palexdev.materialfx.css.themes.*;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.project.components.*;
 import javafx.project.enuma.Elements;
 import javafx.scene.Scene;
@@ -40,24 +41,27 @@ public class Dashboard extends BorderPane {
         this.setLeft(new SideBar());
     }
 
-    private class TopBar extends HBox {
+    private class TopBar extends BorderPane {
         public TopBar() {
-            super();
+            super();//"-fx-border-insets: 4;" +
             this.setStyle("-fx-margin:12;" +
                     "-fx-background-color: linear-gradient(to bottom, derive(cadetblue, 20%), cadetblue);" +
-                    " -fx-background-insets: 8;" +
-                    "  -fx-border-insets: 4;" +
-                    "  -fx-border-radius: 6;" +
-                    "  -fx-background-radius: 6;"
+                    "-fx-background-insets: 0 0 12 0;" +
+                    "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 12, 0.04, 2, 2);"
             );
             this.init();
         }
 
         private void init() {
-            this.setSpacing(12);
             this.setPadding(new Insets(16));
 
+            HBox box = new HBox();
+            box.setPadding(new Insets(8));
+
             MainBtn logout = new MainBtn("Logout");
+
+            box.setAlignment(Pos.CENTER);
+
             logout.setBgColor(Elements.DANGER_COLOR.getName());
             logout.setTextColor("White");
             logout.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
@@ -68,7 +72,9 @@ public class Dashboard extends BorderPane {
                 newStage.close();
             });
 
-            this.getChildren().add(logout);
+            box.getChildren().addAll(logout);
+
+            this.setRight(box);
         }
 
     }

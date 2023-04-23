@@ -21,7 +21,7 @@ public class MainLogin extends VBox {
 
     Connection data = Database.getConnection();
 
-    AdminDatabase admin = new AdminDatabase();
+    AdminDatabase admin = AdminDatabase.getInstance();
 
     Stage stage;
 

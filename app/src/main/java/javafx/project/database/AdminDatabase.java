@@ -5,15 +5,21 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class AdminDatabase {
-    private Connection conn = Database.getConnection();
-
+    private static AdminDatabase instances;
+    private final Connection conn = Database.getConnection();
     // private int id;
-    // private String name, password;
+    private String name;
+
+    private AdminDatabase() {
+    }
+
+    public static AdminDatabase getInstance() {
+        if (instances == null) instances = new AdminDatabase();
+        return instances;
+    }
+
 
     public boolean setLogin(String name, String password) {
-        // this.name = name;
-        // this.password = password;
-
         String n = null, p = null;
         try {
             Statement statement = conn.createStatement();
@@ -24,9 +30,12 @@ public class AdminDatabase {
                 p = rs.getString("password");
             }
             if (name != null && p != null) {
-                if (name.equals(n) && password.equals(p))
+                if (name.equals(n) && password.equals(p)) {
+                    this.name = name;
+                    System.out.println("AdminDatabase.setLogin\nAdmin name:"
+                            + this.name);
                     return true;
-                else
+                } else
                     return false;
             } else
                 return false;
