@@ -46,9 +46,9 @@ public class MainLogin extends VBox {
         stage.setAlwaysOnTop(true);
 
         MainBtn cancel = new MainBtn("Cancel");
-        cancel.setBgColor("#ef2000");
+        cancel.setBgColor(Elements.DANGER_COLOR.getName());
         cancel.setTextColor("White");
-        cancel.setRippleColor(Color.web("#f05152"));
+        cancel.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
         cancel.setAlignment(Pos.CENTER_RIGHT);
         cancel.setOnAction(e -> {
             System.exit(0);
