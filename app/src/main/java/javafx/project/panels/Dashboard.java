@@ -35,29 +35,24 @@ public class Dashboard extends BorderPane {
     }
 
     private void init() {
+        this.setTop(new TopBar());
         this.setCenter(new MainDash());
         this.setLeft(new SideBar());
     }
 
-    private class MainDash extends VBox {
-        public MainDash() {
+    private class TopBar extends HBox {
+        public TopBar() {
             super();
-            super.setSpacing(10);
-            super.setPadding(new Insets(8, 16, 4, 32));
-
+            this.setStyle("-fx-margin:12;" +
+                    "-fx-background-color: linear-gradient(to bottom, derive(cadetblue, 20%), cadetblue);"
+            );
             this.init();
         }
 
         private void init() {
-            Card card = new Card();
+            this.setPadding(new Insets(16));
+
             MainBtn logout = new MainBtn("Logout");
-            ScrollPanel panel = new ScrollPanel();
-            VBox.setVgrow(panel, Priority.ALWAYS);
-            VBox.setMargin(panel, new Insets(8, 4, 8, 4));
-
-            panel.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            panel.setMaxHeight(card.getMaxHeight());
-
             logout.setBgColor(Elements.DANGER_COLOR.getName());
             logout.setTextColor("White");
             logout.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
@@ -67,6 +62,32 @@ public class Dashboard extends BorderPane {
                 stage.show();
                 newStage.close();
             });
+
+            this.getChildren().add(logout);
+        }
+
+    }
+
+    private class MainDash extends VBox {
+        public MainDash() {
+            super();
+            super.setSpacing(10);
+            super.setPadding(new Insets(8, 16, 4, 32));
+            VBox.setMargin(this, new Insets(6));
+
+            this.init();
+        }
+
+        private void init() {
+            Card card = new Card();
+
+            ScrollPanel panel = new ScrollPanel();
+            VBox.setVgrow(panel, Priority.ALWAYS);
+            VBox.setMargin(panel, new Insets(8, 4, 8, 4));
+
+            panel.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            panel.setMaxHeight(card.getMaxHeight());
+
 
             VBox container = new VBox();
             container.setStyle("-fx-background-color: #fafafa;" +
@@ -85,7 +106,7 @@ public class Dashboard extends BorderPane {
             label.autosize();
             label.setStyle(Elements.HEADER1.getName());
 
-            container.getChildren().addAll(label, logout);
+            container.getChildren().addAll(label);
 
             card.setMaxWidth(newStage.getMaxWidth());
             card.getChildren().add(container);

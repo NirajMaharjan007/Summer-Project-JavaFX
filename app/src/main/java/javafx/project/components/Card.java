@@ -20,5 +20,4 @@ public class Card extends VBox {
                 "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 16, 0.05, 4, 8);");
         this.setAlignment(Pos.TOP_CENTER);
     }
-
 }
