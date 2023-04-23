@@ -44,12 +44,17 @@ public class Dashboard extends BorderPane {
         public TopBar() {
             super();
             this.setStyle("-fx-margin:12;" +
-                    "-fx-background-color: linear-gradient(to bottom, derive(cadetblue, 20%), cadetblue);"
+                    "-fx-background-color: linear-gradient(to bottom, derive(cadetblue, 20%), cadetblue);" +
+                    " -fx-background-insets: 8;" +
+                    "  -fx-border-insets: 4;" +
+                    "  -fx-border-radius: 6;" +
+                    "  -fx-background-radius: 6;"
             );
             this.init();
         }
 
         private void init() {
+            this.setSpacing(12);
             this.setPadding(new Insets(16));
 
             MainBtn logout = new MainBtn("Logout");
