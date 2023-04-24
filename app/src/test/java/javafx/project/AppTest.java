@@ -3,12 +3,20 @@
  */
 package javafx.project;
 
+import javafx.project.components.ImgIcon;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
     @Test
-    void appHasMain() {
-        assertNotNull(new App());
+    void hasHashCode() {
+        assertNotNull(new App().hashCode());
+    }
+
+    @Test
+    void hasImage() {
+        ImgIcon icon = new ImgIcon("./img/user.png");
+        assertNotNull(icon);
     }
 }

@@ -1,5 +1,6 @@
 package javafx.project.panels;
 
+
 import io.github.palexdev.materialfx.css.themes.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -60,7 +61,7 @@ public class Dashboard extends BorderPane {
             box.setPadding(new Insets(8));
 
             MainBtn logout = new MainBtn("Logout");
-            
+
             box.setAlignment(Pos.CENTER);
 
             logout.setBgColor(Elements.DANGER_COLOR.getName());
@@ -73,6 +74,7 @@ public class Dashboard extends BorderPane {
                 newStage.close();
             });
 
+            //ImgIcon icon = new ImgIcon("./user.png");
             box.getChildren().addAll(logout);
 
             this.setRight(box);
