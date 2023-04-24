@@ -23,7 +23,7 @@ public class Dashboard extends BorderPane {
         super.autosize();
         // super.setPadding(new Insets(6, 12, 6, 12));
 
-        Scene scene = new Scene(this, 600, 400);
+        Scene scene = new Scene(this, 800, 600);
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
         init();
