@@ -45,8 +45,8 @@ public class Dashboard extends BorderPane {
     private class TopBar extends BorderPane {
         public TopBar() {
             super();//"-fx-border-insets: 4;" +
-            super.setStyle("-fx-margin:12;" +
-                    "-fx-background-color: linear-gradient(to bottom, derive(cadetblue, 20%), cadetblue);" +
+            super.setPadding(new Insets(16));
+            super.setStyle("-fx-background-color: linear-gradient(to bottom, derive(cadetblue, 20%), cadetblue);" +
                     "-fx-background-insets: 0 0 12 0;" +
                     "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 12, 0.04, 2, 2);"
             );
@@ -55,8 +55,6 @@ public class Dashboard extends BorderPane {
         }
 
         private void init() {
-            this.setPadding(new Insets(16));
-
             HBox box = new HBox();
             box.setPadding(new Insets(8));
 
@@ -75,7 +73,8 @@ public class Dashboard extends BorderPane {
             });
 
             ImgIcon icon = new ImgIcon("src/main/resources/img/user.png");
-            
+            icon.getIcon().setPadding(new Insets(2, 16, 4, 16));
+
 
             box.getChildren().addAll(icon.getIcon(), logout);
 
@@ -136,7 +135,8 @@ public class Dashboard extends BorderPane {
             super();
             super.setSpacing(12);
             super.setPrefHeight(newStage.getMaxHeight());
-            super.autosize();
+            super.setPrefWidth(200);
+//            super.autosize();
 
             this.init();
         }
