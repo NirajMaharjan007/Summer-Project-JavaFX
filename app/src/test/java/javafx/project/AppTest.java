@@ -3,20 +3,22 @@
  */
 package javafx.project;
 
-import javafx.project.components.ImgIcon;
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
     @Test
-    void hasHashCode() {
-        assertNotNull(new App().hashCode());
+    void hasMainMethod() throws NoSuchMethodException {
+        Class<?> clazz = App.class;
+        Method mainMethod = clazz.getMethod("main", String[].class);
+        assertNotNull(mainMethod);
+        assertTrue(Modifier.isStatic(mainMethod.getModifiers()));
+        assertEquals(void.class, mainMethod.getReturnType());
     }
 
-    @Test
-    void hasImage() {
-        ImgIcon icon = new ImgIcon("./img/user.png");
-        assertNotNull(icon);
-    }
+
 }
