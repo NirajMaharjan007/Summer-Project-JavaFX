@@ -5,20 +5,26 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.File;
+
 public class ImgIcon {
-    private Label label;
+    private final Label LABEL;
+    private final ImageView imageView;
 
     public ImgIcon(String url) {
-        Image icon = new Image(url);
+        String string = new File(url).toURI().toString();
+        System.out.println("ImgIcon.ImgIcon " + string);
+
+        Image icon = new Image(string, false);
 
         // Create an ImageView for the Image
-        ImageView imageView = new ImageView(icon);
+        imageView = new ImageView(icon);
 
         // Create a Label with text and the ImageView as the graphic
-        label = new Label("", imageView);
+        LABEL = new Label("", imageView);
     }
 
     public Label getIcon() {
-        return label;
+        return LABEL;
     }
 }
