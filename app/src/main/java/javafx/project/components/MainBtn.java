@@ -15,12 +15,17 @@ public class MainBtn extends MFXButton {
     public MainBtn(String text) {
         super(text);
         super.setPadding(new Insets(6, 12, 6, 12));
+        super.buttonTypeProperty().set(ButtonType.RAISED);
+        super.depthLevelProperty().set(DepthLevel.LEVEL2);
+
         this.init();
     }
 
     public MainBtn(ImageView imageView) {
         super("", imageView);
         super.setStyle("-fx-background-color:transparent;");
+        super.setPadding(new Insets(8));
+        super.buttonTypeProperty().set(ButtonType.RAISED);
         super.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         super.setMaxSize(24, 24);
         super.setMinSize(10, 10);
@@ -43,8 +48,6 @@ public class MainBtn extends MFXButton {
 
     public void init() {
         this.setRippleAnimateBackground(true);
-        this.buttonTypeProperty().set(ButtonType.RAISED);
-        this.depthLevelProperty().set(DepthLevel.LEVEL2);
         this.setRippleAnimationSpeed(0.70);
         this.setRippleBackgroundOpacity(0.35);
         this.setRippleRadius(25);

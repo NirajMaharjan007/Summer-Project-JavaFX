@@ -1,6 +1,5 @@
 package javafx.project.panels;
 
-
 import io.github.palexdev.materialfx.css.themes.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -44,12 +43,12 @@ public class Dashboard extends BorderPane {
 
     private class TopBar extends BorderPane {
         public TopBar() {
-            super();//"-fx-border-insets: 4;" +
+            super();// "-fx-border-insets: 4;" +
             super.setPadding(new Insets(16));
+
             super.setStyle("-fx-background-color: linear-gradient(to bottom, derive(cadetblue, 20%), cadetblue);" +
                     "-fx-background-insets: 0 0 12 0;" +
-                    "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 12, 0.04, 2, 2);"
-            );
+                    "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 12, 0.04, 2, 2);");
 
             this.init();
         }
@@ -57,6 +56,7 @@ public class Dashboard extends BorderPane {
         private void init() {
             HBox box = new HBox();
             box.setPadding(new Insets(8));
+            box.setSpacing(16);
 
             MainBtn logout = new MainBtn("Logout");
 
@@ -73,7 +73,6 @@ public class Dashboard extends BorderPane {
             });
 
             ImgIcon icon = new ImgIcon("src/main/resources/img/user.png");
-            
 
             box.getChildren().addAll(icon.getBtnIcon(), logout);
 
@@ -101,7 +100,6 @@ public class Dashboard extends BorderPane {
 
             panel.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             panel.setMaxHeight(card.getMaxHeight());
-
 
             VBox container = new VBox();
             container.setStyle("-fx-background-color: #fafafa;" +
@@ -135,7 +133,7 @@ public class Dashboard extends BorderPane {
             super.setSpacing(12);
             super.setPrefHeight(newStage.getMaxHeight());
             super.setPrefWidth(200);
-//            super.autosize();
+            // super.autosize();
 
             this.init();
         }
