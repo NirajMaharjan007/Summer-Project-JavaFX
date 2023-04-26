@@ -19,14 +19,13 @@ public class ImgIcon {
         Image icon = new Image(string, false);
 
         // Create an ImageView for the Image
-        ImageView imageView = new ImageView(icon);
+
 
         // Create a Label with text and the ImageView as the graphic
-        LABEL = new Label("", imageView);
+        LABEL = new Label("", new ImageView(icon));
 
-        BUTTON = new MainBtn("Icon");
-        BUTTON.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-        BUTTON.setGraphic(imageView);
+        BUTTON = new MainBtn(new ImageView(icon));
+
     }
 
     public Label getIcon() {

@@ -4,15 +4,27 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.effects.DepthLevel;
 import io.github.palexdev.materialfx.enums.ButtonType;
 import javafx.geometry.Insets;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 public class MainBtn extends MFXButton {
-    String color;
+    String color, colorHex;
 
     public MainBtn(String text) {
         super(text);
         super.setPadding(new Insets(6, 12, 6, 12));
+        this.init();
+    }
+
+    public MainBtn(ImageView imageView) {
+        super("", imageView);
+        super.setStyle("-fx-background-color:transparent;");
+        super.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        super.setMaxSize(24, 24);
+        super.setMinSize(10, 10);
+
         this.init();
     }
 
@@ -22,6 +34,7 @@ public class MainBtn extends MFXButton {
     }
 
     public void setTextColor(String colorHEX) {
+        this.colorHex = colorHEX;
         if (color != null)
             this.setStyle("-fx-text-fill:" + colorHEX + ";-fx-background-color:" + color);
         else
