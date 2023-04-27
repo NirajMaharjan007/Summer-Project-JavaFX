@@ -16,6 +16,7 @@ public class Dashboard extends BorderPane {
 
     public Dashboard(Stage stage) {
         super();
+
         this.stage = stage;
 
         this.newStage = new Stage();
@@ -84,9 +85,9 @@ public class Dashboard extends BorderPane {
     private class MainDash extends VBox {
         public MainDash() {
             super();
-            super.setSpacing(10);
+            super.setSpacing(12);
             super.setPadding(new Insets(8, 16, 4, 32));
-            VBox.setMargin(this, new Insets(6));
+            VBox.setMargin(this, new Insets(8));
 
             this.init();
         }
