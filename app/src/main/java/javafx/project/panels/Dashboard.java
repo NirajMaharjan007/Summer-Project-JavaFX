@@ -174,6 +174,7 @@ public class Dashboard extends BorderPane {
             navBar.setMaxWidth(Double.MAX_VALUE);
             navBar.setMaxHeight(Double.MAX_VALUE);
 
+            navBar.getChildren().add(new ToggleBtn("hello"));
             for (int i = 1; i <= 20; i++) {
                 Label l = new Label(i + ". label");
                 l.setStyle("-fx-text-fill: #484b6a");
