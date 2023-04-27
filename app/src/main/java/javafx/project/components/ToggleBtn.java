@@ -12,7 +12,8 @@ public class ToggleBtn extends MFXRectangleToggleNode {
         super(text);
         super.setAlignment(Pos.BASELINE_CENTER);
         super.setStyle("-fx-background-color: #fafafa;");
-        super.setMaxSize(USE_COMPUTED_SIZE, BASELINE_OFFSET_SAME_AS_HEIGHT);
+        super.setMaxSize(100, 100);
+        super.setMinSize(16, 16);
 
         this.init();
     }
