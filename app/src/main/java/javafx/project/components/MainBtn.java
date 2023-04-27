@@ -28,6 +28,13 @@ public class MainBtn extends MFXButton {
             this.setStyle("-fx-text-fill:" + colorHEX);
     }
 
+    public void setTransparent(boolean transparent) {
+        if (transparent == true)
+            System.out.println("MainBtn.setTransparent()");
+        else
+            System.out.println("MainBtn.setTransparent() GG");
+    }
+
     public void init() {
         this.setRippleAnimateBackground(true);
         this.buttonTypeProperty().set(ButtonType.RAISED);
