@@ -1,6 +1,5 @@
 package javafx.project.components;
 
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,15 +17,10 @@ public class ImgIcon {
 
         Image icon = new Image(string, false);
 
-        // Create an ImageView for the Image
-        ImageView imageView = new ImageView(icon);
+        LABEL = new Label("", new ImageView(icon));
 
-        // Create a Label with text and the ImageView as the graphic
-        LABEL = new Label("", imageView);
+        BUTTON = new MainBtn(new ImageView(icon));
 
-        BUTTON = new MainBtn("Icon");
-        BUTTON.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-        BUTTON.setGraphic(imageView);
     }
 
     public Label getIcon() {

@@ -45,6 +45,7 @@ public class Dashboard extends BorderPane {
         public TopBar() {
             super();// "-fx-border-insets: 4;" +
             super.setPadding(new Insets(16));
+
             super.setStyle("-fx-background-color: linear-gradient(to bottom, derive(cadetblue, 20%), cadetblue);" +
                     "-fx-background-insets: 0 0 12 0;" +
                     "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 12, 0.04, 2, 2);");
@@ -55,6 +56,7 @@ public class Dashboard extends BorderPane {
         private void init() {
             HBox box = new HBox();
             box.setPadding(new Insets(8));
+            box.setSpacing(16);
 
             MainBtn logout = new MainBtn("Logout");
 
@@ -71,7 +73,6 @@ public class Dashboard extends BorderPane {
             });
 
             ImgIcon icon = new ImgIcon("src/main/resources/img/user.png");
-            icon.getBtnIcon().setPadding(new Insets(4));
 
             box.getChildren().addAll(icon.getBtnIcon(), logout);
 
