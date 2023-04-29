@@ -1,29 +1,26 @@
 package javafx.project.components;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.effects.DepthLevel;
+import io.github.palexdev.materialfx.enums.ButtonType;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
 
-public class ToggleBtn extends MFXButton {
+public class ToggleBtn extends MainBtn {
     public ToggleBtn(String text) {
         super(text);
         super.setAlignment(Pos.BASELINE_CENTER);
+        super.buttonTypeProperty().set(ButtonType.FLAT);
+        super.depthLevelProperty().set(DepthLevel.LEVEL0);
 
         this.init();
+        this.initialize();
     }
 
-    private void init() {
-        this.setRippleAnimateBackground(true);
-        this.setRippleAnimationSpeed(0.70);
-        this.setRippleBackgroundOpacity(0.35);
-        this.setRippleRadius(25);
-        this.setTextAlignment(TextAlignment.CENTER);
-        this.setRippleColor(Color.web("#cdcdcd"));
-        this.setFocusTraversable(false);
-        this.setFocused(false);
-        this.setTextAlignment(TextAlignment.JUSTIFY);
-        this.setFocusTraversable(true);
-        this.setFocused(true);
+    private void initialize() {
+        this.setPadding(new Insets(12, 10, 12, 10));
+    }
+
+    public void setSize(int width, int height) {
+        this.setSize(width, height);
     }
 }
