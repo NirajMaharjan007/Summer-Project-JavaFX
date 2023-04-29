@@ -18,9 +18,11 @@ public class ToggleBtn extends MainBtn {
 
     private void initialize() {
         this.setPadding(new Insets(12, 10, 12, 10));
+        this.setStyle("");
+        this.getStyleClass().setAll("toggle-button");
     }
 
     public void setSize(int width, int height) {
-        this.setSize(width, height);
+        this.setPrefSize(width, height);
     }
 }

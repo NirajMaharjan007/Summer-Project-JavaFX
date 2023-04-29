@@ -1,0 +1,40 @@
+* {
+  padding: 0;
+  margin: 0;
+  -fx-text-fill: black;
+}
+
+.navbar {
+  -fx-background-color: #fafafa;
+  -fx-background-radius: 0;
+  -fx-border-color: transparent;
+  -fx-border-radius: 0;
+  -fx-pref-height: 42;
+  -fx-font-size: 12;
+}
+
+.container {
+  -fx-background-color: #fafafa;
+  -fx-background-radius: 0;
+  -fx-border-color: transparent;
+  -fx-border-radius: 0;
+  -fx-pref-height: 42;
+  -fx-font-size: 12;
+}
+
+.sidebar {
+  -fx-background-color: #fafafa;
+  -fx-background-insets: -1 -5 -1 -1;
+  -fx-background-radius: 0 16 8 0;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 16, 0.05, 4, 8);
+}
+
+.topbar {
+  -fx-background-color: linear-gradient(
+    to bottom,
+    derive(cadetblue, 20%),
+    cadetblue
+  );
+  -fx-background-insets: 0 0 12 0;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0.04, 2, 2);
+}

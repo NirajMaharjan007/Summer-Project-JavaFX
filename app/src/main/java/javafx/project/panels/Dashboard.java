@@ -1,10 +1,9 @@
 package javafx.project.panels;
 
 import io.github.palexdev.materialfx.css.themes.*;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.geometry.*;
 import javafx.project.components.*;
-import javafx.project.enuma.Elements;
+import javafx.project.enuma.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -46,10 +45,8 @@ public class Dashboard extends BorderPane {
         public TopBar() {
             super();// "-fx-border-insets: 4;" +
             super.setPadding(new Insets(16));
-
-            super.setStyle("-fx-background-color: linear-gradient(to bottom, derive(cadetblue, 20%), cadetblue);" +
-                    "-fx-background-insets: 0 0 12 0;" +
-                    "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 12, 0.04, 2, 2);");
+            super.getStylesheets().add(MainStyle.STYLESHEET.getLocation());
+            super.getStyleClass().add("topbar");
 
             this.init();
         }
@@ -103,12 +100,8 @@ public class Dashboard extends BorderPane {
             panel.setMaxHeight(card.getMaxHeight());
 
             VBox container = new VBox();
-            container.setStyle("-fx-background-color: #fafafa;" +
-                    "-fx-background-radius: 0;" +
-                    "-fx-border-color: transparent;" +
-                    "-fx-border-radius: 0;" +
-                    "-fx-pref-height: 42;" +
-                    "-fx-font-size: 12;");
+            container.getStylesheets().add(MainStyle.STYLESHEET.getLocation());
+            container.getStyleClass().add("container");
             container.setSpacing(12);
             container.setMaxWidth(Double.MAX_VALUE);
             container.setMaxHeight(Double.MAX_VALUE);
@@ -141,10 +134,12 @@ public class Dashboard extends BorderPane {
 
         private void init() {
             this.setPadding(new Insets(18, 8, 12, 8));
-            this.setStyle("-fx-background-color: #fafafa;" +
-                    "-fx-background-insets: -1 -5 -1 -1;" +
-                    "-fx-background-radius: 0 16 8 0;" +
-                    "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 16, 0.05, 4, 8);");
+            // this.setStyle("-fx-background-color: #fafafa;" +
+            // "-fx-background-insets: -1 -5 -1 -1;" +
+            // "-fx-background-radius: 0 16 8 0;" +
+            // "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 16, 0.05, 4, 8);");
+            this.getStylesheets().add(MainStyle.STYLESHEET.getLocation());
+            this.getStyleClass().addAll("sidebar");
 
             Label headerLabel = new Label("Side Bar");
             headerLabel.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a");
@@ -164,21 +159,20 @@ public class Dashboard extends BorderPane {
             VBox.setMargin(scrollPane, scrollPaneMargin);
 
             VBox navBar = new VBox();
-            navBar.setStyle("-fx-background-color: #fafafa;" +
-                    "-fx-background-radius: 0;" +
-                    "-fx-border-color: transparent;" +
-                    "-fx-border-radius: 0;" +
-                    "-fx-pref-height: 42;" +
-                    "-fx-font-size: 12;");
-            navBar.setSpacing(12);
+            navBar.getStylesheets().add(MainStyle.STYLESHEET.getLocation());
+            navBar.getStyleClass().add("navbar");
+            navBar.setSpacing(8);
             navBar.setMaxWidth(Double.MAX_VALUE);
             navBar.setMaxHeight(Double.MAX_VALUE);
 
-            navBar.getChildren().add(new ToggleBtn("hello"));
             for (int i = 1; i <= 20; i++) {
-                Label l = new Label(i + ". label");
-                l.setStyle("-fx-text-fill: #484b6a");
-                navBar.getChildren().add(l);
+                ToggleBtn toggle = new ToggleBtn("hello");
+
+                toggle.setSize((int) navBar.getMaxWidth(), 85);
+                // Label l = new Label(i + ". label");
+                // l.setStyle("-fx-text-fill: #484b6a");
+                // navBar.getChildren().add(l);
+                navBar.getChildren().add(toggle);
             }
 
             scrollPane.setContent(navBar);
