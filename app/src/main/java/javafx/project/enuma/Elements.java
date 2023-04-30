@@ -13,7 +13,11 @@ public enum Elements {
 
     SUCCESS_COLOR("#54B435"),
 
-    SUCCESS_ALT_COLOR("#82CD47"),;
+    SUCCESS_ALT_COLOR("#82CD47"),
+
+    INFO_COLOR("#00A896"),
+
+    INFO_ALT_COLOR("#8fcee2");
 
     public final String label;
 

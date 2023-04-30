@@ -14,7 +14,7 @@ public class MainBtn extends MFXButton {
 
     public MainBtn(String text) {
         super(text);
-        super.setPadding(new Insets(6, 12, 6, 12));
+        super.setPadding(new Insets(8, 12, 8, 12));
         super.buttonTypeProperty().set(ButtonType.RAISED);
         super.depthLevelProperty().set(DepthLevel.LEVEL2);
 
@@ -55,6 +55,10 @@ public class MainBtn extends MFXButton {
         this.setRippleColor(Color.web("#cdcdcd"));
         this.setFocusTraversable(false);
         this.setFocused(false);
+    }
+
+    public void setSize(int width, int height) {
+        this.setPrefSize(width, height);
     }
 
 }

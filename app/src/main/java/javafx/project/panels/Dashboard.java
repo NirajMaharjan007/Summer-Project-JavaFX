@@ -110,7 +110,7 @@ public class Dashboard extends BorderPane {
 
             Label label = new Label("GG");
             label.autosize();
-            label.setStyle(Elements.HEADER1.getName());
+            label.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a;");
 
             container.getChildren().addAll(label);
 
@@ -161,18 +161,22 @@ public class Dashboard extends BorderPane {
             VBox navBar = new VBox();
             navBar.getStylesheets().add(MainStyle.STYLESHEET.getLocation());
             navBar.getStyleClass().add("navbar");
-            navBar.setSpacing(8);
+            navBar.setSpacing(10);
             navBar.setMaxWidth(Double.MAX_VALUE);
             navBar.setMaxHeight(Double.MAX_VALUE);
 
-            for (int i = 1; i <= 20; i++) {
-                ToggleBtn toggle = new ToggleBtn("hello");
+            for (int i = 1; i <= 5; i++) {
+                MainBtn btn = new MainBtn("hello");
 
-                toggle.setSize((int) navBar.getMaxWidth(), 85);
-                // Label l = new Label(i + ". label");
-                // l.setStyle("-fx-text-fill: #484b6a");
-                // navBar.getChildren().add(l);
-                navBar.getChildren().add(toggle);
+                btn.setSize((int) navBar.getMaxWidth(), 100);
+                btn.setPadding(new Insets(12, 8, 12, 8));
+                btn.setBgColor(Elements.INFO_COLOR.getName());
+                btn.setRippleColor(Color.web("#8fcee2"));
+                btn.setTextColor("black; -fx-font-weight: bold; -fx-font-size:14px");
+                btn.buttonTypeProperty().set(io.github.palexdev.materialfx.enums.ButtonType.RAISED);
+                btn.depthLevelProperty().set(io.github.palexdev.materialfx.effects.DepthLevel.LEVEL1);
+
+                navBar.getChildren().add(btn);
             }
 
             scrollPane.setContent(navBar);
