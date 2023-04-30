@@ -38,13 +38,3 @@
   -fx-background-insets: 0 0 12 0;
   -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0.04, 2, 2);
 }
-
-.toggle-button {
-  -fx-background-color: blue;
-  -fx-text-fill: white;
-}
-
-.toggle-button:selected:focused {
-  -fx-background-color: green;
-  -fx-text-fill: white;
-}
