@@ -25,10 +25,11 @@ public class MainBtn extends MFXButton {
         super("", imageView);
         super.setStyle("-fx-background-color:transparent;");
         super.setPadding(new Insets(16));
-        super.buttonTypeProperty().set(ButtonType.FLAT);
+        super.buttonTypeProperty().set(ButtonType.RAISED);
+        super.depthLevelProperty().set(DepthLevel.LEVEL1);
         super.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-        super.setMaxSize(28, 28);
-        super.setMinSize(12, 12);
+        super.setMaxSize(24, 24);
+        super.setMinSize(16, 16);
 
         this.init();
     }
