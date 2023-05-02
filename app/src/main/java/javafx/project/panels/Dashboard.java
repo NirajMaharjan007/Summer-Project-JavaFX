@@ -81,7 +81,10 @@ public class Dashboard extends BorderPane {
             box.getChildren().addAll(icon.getBtnIcon(), logout);
 
             HBox logoSide = new HBox();
-            logoSide.getChildren().add(new Label("Logo"));
+            logoSide.setPadding(new Insets(8));
+            logoSide.setSpacing(16);
+            // logoSide.getChildren().add(new Label("Logo"));
+            logoSide.getChildren().add(new ImgIcon("src/main/resources/img/logolaxprinter.png").getIcon());
 
             this.setRight(box);
             this.setLeft(logoSide);
