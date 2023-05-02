@@ -70,7 +70,11 @@ public class Dashboard extends BorderPane {
                 newStage.close();
             });
 
-            ImgIcon icon = new ImgIcon("src/main/resources/img/user.png");
+            ImgIcon icon = new ImgIcon("src/main/resources/img/settings.png");
+
+            icon.getBtnIcon().setOnAction(value -> {
+
+            });
 
             box.getChildren().addAll(icon.getBtnIcon(), logout);
 
