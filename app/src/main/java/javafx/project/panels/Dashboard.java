@@ -80,14 +80,20 @@ public class Dashboard extends BorderPane {
 
             box.getChildren().addAll(icon.getBtnIcon(), logout);
 
+            HBox logoSide = new HBox();
+            logoSide.getChildren().add(new Label("Logo"));
+
             this.setRight(box);
+            this.setLeft(logoSide);
         }
 
     }
 
     private class MainDash extends VBox {
-        public static MainModule module = new MainModule();
-        public static EmployeeModule employeeModule = new EmployeeModule();
+        /*
+         * public MainModule module = new MainModule();
+         * public EmployeeModule employeeModule = new EmployeeModule();
+         */
         public static VBox container = new VBox();
 
         public MainDash() {
@@ -121,7 +127,8 @@ public class Dashboard extends BorderPane {
             label.autosize();
             label.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a;");
 
-            container.getChildren().add(module);
+            container.getChildren().clear();
+            container.getChildren().add(new MainModule());
 
             card.setMaxWidth(newStage.getMaxWidth());
             card.getChildren().add(container);
@@ -192,8 +199,8 @@ public class Dashboard extends BorderPane {
             SwitchNode firstSwitchNode = new SwitchNode(MainDash.container, btn[0]);
             SwitchNode secondSwitchNode = new SwitchNode(MainDash.container, btn[1]);
 
-            firstSwitchNode.switchNode(MainDash.module);
-            secondSwitchNode.switchNode(MainDash.employeeModule);
+            firstSwitchNode.switchNode(new MainModule());
+            secondSwitchNode.switchNode(new EmployeeModule());
 
             scrollPane.setContent(navBar);
 

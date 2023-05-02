@@ -12,7 +12,7 @@ public class MainModule extends VBox {
     }
 
     private void init() {
-        Label header1 = new Label("MainModule");
+        Label header1 = new Label("Dashboard");
         this.getStylesheets().add(MainStyle.ALT_STYLESHEET.getLocation());
 
         header1.getStyleClass().add("header1");
