@@ -1,5 +1,6 @@
 package javafx.project.modules;
 
+import javafx.geometry.Insets;
 import javafx.project.enuma.MainStyle;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -7,11 +8,9 @@ import javafx.scene.layout.VBox;
 public class EmployeeModule extends VBox {
     public EmployeeModule() {
         super();
-        this.init();
-    }
-
-    public EmployeeModule(String Header) {
-        super();
+        super.setSpacing(16);
+        super.setPadding(new Insets(2, 6, 4, 8));
+        VBox.setMargin(this, new Insets(8));
 
         this.init();
     }
