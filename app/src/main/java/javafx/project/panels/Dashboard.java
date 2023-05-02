@@ -4,6 +4,8 @@ import io.github.palexdev.materialfx.css.themes.*;
 import javafx.geometry.*;
 import javafx.project.components.*;
 import javafx.project.enuma.*;
+import javafx.project.modules.EmployeeModule;
+import javafx.project.modules.MainModule;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -84,6 +86,10 @@ public class Dashboard extends BorderPane {
     }
 
     private class MainDash extends VBox {
+        public static MainModule module = new MainModule();
+        public static EmployeeModule employeeModule = new EmployeeModule();
+        public static VBox container = new VBox();
+
         public MainDash() {
             super();
             super.setSpacing(12);
@@ -103,7 +109,6 @@ public class Dashboard extends BorderPane {
             panel.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             panel.setMaxHeight(card.getMaxHeight());
 
-            VBox container = new VBox();
             container.getStylesheets().add(MainStyle.STYLESHEET.getLocation());
             container.getStyleClass().add("container");
             container.setSpacing(12);
@@ -116,7 +121,7 @@ public class Dashboard extends BorderPane {
             label.autosize();
             label.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a;");
 
-            container.getChildren().addAll(label);
+            container.getChildren().add(module);
 
             card.setMaxWidth(newStage.getMaxWidth());
             card.getChildren().add(container);
@@ -169,19 +174,26 @@ public class Dashboard extends BorderPane {
             navBar.setMaxWidth(Double.MAX_VALUE);
             navBar.setMaxHeight(Double.MAX_VALUE);
 
-            for (int i = 1; i <= 5; i++) {
-                MainBtn btn = new MainBtn("hello");
+            MainBtn[] btn = new MainBtn[5];
 
-                btn.setSize((int) navBar.getMaxWidth(), 100);
-                btn.setPadding(new Insets(12, 8, 12, 8));
-                btn.setBgColor(Elements.INFO_COLOR.getName());
-                btn.setRippleColor(Color.web("#8fcee2"));
-                btn.setTextColor("black; -fx-font-weight: bold; -fx-font-size:14px");
-                btn.buttonTypeProperty().set(io.github.palexdev.materialfx.enums.ButtonType.RAISED);
-                btn.depthLevelProperty().set(io.github.palexdev.materialfx.effects.DepthLevel.LEVEL1);
+            for (int i = 0; i < 5; i++) {
+                btn[i] = new MainBtn("hello " + i);
 
-                navBar.getChildren().add(btn);
+                btn[i].setSize((int) navBar.getMaxWidth(), 100);
+                btn[i].setPadding(new Insets(12, 8, 12, 8));
+                btn[i].setBgColor(Elements.INFO_COLOR.getName());
+                btn[i].setRippleColor(Color.web("#8fcee2"));
+                btn[i].setTextColor("black; -fx-font-weight: bold; -fx-font-size:14px");
+                btn[i].buttonTypeProperty().set(io.github.palexdev.materialfx.enums.ButtonType.RAISED);
+                btn[i].depthLevelProperty().set(io.github.palexdev.materialfx.effects.DepthLevel.LEVEL1);
             }
+            navBar.getChildren().addAll(btn[0], btn[1]);
+
+            SwitchNode firstSwitchNode = new SwitchNode(MainDash.container, btn[0]);
+            SwitchNode secondSwitchNode = new SwitchNode(MainDash.container, btn[1]);
+
+            firstSwitchNode.switchNode(MainDash.module);
+            secondSwitchNode.switchNode(MainDash.employeeModule);
 
             scrollPane.setContent(navBar);
 
