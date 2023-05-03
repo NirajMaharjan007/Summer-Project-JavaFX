@@ -10,6 +10,7 @@
 .header2,
 .header3,
 .header4 {
+  -fx-margin-top: 12;
   -fx-font-weight: bold;
   -fx-line-height: 1.5;
 }
@@ -20,4 +21,11 @@
 
 .header2 {
   -fx-font-size: 20px;
+}
+
+.content {
+  -fx-background-color: #fafafa;
+  -fx-background-insets: -1 -5 -1 -1;
+  -fx-background-radius: 8 8 4 4;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 16, 0.05, 4, 8);
 }

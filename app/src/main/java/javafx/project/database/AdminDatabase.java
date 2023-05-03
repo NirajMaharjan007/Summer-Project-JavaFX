@@ -14,10 +14,10 @@ public class AdminDatabase {
     }
 
     public static AdminDatabase getInstance() {
-        if (instances == null) instances = new AdminDatabase();
+        if (instances == null)
+            instances = new AdminDatabase();
         return instances;
     }
-
 
     public boolean setLogin(String name, String password) {
         String n = null, p = null;
