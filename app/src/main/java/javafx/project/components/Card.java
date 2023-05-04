@@ -2,7 +2,6 @@ package javafx.project.components;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.project.enuma.MainStyle;
 import javafx.scene.layout.VBox;
 
 public class Card extends VBox {

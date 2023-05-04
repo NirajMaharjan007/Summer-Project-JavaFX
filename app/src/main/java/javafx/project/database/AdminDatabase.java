@@ -7,8 +7,8 @@ import java.sql.Statement;
 public class AdminDatabase {
     private static AdminDatabase instances;
     private final Connection conn = Database.getConnection();
-    // private int id;
-    private String name;
+    private int id;
+    private String name, password;
 
     private AdminDatabase() {
     }
@@ -19,7 +19,25 @@ public class AdminDatabase {
         return instances;
     }
 
+    public int getId() {
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM admin where name = '" + this.name +
+                    "' and password = '" + this.password + "'");
+            while (rs.next()) {
+                this.id = rs.getInt(1);
+            }
+            return this.id;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return -1;
+        }
+    }
+
     public boolean setLogin(String name, String password) {
+        this.name = name;
+        this.password = password;
+
         String n = null, p = null;
         try {
             Statement statement = conn.createStatement();

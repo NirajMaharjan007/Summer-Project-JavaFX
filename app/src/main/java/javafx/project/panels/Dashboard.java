@@ -25,7 +25,7 @@ public class Dashboard extends BorderPane {
         super.autosize();
         // super.setPadding(new Insets(6, 12, 6, 12));
 
-        Scene scene = new Scene(this, 800, 600);
+        Scene scene = new Scene(this);
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
         init();
@@ -125,10 +125,6 @@ public class Dashboard extends BorderPane {
             container.setMaxHeight(Double.MAX_VALUE);
             container.setPadding(new Insets(4, 8, 2, 8));
             VBox.setMargin(container, new Insets(8));
-
-            Label label = new Label("GG");
-            label.autosize();
-            label.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a;");
 
             container.getChildren().clear();
             container.getChildren().add(new MainModule());

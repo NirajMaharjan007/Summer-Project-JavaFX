@@ -7,6 +7,8 @@ public class EmpDatabase {
 
     private static EmpDatabase instance;
 
+    private AdminDatabase admin = AdminDatabase.getInstance();
+
     private EmpDatabase() {
     }
 
@@ -19,8 +21,10 @@ public class EmpDatabase {
 
     public int count() {
         try {
+            int adminId = admin.getId();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS emp_count FROM employees");
+            ResultSet resultSet = statement
+                    .executeQuery("SELECT COUNT(*) AS emp_count FROM employees where admin_id=" + adminId);
             resultSet.next();
             int count = resultSet.getInt("emp_count");
             return count;
