@@ -38,7 +38,7 @@ public class MainModule extends VBox {
 
         public Pane() {
             super();
-            super.setPadding(new Insets(10, 12, 10, 12));
+            super.setPadding(new Insets(8, 4, 8, 4));
             super.getStylesheets().add(MainStyle.ALT_STYLESHEET.getLocation());
 
             for (int i = 0; i < 3; i++) {
