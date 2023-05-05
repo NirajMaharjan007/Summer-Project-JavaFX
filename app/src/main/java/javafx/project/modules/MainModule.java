@@ -65,7 +65,13 @@ public class MainModule extends VBox {
             Label label = new Label("Total employees");
             label.getStyleClass().add("header3");
 
-            Label label2 = new Label("" + count);
+            Label label2 = new Label();
+            if (count <= 0)
+                label2.setText("No Employee Found");
+
+            else
+                label2.setText("" + count);
+
             label2.getStyleClass().add("header1");
 
             box.getChildren().add(label2);
