@@ -13,7 +13,7 @@ public class MainModule extends VBox {
     public MainModule() {
         super();
         super.setSpacing(16);
-        super.setPadding(new Insets(2, 6, 4, 8));
+        super.setPadding(new Insets(2, 4, 2, 4));
         VBox.setMargin(this, new Insets(8));
 
         this.init();
@@ -32,21 +32,23 @@ public class MainModule extends VBox {
     }
 
     private class Pane extends GridPane {
-        private BorderPane[] pane = new BorderPane[3];
+        private BorderPane[] pane = new BorderPane[2];
 
-        private Card[] card = new Card[3];
+        private Card[] card = new Card[2];
 
         public Pane() {
             super();
-            super.setPadding(new Insets(8, 4, 8, 4));
+            super.setPadding(new Insets(2, 6, 2, 6));
             super.getStylesheets().add(MainStyle.ALT_STYLESHEET.getLocation());
 
-            for (int i = 0; i < 3; i++) {
+            Insets padding = new Insets(2, 8, 4, 8);
+
+            for (int i = 0; i < 2; i++) {
                 pane[i] = new BorderPane();
-                pane[i].setPadding(new Insets(10, 8, 10, 8));
+                pane[i].setPadding(padding);
 
                 card[i] = new Card();
-                card[i].setPadding(new Insets(10, 8, 10, 8));
+                card[i].setPadding(padding);
                 card[i].setBgColor("#AFD3E2");
             }
 
@@ -59,17 +61,24 @@ public class MainModule extends VBox {
 
             ImgIcon icon = new ImgIcon("src/main/resources/img/staffs.png");
             VBox box = new VBox(16);
-            box.setPadding(new Insets(8, 12, 8, 32));
+            box.setPadding(new Insets(4, 10, 2, 32));
             box.setAlignment(Pos.CENTER);
 
             Label label = new Label("Total employees");
             label.getStyleClass().add("header3");
 
-            Label label2 = new Label("" + count);
-            label2.getStyleClass().add("header1");
+            Label label2 = new Label();
 
-            box.getChildren().add(label2);
-            box.getChildren().add(label);
+            if (count <= 0) {
+                label2.setText("No Employees Found");
+                label2.getStyleClass().add("header2");
+                box.getChildren().add(label2);
+            } else {
+                label2.setText("" + count);
+                label2.getStyleClass().add("header1");
+                box.getChildren().add(label2);
+                box.getChildren().add(label);
+            }
 
             // card[0].setPrefWidth(1024);
 
@@ -92,7 +101,7 @@ public class MainModule extends VBox {
             pane[1].setLeft(new ImgIcon("src/main/resources/img/calendar.png").getIcon());
             pane[1].setCenter(activeBox);
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 2; i++) {
                 card[i].getChildren().add(pane[i]);
                 this.add(card[i], i, 0);
             }
