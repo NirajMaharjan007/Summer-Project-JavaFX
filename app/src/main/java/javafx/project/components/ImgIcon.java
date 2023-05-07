@@ -13,7 +13,7 @@ public class ImgIcon {
     public ImgIcon(String url) {
         String string = new File(url).toURI().toString();
 
-        System.out.println("ImgIcon.ImgIcon " + string);
+        // System.out.println("ImgIcon.ImgIcon " + string);
 
         Image icon = new Image(string, false);
 

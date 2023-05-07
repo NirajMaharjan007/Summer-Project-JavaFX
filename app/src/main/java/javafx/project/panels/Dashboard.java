@@ -31,7 +31,7 @@ public class Dashboard extends BorderPane {
         init();
 
         newStage.centerOnScreen();
-        newStage.setResizable(false);
+        newStage.setResizable(true);
         newStage.setTitle("Dashboard");
         newStage.setScene(scene);
         newStage.show();
@@ -131,6 +131,7 @@ public class Dashboard extends BorderPane {
 
             card.setMaxWidth(newStage.getMaxWidth());
             card.getChildren().add(container);
+            card.setAlignment(Pos.TOP_CENTER);
 
             this.getChildren().add(card);
         }
@@ -183,7 +184,7 @@ public class Dashboard extends BorderPane {
             MainBtn[] btn = new MainBtn[5];
 
             for (int i = 0; i < 5; i++) {
-                btn[i] = new MainBtn("hello " + i);
+                btn[i] = new MainBtn("");
 
                 btn[i].setSize((int) navBar.getMaxWidth(), 100);
                 btn[i].setPadding(new Insets(12, 8, 12, 8));
@@ -193,6 +194,9 @@ public class Dashboard extends BorderPane {
                 btn[i].buttonTypeProperty().set(io.github.palexdev.materialfx.enums.ButtonType.RAISED);
                 btn[i].depthLevelProperty().set(io.github.palexdev.materialfx.effects.DepthLevel.LEVEL1);
             }
+            btn[0].setText("Dashboard");
+            btn[1].setText("Employees");
+
             navBar.getChildren().addAll(btn[0], btn[1]);
 
             SwitchNode firstSwitchNode = new SwitchNode(MainDash.container, btn[0]);

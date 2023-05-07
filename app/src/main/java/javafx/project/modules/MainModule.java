@@ -57,8 +57,12 @@ public class MainModule extends VBox {
         }
 
         private void init() {
-            int count = EmpDatabase.getInstance().count();
             this.setHgap(32);
+            this.setAlignment(Pos.BASELINE_CENTER);
+
+            int count = EmpDatabase.getInstance().count();
+
+            GridPane.setFillWidth(this, true);
 
             ImgIcon icon = new ImgIcon("src/main/resources/img/staffs.png");
             VBox box = new VBox(16);
