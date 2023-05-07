@@ -25,7 +25,7 @@ public class Dashboard extends BorderPane {
         super.autosize();
         // super.setPadding(new Insets(6, 12, 6, 12));
 
-        Scene scene = new Scene(this);
+        Scene scene = new Scene(this, 1024, 600);
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
         init();
@@ -187,9 +187,9 @@ public class Dashboard extends BorderPane {
 
                 btn[i].setSize((int) navBar.getMaxWidth(), 100);
                 btn[i].setPadding(new Insets(12, 8, 12, 8));
-                btn[i].setBgColor(Elements.INFO_COLOR.getName());
+                btn[i].setBgColor("#AFD3E2");
                 btn[i].setRippleColor(Color.web("#8fcee2"));
-                btn[i].setTextColor("black; -fx-font-weight: bold; -fx-font-size:14px");
+                btn[i].setTextColor("#484b6a; -fx-font-weight: bold; -fx-font-size:14px");
                 btn[i].buttonTypeProperty().set(io.github.palexdev.materialfx.enums.ButtonType.RAISED);
                 btn[i].depthLevelProperty().set(io.github.palexdev.materialfx.effects.DepthLevel.LEVEL1);
             }

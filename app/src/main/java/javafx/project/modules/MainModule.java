@@ -38,10 +38,11 @@ public class MainModule extends VBox {
 
         public Pane() {
             super();
-            super.setPadding(new Insets(2, 6, 2, 6));
-            super.getStylesheets().add(MainStyle.ALT_STYLESHEET.getLocation());
 
-            Insets padding = new Insets(2, 8, 4, 8);
+            Insets padding = new Insets(4, 8, 6, 8);
+
+            super.setPadding(padding);
+            super.getStylesheets().add(MainStyle.ALT_STYLESHEET.getLocation());
 
             for (int i = 0; i < 2; i++) {
                 pane[i] = new BorderPane();
