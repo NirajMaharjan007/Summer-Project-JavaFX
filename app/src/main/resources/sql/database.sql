@@ -1,10 +1,8 @@
 -- Active: 1657020369972@@127.0.0.1@3306@my_data
 
-CREATE DATABASE IF NOT EXISTS my_data ;
+CREATE DATABASE IF NOT EXISTS hr_data ;
 
-USE my_data ;
-
-use my_data ;
+USE hr_data ;
 
 CREATE TABLE
     admin(
