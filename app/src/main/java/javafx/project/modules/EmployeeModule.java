@@ -5,8 +5,11 @@ import io.github.palexdev.materialfx.controls.*;
 import javafx.geometry.Insets;
 import javafx.project.database.EmpDatabase;
 import javafx.project.enuma.MainStyle;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class EmployeeModule extends VBox {
     private EmpDatabase empData = EmpDatabase.getInstance();
@@ -34,6 +37,23 @@ public class EmployeeModule extends VBox {
         header1.getStyleClass().add("header1");
 
         this.getChildren().addAll(header1, box);
+    }
+
+    private class CreateEmployee extends VBox {
+        Stage stage;
+
+        public CreateEmployee() {
+            super(16);
+            Scene scene = new Scene(this, 450, 450);
+            stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.setTitle("Create Employee");
+        }
+
+        public void show() {
+            stage.show();
+        }
     }
 
     private class EmployeeTable extends MFXTableView<String> {
