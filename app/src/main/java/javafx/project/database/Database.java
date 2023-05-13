@@ -13,7 +13,7 @@ public class Database {
         if (conn == null) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_data", "root", "");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hr_data", "root", "");
             } catch (Exception e) {
                 System.err.println("Database.getConnection(); => " + e.getMessage());
             }

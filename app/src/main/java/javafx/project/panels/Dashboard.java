@@ -13,14 +13,14 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Dashboard extends BorderPane {
-    Stage stage, newStage;
+    static Stage stage, newStage;
 
     public Dashboard(Stage stage) {
         super();
 
-        this.stage = stage;
+        Dashboard.stage = stage;
 
-        this.newStage = new Stage();
+        Dashboard.newStage = new Stage();
 
         super.autosize();
         // super.setPadding(new Insets(6, 12, 6, 12));
@@ -35,6 +35,10 @@ public class Dashboard extends BorderPane {
         newStage.setTitle("Dashboard");
         newStage.setScene(scene);
         newStage.show();
+    }
+
+    public static Stage getStage() {
+        return Dashboard.newStage;
     }
 
     private void init() {
@@ -186,16 +190,26 @@ public class Dashboard extends BorderPane {
             for (int i = 0; i < 5; i++) {
                 btn[i] = new MainBtn("");
 
-                btn[i].setSize((int) navBar.getMaxWidth(), 100);
-                btn[i].setPadding(new Insets(12, 8, 12, 8));
+                btn[i].setSize((int) navBar.getMaxWidth(), 120);
+                // btn[i].setPadding(new Insets(10, 1, 10, 1));
                 btn[i].setBgColor("#AFD3E2");
                 btn[i].setRippleColor(Color.web("#8fcee2"));
                 btn[i].setTextColor("#484b6a; -fx-font-weight: bold; -fx-font-size:14px");
                 btn[i].buttonTypeProperty().set(io.github.palexdev.materialfx.enums.ButtonType.RAISED);
                 btn[i].depthLevelProperty().set(io.github.palexdev.materialfx.effects.DepthLevel.LEVEL1);
             }
+
+            Label emp_icon = new ImgIcon("src/main/resources/img/user.png").getIcon();
+            emp_icon.setPadding(new Insets(4, 10, 4, 2));
+
+            Label dash_icon = new ImgIcon("src/main/resources/img/monitor.png").getIcon();
+            dash_icon.setPadding(new Insets(4, 8, 4, 2));
+
+            btn[0].setGraphic(dash_icon);
             btn[0].setText("Dashboard");
-            btn[1].setText("Employees");
+
+            btn[1].setGraphic(emp_icon);
+            btn[1].setText("Employee");
 
             navBar.getChildren().addAll(btn[0], btn[1]);
 

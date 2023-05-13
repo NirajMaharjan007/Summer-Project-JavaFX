@@ -103,7 +103,9 @@ public class MainModule extends VBox {
             activeBox.getChildren().add(label3);
             activeBox.getChildren().add(label4);
 
-            pane[1].setLeft(new ImgIcon("src/main/resources/img/calendar.png").getIcon());
+            Label label5 = new ImgIcon("src/main/resources/img/calendar.png").getIcon();
+            label5.setPadding(new Insets(12, 4, 2, 4));
+            pane[1].setLeft(label5);
             pane[1].setCenter(activeBox);
 
             for (int i = 0; i < 2; i++) {
