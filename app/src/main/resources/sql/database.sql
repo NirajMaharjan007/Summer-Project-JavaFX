@@ -4,8 +4,6 @@ CREATE DATABASE IF NOT EXISTS my_data ;
 
 USE my_data ;
 
-use my_data ;
-
 CREATE TABLE
     admin(
         id int PRIMARY KEY NOT NULL,
