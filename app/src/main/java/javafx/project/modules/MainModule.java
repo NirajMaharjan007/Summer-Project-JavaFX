@@ -2,14 +2,16 @@ package javafx.project.modules;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.project.components.Card;
-import javafx.project.components.ImgIcon;
-import javafx.project.database.EmpDatabase;
-import javafx.project.enuma.MainStyle;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
+import javafx.project.database.*;
+import javafx.project.components.*;
+import javafx.project.enuma.MainStyle;
+
 public class MainModule extends VBox {
+    private int adminId = AdminDatabase.getInstance().getId();
+
     public MainModule() {
         super();
         super.setSpacing(16);
@@ -60,7 +62,7 @@ public class MainModule extends VBox {
             this.setHgap(32);
             this.setAlignment(Pos.BASELINE_CENTER);
 
-            int count = EmpDatabase.getInstance().count();
+            int count = new EmpDatabase(adminId).count();
 
             GridPane.setFillWidth(this, true);
 

@@ -1,18 +1,18 @@
 package javafx.project.modules;
 
 import io.github.palexdev.materialfx.controls.*;
-
 import javafx.geometry.Insets;
-import javafx.project.database.EmpDatabase;
-import javafx.project.enuma.MainStyle;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javafx.project.enuma.MainStyle;
+import javafx.project.database.*;
+
 public class EmployeeModule extends VBox {
-    private EmpDatabase empData = EmpDatabase.getInstance();
+    private EmpDatabase empData = new EmpDatabase(AdminDatabase.getInstance().getId());
 
     public EmployeeModule() {
         super();
@@ -32,7 +32,7 @@ public class EmployeeModule extends VBox {
 
         EmployeeTable table = new EmployeeTable();
 
-        box.getChildren().add(table);
+        box.getChildren().addAll(new Label("Hello. " + empData.getNames().toString()), table);
 
         header1.getStyleClass().add("header1");
 
@@ -67,6 +67,8 @@ public class EmployeeModule extends VBox {
             this.setMinWidth(Double.MIN_NORMAL);
             this.setMaxWidth(Double.MAX_VALUE);
             this.setPrefWidth(800);
+
+            setFooterVisible(false);
 
             MFXTableColumn<String> nameColumn = new MFXTableColumn<>("Name", false);
             MFXTableColumn<String> surnameColumn = new MFXTableColumn<>("Surname", false);

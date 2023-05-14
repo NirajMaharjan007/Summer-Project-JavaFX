@@ -27,6 +27,7 @@ public class AdminDatabase {
             while (rs.next()) {
                 this.id = rs.getInt(1);
             }
+            System.out.println("GG:" + this.id);
             return this.id;
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -39,6 +40,7 @@ public class AdminDatabase {
         this.password = password;
 
         String n = null, p = null;
+
         try {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM admin where name = '" + name +
