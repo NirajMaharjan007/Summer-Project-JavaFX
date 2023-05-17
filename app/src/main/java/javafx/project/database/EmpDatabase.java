@@ -65,9 +65,4 @@ public class EmpDatabase {
     public String getName() {
         return this.name;
     }
-
-    public ObservableList<String> getNames() {
-        return row;
-    }
-
 }

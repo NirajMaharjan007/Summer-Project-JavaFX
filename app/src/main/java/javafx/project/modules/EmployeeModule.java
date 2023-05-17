@@ -53,15 +53,32 @@ public class EmployeeModule extends VBox {
 
         EmployeeBox hbox = new EmployeeBox();
 
-        this.getChildren().addAll(box, new Label("Hello. " + empData.getNames().toString()), hbox);
+        this.getChildren().addAll(box, new Label("Hello."), hbox);
     }
 
     private class EmployeeBox extends HBox {
         public EmployeeBox() {
             super(16);
-            Card card = new Card();
+            init();
+        }
 
+        private void init() {
             List<Card> card_list = new ArrayList<>();
+
+            if (empData.count() >= 1) {
+                for (int i = 0; i < empData.count(); i++) {
+                    Card card = new Card();
+                    card.setMaxWidth(Double.MAX_VALUE);
+                    card.setPrefSize(200, 200);
+                    card.getChildren().add(new Label("Test"));
+                    card_list.add(card);
+                }
+                this.getChildren().addAll(card_list);
+            } else {
+                Label label = new Label("No Employee");
+                label.setStyle(Elements.HEADER2.getName());
+                this.getChildren().add(label);
+            }
         }
     }
 
