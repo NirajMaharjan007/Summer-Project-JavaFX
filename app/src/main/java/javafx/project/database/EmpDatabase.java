@@ -1,8 +1,8 @@
 package javafx.project.database;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+
+import javafx.collections.*;
 
 public class EmpDatabase {
     private final Connection connection = Database.getConnection();
@@ -11,11 +11,12 @@ public class EmpDatabase {
 
     // private AdminDatabase admin = AdminDatabase.getInstance();
 
+    private ObservableList<String> row = FXCollections.observableArrayList();
+
     private int adminId;
 
     private int id;
 
-    private List<String> nameList = new ArrayList<>();
     private String name = "";
 
     public EmpDatabase(int adminId) {
@@ -47,7 +48,10 @@ public class EmpDatabase {
             while (rs.next()) {
                 this.id = rs.getInt(1);
                 this.name = rs.getString(2);
-                nameList.add(name);
+
+                for (int i = 1; i <= 6; i++)
+                    row.add(rs.getString(i));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,12 +62,12 @@ public class EmpDatabase {
         return this.id;
     }
 
-    public List<String> getNames() {
-        return this.nameList;
-    }
-
     public String getName() {
         return this.name;
+    }
+
+    public ObservableList<String> getNames() {
+        return row;
     }
 
 }

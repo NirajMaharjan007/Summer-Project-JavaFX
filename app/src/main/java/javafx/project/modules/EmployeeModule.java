@@ -1,6 +1,6 @@
 package javafx.project.modules;
 
-import io.github.palexdev.materialfx.controls.*;
+import java.util.*;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,8 +11,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import javafx.project.enuma.*;
-import javafx.project.components.ImgIcon;
-import javafx.project.components.MainBtn;
+import javafx.project.components.*;
 import javafx.project.database.*;
 
 public class EmployeeModule extends VBox {
@@ -52,9 +51,18 @@ public class EmployeeModule extends VBox {
         box.setLeft(header1);
         box.setRight(create);
 
-        EmployeeTable table = new EmployeeTable();
+        EmployeeBox hbox = new EmployeeBox();
 
-        this.getChildren().addAll(box, new Label("Hello. " + empData.getNames().toString()), table);
+        this.getChildren().addAll(box, new Label("Hello. " + empData.getNames().toString()), hbox);
+    }
+
+    private class EmployeeBox extends HBox {
+        public EmployeeBox() {
+            super(16);
+            Card card = new Card();
+
+            List<Card> card_list = new ArrayList<>();
+        }
     }
 
     private class CreateEmployee extends VBox {
@@ -73,32 +81,6 @@ public class EmployeeModule extends VBox {
 
         public void show() {
             stage.show();
-        }
-    }
-
-    private class EmployeeTable extends MFXTableView<String> {
-        public EmployeeTable() {
-            super();
-
-            this.init();
-        }
-
-        private void init() {
-            this.setMinWidth(Double.MIN_NORMAL);
-            this.setMaxWidth(Double.MAX_VALUE);
-            this.setPrefWidth(800);
-
-            setFooterVisible(false);
-
-            MFXTableColumn<String> nameColumn = new MFXTableColumn<>("Name", false);
-            MFXTableColumn<String> surnameColumn = new MFXTableColumn<>("Surname", false);
-            MFXTableColumn<String> ageColumn = new MFXTableColumn<>("Age", false);
-
-            getTableColumns().add(nameColumn);
-            getTableColumns().add(surnameColumn);
-            getTableColumns().add(ageColumn);
-
-            this.autosizeColumn(8);
         }
     }
 
