@@ -27,7 +27,6 @@ public class AdminDatabase {
             while (rs.next()) {
                 this.id = rs.getInt(1);
             }
-            System.out.println("GG:" + this.id);
             return this.id;
         } catch (Exception e) {
             System.err.println(e.getMessage());

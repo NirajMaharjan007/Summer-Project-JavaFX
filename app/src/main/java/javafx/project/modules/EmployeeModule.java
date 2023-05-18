@@ -11,6 +11,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import javafx.project.enuma.*;
+import javafx.project.modules.submodules.EmployeeEdit;
 import javafx.project.components.*;
 import javafx.project.database.*;
 
@@ -65,12 +66,15 @@ public class EmployeeModule extends VBox {
         private void init() {
             List<Card> card_list = new ArrayList<>();
 
+            // Label label = new Label("");
+
             if (empData.count() >= 1) {
                 for (int i = 0; i < empData.count(); i++) {
                     Card card = new Card();
+                    Label name = new Label("Name");
                     card.setMaxWidth(Double.MAX_VALUE);
                     card.setPrefSize(200, 200);
-                    card.getChildren().add(new Label("Test"));
+                    card.getChildren().addAll(name);
                     card_list.add(card);
                 }
                 this.getChildren().addAll(card_list);
@@ -87,6 +91,7 @@ public class EmployeeModule extends VBox {
 
         public CreateEmployee() {
             super(16);
+            this.init();
             Scene scene = new Scene(this, 512, 400);
             stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -94,6 +99,11 @@ public class EmployeeModule extends VBox {
             stage.setAlwaysOnTop(true);
             stage.setScene(scene);
             stage.setTitle("Create Employee");
+        }
+
+        private void init() {
+            this.setAlignment(Pos.CENTER);
+            this.getChildren().add(new EmployeeEdit());
         }
 
         public void show() {

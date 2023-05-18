@@ -31,7 +31,7 @@ public class EmpDatabase {
             ResultSet resultSet = statement
                     .executeQuery("SELECT COUNT(*) AS emp_count FROM employees where admin_id=" + this.adminId);
             resultSet.next();
-            System.out.println("EmpDatabase.count(): " + this.adminId);
+
             int count = resultSet.getInt("emp_count");
             return count;
         } catch (Exception e) {

@@ -8,6 +8,29 @@ public class MainTextField extends MFXTextField {
         super();
         super.setWidth(32);
         this.initialize();
+        this.floatModeProperty().set(FloatMode.BORDER);
+    }
+
+    public MainTextField(String type) {
+        super();
+        super.setWidth(16);
+
+        try {
+            this.initialize();
+            switch (type.toLowerCase()) {
+                case "above":
+                    this.floatModeProperty().set(FloatMode.ABOVE);
+                    break;
+
+                case "normal":
+                    break;
+
+                default:
+                    throw new IllegalArgumentException(type + " not found");
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     private void initialize() {
@@ -17,6 +40,6 @@ public class MainTextField extends MFXTextField {
         this.prefWidthProperty().set(USE_COMPUTED_SIZE);
         this.maxHeight(USE_PREF_SIZE);
         this.maxWidth(USE_COMPUTED_SIZE);
-        this.floatModeProperty().set(FloatMode.BORDER);
     }
+
 }
