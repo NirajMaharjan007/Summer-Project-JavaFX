@@ -52,9 +52,7 @@ public class EmployeeModule extends VBox {
         box.setLeft(header1);
         box.setRight(create);
 
-        EmployeeBox hbox = new EmployeeBox();
-
-        this.getChildren().addAll(box, new Label("Hello."), hbox);
+        this.getChildren().addAll(box, new Label("Hello."), new EmployeeBox());
     }
 
     private class EmployeeBox extends HBox {
@@ -64,25 +62,33 @@ public class EmployeeModule extends VBox {
         }
 
         private void init() {
-            List<Card> card_list = new ArrayList<>();
+            this.setAlignment(Pos.TOP_CENTER);
 
             // Label label = new Label("");
 
             if (empData.count() >= 1) {
-                for (int i = 0; i < empData.count(); i++) {
-                    Card card = new Card();
-                    Label name = new Label("Name");
-                    card.setMaxWidth(Double.MAX_VALUE);
-                    card.setPrefSize(200, 200);
-                    card.getChildren().addAll(name);
-                    card_list.add(card);
-                }
-                this.getChildren().addAll(card_list);
+                this.employeeCards();
             } else {
                 Label label = new Label("No Employee");
-                label.setStyle(Elements.HEADER2.getName());
+                label.setStyle(Elements.HEADER2.getName() + "-fx-text-fill:#484b6a");
                 this.getChildren().add(label);
             }
+        }
+
+        private void employeeCards() {
+            List<Card> card_list = new ArrayList<>();
+            for (int i = 0; i < empData.count(); i++) {
+                Card card = new Card();
+                Label name = new Label("Name");
+                Label department = new Label("Department");
+
+                card.setAlignment(Pos.BASELINE_LEFT);
+                card.setMaxWidth(Double.MAX_VALUE);
+                card.setPrefSize(200, 200);
+                card.getChildren().addAll(name, department);
+                card_list.add(card);
+            }
+            this.getChildren().addAll(card_list);
         }
     }
 
