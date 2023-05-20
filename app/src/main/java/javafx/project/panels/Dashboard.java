@@ -154,10 +154,6 @@ public class Dashboard extends BorderPane {
 
         private void init() {
             this.setPadding(new Insets(18, 8, 12, 8));
-            // this.setStyle("-fx-background-color: #fafafa;" +
-            // "-fx-background-insets: -1 -5 -1 -1;" +
-            // "-fx-background-radius: 0 16 8 0;" +
-            // "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 16, 0.05, 4, 8);");
             this.getStylesheets().add(MainStyle.STYLESHEET.getLocation());
             this.getStyleClass().addAll("sidebar");
 
@@ -189,11 +185,9 @@ public class Dashboard extends BorderPane {
 
             for (int i = 0; i < 5; i++) {
                 btn[i] = new MainBtn("");
-
                 btn[i].setSize((int) navBar.getMaxWidth(), 120);
-                // btn[i].setPadding(new Insets(10, 1, 10, 1));
-                btn[i].setBgColor("#AFD3E2");
-                btn[i].setRippleColor(Color.web("#8fcee2"));
+                btn[i].setBgColor("#C7E0EA");
+                btn[i].setRippleColor(Color.web("#ddecf2"));
                 btn[i].setTextColor("#484b6a; -fx-font-weight: bold; -fx-font-size:14px");
                 btn[i].buttonTypeProperty().set(io.github.palexdev.materialfx.enums.ButtonType.RAISED);
                 btn[i].depthLevelProperty().set(io.github.palexdev.materialfx.effects.DepthLevel.LEVEL1);

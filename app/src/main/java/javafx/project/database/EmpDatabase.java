@@ -2,8 +2,6 @@ package javafx.project.database;
 
 import java.sql.*;
 
-import javafx.collections.*;
-
 public class EmpDatabase {
     private final Connection connection = Database.getConnection();
 
@@ -11,18 +9,14 @@ public class EmpDatabase {
 
     // private AdminDatabase admin = AdminDatabase.getInstance();
 
-    private ObservableList<String> row = FXCollections.observableArrayList();
-
     private int adminId;
 
-    private int id;
+    // private int id;
 
-    private String name = "";
+    private ResultSet data;
 
     public EmpDatabase(int adminId) {
         this.adminId = adminId;
-
-        this.getData();
     }
 
     public int count() {
@@ -40,29 +34,15 @@ public class EmpDatabase {
         }
     }
 
-    private void getData() {
+    public ResultSet getData() {
         try {
-            Statement stmt = connection.createStatement();
-            String sql = "SELECT * FROM employees where admin_id=" + adminId;
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                this.id = rs.getInt(1);
-                this.name = rs.getString(2);
-
-                for (int i = 1; i <= 6; i++)
-                    row.add(rs.getString(i));
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            Statement statement = connection.createStatement();
+            data = statement.executeQuery("Select * from employees where admin_id=" + this.adminId);
+            return data;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
         }
     }
 
-    public int getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
 }

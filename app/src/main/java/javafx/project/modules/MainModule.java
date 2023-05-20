@@ -52,7 +52,7 @@ public class MainModule extends VBox {
 
                 card[i] = new Card();
                 card[i].setPadding(padding);
-                card[i].setBgColor("#AFD3E2");
+                card[i].setBgColor("#C7E0EA");
             }
 
             this.init();

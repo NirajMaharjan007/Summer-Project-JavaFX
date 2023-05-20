@@ -1,7 +1,10 @@
 package javafx.project.modules;
 
+import java.sql.ResultSet;
 import java.util.*;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -62,7 +65,7 @@ public class EmployeeModule extends VBox {
         }
 
         private void init() {
-            this.setAlignment(Pos.TOP_CENTER);
+            this.setAlignment(Pos.BASELINE_LEFT);
 
             // Label label = new Label("");
 
@@ -77,17 +80,42 @@ public class EmployeeModule extends VBox {
 
         private void employeeCards() {
             List<Card> card_list = new ArrayList<>();
-            for (int i = 0; i < empData.count(); i++) {
-                Card card = new Card();
-                Label name = new Label("Name");
-                Label department = new Label("Department");
+            ResultSet data = empData.getData();
+            try {
+                while (data.next()) {
+                    Card card = new Card();
 
-                card.setAlignment(Pos.BASELINE_LEFT);
-                card.setMaxWidth(Double.MAX_VALUE);
-                card.setPrefSize(200, 200);
-                card.getChildren().addAll(name, department);
-                card_list.add(card);
+                    Label name = new Label("Name: " + data.getString(2));
+                    Label department = new Label("Department: " + data.getString(3));
+                    Label address = new Label("Address: " + data.getString(4));
+                    Label salary = new Label("Salary: " + data.getString(5));
+                    Label gender = new Label("Gender: " + data.getString(6));
+
+                    HBox box = new HBox(12);
+                    box.autosize();
+
+                    MainBtn view = new MainBtn("view datail");
+                    view.setBgColor("#17a2b8");
+                    view.setTextColor("#FFF");
+                    view.setRippleColor(Color.web("#AFD3E2"));
+                    view.setOnAction(event -> {
+                        System.out.println("EmployeeModule.EmployeeBox.employeeCards() " + event.getSource());
+                    });
+
+                    box.getChildren().addAll(view);
+
+                    card.setAlignment(Pos.TOP_LEFT);
+                    card.setPadding(new Insets(16));
+                    card.setMaxWidth(Double.MAX_VALUE);
+                    // card.setPrefSize(200, 200);
+                    card.autosize();
+                    card.getChildren().addAll(name, department, address, salary, gender, box);
+                    card_list.add(card);
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
             }
+
             this.getChildren().addAll(card_list);
         }
     }
