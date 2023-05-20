@@ -45,4 +45,23 @@ public class EmpDatabase {
         }
     }
 
+    public int setData(String name, String department, String address, String salary, String gender) {
+        try {
+            String sql = "INSERT INTO employees (name,department,address,salary,gender,admin_id)" +
+                    " VALUES (?,?,?,?,?,?);";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.setString(2, department);
+            statement.setString(3, address);
+            statement.setString(4, salary);
+            statement.setString(5, gender);
+            statement.setInt(6, this.adminId);
+            int i = statement.executeUpdate();
+            return i;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return -1;
+        }
+    }
+
 }

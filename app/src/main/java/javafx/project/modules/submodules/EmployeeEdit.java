@@ -2,6 +2,7 @@ package javafx.project.modules.submodules;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -59,7 +60,20 @@ public class EmployeeEdit extends BorderPane {
         save.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
 
         save.setOnAction(event -> {
-            this.validate();
+            if (this.isEmpty()) {
+                if (data.setData(name.getText(), department.getText(), address.getText(), salary.getText(),
+                        gender.getText()) > -1) {
+                    Alert alert = new Alert(AlertType.CONFIRMATION);
+                    alert.setTitle("Succeed");
+                    alert.setHeaderText("successfully added employee");
+                    alert.show();
+                } else {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Failed");
+                    alert.setHeaderText("Failed added employee");
+                    alert.show();
+                }
+            }
         });
 
         hbox.setAlignment(Pos.BASELINE_CENTER);
@@ -81,7 +95,7 @@ public class EmployeeEdit extends BorderPane {
         this.setRight(new VBox(new Label("\t")));
     }
 
-    public boolean validate() {
+    public boolean isEmpty() {
         StringBuilder errors = new StringBuilder();
 
         // Confirm mandatory fields are filled out
