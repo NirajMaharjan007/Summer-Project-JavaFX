@@ -3,8 +3,6 @@ package javafx.project.modules;
 import java.sql.ResultSet;
 import java.util.*;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -126,11 +124,11 @@ public class EmployeeModule extends VBox {
         public CreateEmployee() {
             super(16);
             this.init();
-            Scene scene = new Scene(this, 512, 400);
+            Scene scene = new Scene(this, 600, 420);
             stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
-            stage.setAlwaysOnTop(true);
+            stage.setAlwaysOnTop(false);
             stage.setScene(scene);
             stage.setTitle("Create Employee");
         }
