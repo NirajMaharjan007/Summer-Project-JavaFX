@@ -1,27 +1,26 @@
 package javafx.project.modules.submodules;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.geometry.*;
 import javafx.scene.paint.Color;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+
 import javafx.project.components.*;
 import javafx.project.database.*;
 import javafx.project.enuma.Elements;
 
 public class EmployeeEdit extends BorderPane {
     MainTextField name;
-    // MainTextField name;
-
     MainTextField department;
     MainTextField address;
     MainTextField salary;
     MainTextField gender;
     // private int id;
+
+    String gender_text;
+
+    ToggleGroup genderToggleGroup;
 
     private EmpDatabase data = new EmpDatabase(AdminDatabase.getInstance().getId());
 
@@ -38,6 +37,7 @@ public class EmployeeEdit extends BorderPane {
         VBox box = new VBox(26);
         VBox left_Vbox = new VBox(8);
         HBox hbox = new HBox(8);
+        VBox gender_box = new VBox(8);
 
         name = new MainTextField("above");
         name.setFloatingText("Enter a employee name");
@@ -51,8 +51,27 @@ public class EmployeeEdit extends BorderPane {
         salary = new MainTextField("above");
         salary.setFloatingText("Enter a salary");
 
-        gender = new MainTextField("above");
-        gender.setFloatingText("Enter a gender");
+        Label gender = new Label("Select a gender");
+        RadioButton male = new RadioButton("Male");
+        RadioButton female = new RadioButton("Female");
+        genderToggleGroup = new ToggleGroup();
+
+        male.setToggleGroup(genderToggleGroup);
+        female.setToggleGroup(genderToggleGroup);
+
+        genderToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                RadioButton selectedRadioButton = (RadioButton) newValue;
+                gender_text = selectedRadioButton.getText();
+                System.out.println("Selected radio button: " + gender_text);
+            }
+        });
+        HBox radioBox = new HBox(male, female);
+        radioBox.setSpacing(16);
+        radioBox.setAlignment(Pos.BASELINE_CENTER);
+
+        gender_box.setAlignment(Pos.TOP_CENTER);
+        gender_box.getChildren().addAll(gender, radioBox);
 
         MainBtn save = new MainBtn("Save");
         save.setBgColor(Elements.SUCCESS_COLOR.getName());
@@ -62,7 +81,7 @@ public class EmployeeEdit extends BorderPane {
         save.setOnAction(event -> {
             if (this.isEmpty()) {
                 if (data.setData(name.getText(), department.getText(), address.getText(), salary.getText(),
-                        gender.getText()) > -1) {
+                        gender_text) > -1) {
                     Alert alert = new Alert(AlertType.CONFIRMATION);
                     alert.setTitle("Succeed");
                     alert.setHeaderText("successfully added employee");
@@ -81,7 +100,7 @@ public class EmployeeEdit extends BorderPane {
 
         box.setPadding(new Insets(25, 16, 12, 16));
         box.setAlignment(Pos.CENTER);
-        box.getChildren().addAll(name, department, address, salary, gender, hbox);
+        box.getChildren().addAll(name, department, address, salary, gender_box, hbox);
 
         card.setPadding(new Insets(10));
         card.getChildren().add(box);
@@ -95,7 +114,7 @@ public class EmployeeEdit extends BorderPane {
         this.setRight(new VBox(new Label("\t")));
     }
 
-    public boolean isEmpty() {
+    protected boolean isEmpty() {
         StringBuilder errors = new StringBuilder();
 
         // Confirm mandatory fields are filled out
@@ -111,7 +130,7 @@ public class EmployeeEdit extends BorderPane {
         if (salary.getText().trim().isEmpty()) {
             errors.append("- Please enter a address.\n");
         }
-        if (gender.getText().trim().isEmpty()) {
+        if (genderToggleGroup.getSelectedToggle() == null) {
             errors.append("- Please enter a gender.\n");
         }
 
