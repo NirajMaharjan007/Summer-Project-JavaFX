@@ -1,16 +1,17 @@
 package javafx.project.panels;
 
 import io.github.palexdev.materialfx.css.themes.*;
+
 import javafx.geometry.*;
-import javafx.project.components.*;
-import javafx.project.enuma.*;
-import javafx.project.modules.EmployeeModule;
-import javafx.project.modules.MainModule;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import javafx.project.components.*;
+import javafx.project.enuma.*;
+import javafx.project.modules.*;
 
 public class Dashboard extends BorderPane {
     static Stage stage, newStage;
@@ -133,9 +134,10 @@ public class Dashboard extends BorderPane {
             container.getChildren().clear();
             container.getChildren().add(new MainModule());
 
-            card.setMaxWidth(newStage.getMaxWidth());
             card.getChildren().add(container);
             card.setAlignment(Pos.TOP_CENTER);
+            card.setPrefWidth(newStage.getMaxWidth());
+            card.setPrefHeight(newStage.getMaxHeight());
 
             this.getChildren().add(card);
         }
