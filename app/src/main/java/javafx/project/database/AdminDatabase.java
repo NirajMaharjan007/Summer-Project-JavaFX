@@ -1,8 +1,6 @@
 package javafx.project.database;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class AdminDatabase {
     private static AdminDatabase instances;
@@ -41,9 +39,11 @@ public class AdminDatabase {
         String n = null, p = null;
 
         try {
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM admin where name = '" + name +
-                    "' and password = '" + password + "'");
+            String sql = "SELECT * FROM admin WHERE name = ? AND password = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.setString(2, password);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 n = rs.getString("name");
                 p = rs.getString("password");
