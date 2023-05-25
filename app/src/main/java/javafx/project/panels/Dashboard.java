@@ -204,19 +204,23 @@ public class Dashboard extends BorderPane {
             Label dash_icon = new ImgIcon("src/main/resources/img/monitor.png").getIcon();
             dash_icon.setPadding(new Insets(4, 8, 4, 2));
 
+            Label attend_icon = new ImgIcon("src/main/resources/img/attendence.png").getIcon();
+            attend_icon.setPadding(new Insets(4, 8, 4, 2));
+
             btn[0].setGraphic(dash_icon);
             btn[0].setText("Dashboard");
 
             btn[1].setGraphic(emp_icon);
             btn[1].setText("Employee");
 
-            navBar.getChildren().addAll(btn[0], btn[1]);
+            btn[2].setGraphic(attend_icon);
+            btn[2].setText("Attenance");
 
-            SwitchNode firstSwitchNode = new SwitchNode(MainDash.container, btn[0]);
-            SwitchNode secondSwitchNode = new SwitchNode(MainDash.container, btn[1]);
+            navBar.getChildren().addAll(btn[0], btn[1], btn[2]);
 
-            firstSwitchNode.switchNode(new MainModule());
-            secondSwitchNode.switchNode(new EmployeeModule());
+            new SwitchNode(MainDash.container, btn[0]).switchNode(new MainModule());
+            new SwitchNode(MainDash.container, btn[1]).switchNode(new EmployeeModule());
+            new SwitchNode(MainDash.container, btn[2]).switchNode(new Attendence());
 
             scrollPane.setContent(navBar);
 
