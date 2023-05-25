@@ -54,12 +54,12 @@ public class EmployeeModule extends VBox {
 
         ScrollPanel scrollPanel = new ScrollPanel();
         VBox.setVgrow(scrollPanel, Priority.ALWAYS);
-        VBox.setMargin(scrollPanel, new Insets(8, 5, 10, 5));
-        scrollPanel.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPanel.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPanel.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPanel.setFitToHeight(true);
         scrollPanel.setFitToWidth(true);
-        scrollPanel.setPadding(new Insets(16));
-        scrollPanel.setMinViewportHeight(300);
+        scrollPanel.setMinViewportHeight(360);
+        scrollPanel.setMinViewportWidth(360);
         scrollPanel.setContent(new EmployeeBox());
 
         this.getChildren().addAll(box, new Label("Hello."), scrollPanel);
@@ -68,18 +68,22 @@ public class EmployeeModule extends VBox {
     private class EmployeeBox extends GridPane {
         public EmployeeBox() {
             super();
+            GridPane.setVgrow(this, Priority.ALWAYS);
+            GridPane.setHgrow(this, Priority.ALWAYS);
+            GridPane.setFillWidth(this, true);
+            GridPane.setFillHeight(this, true);
+            GridPane.setMargin(this, new Insets(32));
+            super.setPadding(new Insets(8, 32, 16, 32));
+            super.setMinWidth(125);
+            super.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
-            init();
+            this.init();
         }
 
         private void init() {
-            GridPane.setVgrow(this, Priority.ALWAYS);
-            GridPane.setHgrow(this, Priority.ALWAYS);
-            this.setAlignment(Pos.BASELINE_LEFT);
+            this.setAlignment(Pos.TOP_CENTER);
             this.setHgap(32);
             this.setVgap(16);
-
-            // Label label = new Label("");
 
             if (empData.count() >= 1) {
                 this.employeeCards();
@@ -88,8 +92,6 @@ public class EmployeeModule extends VBox {
                 label.setStyle(Elements.HEADER2.getName() + "-fx-text-fill:#484b6a");
                 this.getChildren().add(label);
             }
-
-            this.autosize();
         }
 
         private void employeeCards() {
@@ -122,13 +124,10 @@ public class EmployeeModule extends VBox {
                     box.getChildren().addAll(view);
 
                     card.setAlignment(Pos.TOP_LEFT);
-                    card.setSpacing(10);
-                    card.setMinWidth(100);
-                    card.setPrefWidth(180);
-                    card.setMaxSize(512, 512);
+                    card.setSpacing(12);
+                    card.setMinWidth(185);
+                    card.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                     card.setPadding(new Insets(16));
-                    card.setMaxWidth(Double.MAX_VALUE);
-                    card.setMaxHeight(Double.MAX_VALUE);
                     card.getChildren().addAll(id, name, department, address, salary, gender,
                             box);
                     card_list.add(card);
@@ -138,17 +137,11 @@ public class EmployeeModule extends VBox {
             }
 
             for (int i = 0; i < card_list.size(); i++) {
-                if (card_list.size() % 2 == 0) {
-                    if (col == 4) {
-                        row++;
-                        col = 0;
-                    }
-                } else {
-                    if (col == 3) {
-                        row++;
-                        col = 0;
-                    }
+                if (col == 3) {
+                    row++;
+                    col = 0;
                 }
+
                 this.add(card_list.get(i), col, row);
                 col++;
             }
