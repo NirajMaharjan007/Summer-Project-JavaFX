@@ -58,8 +58,8 @@ public class EmployeeModule extends VBox {
         scrollPanel.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPanel.setFitToHeight(true);
         scrollPanel.setFitToWidth(true);
-        scrollPanel.setPadding(new Insets(12));
-        scrollPanel.setMinViewportHeight(335);
+        scrollPanel.setPadding(new Insets(16));
+        scrollPanel.setMinViewportHeight(300);
         scrollPanel.setContent(new EmployeeBox());
 
         this.getChildren().addAll(box, new Label("Hello."), scrollPanel);
@@ -123,8 +123,9 @@ public class EmployeeModule extends VBox {
 
                     card.setAlignment(Pos.TOP_LEFT);
                     card.setSpacing(10);
-                    card.setPrefSize(400, 512);
-                    card.setFillWidth(true);
+                    card.setMinWidth(100);
+                    card.setPrefWidth(180);
+                    card.setMaxSize(512, 512);
                     card.setPadding(new Insets(16));
                     card.setMaxWidth(Double.MAX_VALUE);
                     card.setMaxHeight(Double.MAX_VALUE);
