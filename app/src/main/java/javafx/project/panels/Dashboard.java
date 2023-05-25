@@ -64,9 +64,12 @@ public class Dashboard extends BorderPane {
             box.setSpacing(16);
 
             MainBtn logout = new MainBtn("Logout");
+            Label img_logout = new ImgIcon("src/main/resources/img/logout.png").getIcon();
+            img_logout.setPadding(new Insets(0, 6, 0, 0));
 
             box.setAlignment(Pos.CENTER);
 
+            logout.setGraphic(img_logout);
             logout.setBgColor(Elements.DANGER_COLOR.getName());
             logout.setTextColor("White");
             logout.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
