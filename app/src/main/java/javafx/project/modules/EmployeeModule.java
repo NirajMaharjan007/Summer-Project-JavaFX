@@ -109,9 +109,6 @@ public class EmployeeModule extends VBox {
                     Label salary = new Label("Salary: " + data.getString(5));
                     Label gender = new Label("Gender: " + data.getString(6));
 
-                    HBox box = new HBox(12);
-                    box.autosize();
-
                     MainBtn view = new MainBtn("view detail");
                     view.setBgColor("#17a2b8");
                     view.setTextColor("#FFF");
@@ -121,7 +118,18 @@ public class EmployeeModule extends VBox {
                                 event.getSource());
                     });
 
-                    box.getChildren().addAll(view);
+                    MainBtn delete = new MainBtn("Delete");
+                    delete.setBgColor(Elements.DANGER_COLOR.getName());
+                    delete.setTextColor("#FFF");
+                    delete.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
+                    delete.setOnAction(event -> {
+                        System.out.println("EmployeeModule.EmployeeBox.employeeCards() " +
+                                event.getSource());
+                    });
+
+                    HBox box = new HBox(12);
+                    box.getChildren().addAll(view, delete);
+                    box.autosize();
 
                     card.setAlignment(Pos.TOP_LEFT);
                     card.setSpacing(12);
