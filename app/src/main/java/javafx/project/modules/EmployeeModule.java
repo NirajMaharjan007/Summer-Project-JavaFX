@@ -3,6 +3,7 @@ package javafx.project.modules;
 import java.sql.ResultSet;
 import java.util.*;
 
+import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -12,6 +13,7 @@ import javafx.scene.paint.Color;
 
 import javafx.project.enuma.*;
 import javafx.project.modules.submodules.EmployeeEdit;
+import javafx.project.modules.submodules.ViewDetail;
 import javafx.project.components.*;
 import javafx.project.database.*;
 
@@ -94,6 +96,30 @@ public class EmployeeModule extends VBox {
             }
         }
 
+        private class Delete implements EventHandler<ActionEvent> {
+            private int id;
+
+            public Delete(int id) {
+                this.id = id;
+            }
+
+            @Override
+            public void handle(ActionEvent event) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Are you sure about that? ");
+                alert.setContentText("You are deleting the Id " + this.id);
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        System.out.println(this.id);
+                    } else {
+                        alert.close();
+                    }
+                });
+            }
+
+        }
+
         private void employeeCards() {
             List<Card> card_list = new ArrayList<>();
             ResultSet data = empData.getData();
@@ -113,19 +139,13 @@ public class EmployeeModule extends VBox {
                     view.setBgColor("#17a2b8");
                     view.setTextColor("#FFF");
                     view.setRippleColor(Color.web("#AFD3E2"));
-                    view.setOnAction(event -> {
-                        System.out.println("EmployeeModule.EmployeeBox.employeeCards() " +
-                                event.getSource());
-                    });
+                    view.setOnAction(new View(data.getInt(1)));
 
                     MainBtn delete = new MainBtn("Delete");
                     delete.setBgColor(Elements.DANGER_COLOR.getName());
                     delete.setTextColor("#FFF");
                     delete.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
-                    delete.setOnAction(event -> {
-                        System.out.println("EmployeeModule.EmployeeBox.employeeCards() " +
-                                event.getSource());
-                    });
+                    delete.setOnAction(new Delete(data.getInt(1)));
 
                     HBox box = new HBox(12);
                     box.getChildren().addAll(view, delete);
@@ -155,6 +175,50 @@ public class EmployeeModule extends VBox {
             }
 
         }
+    }
+
+    private class View implements EventHandler<ActionEvent> {
+        private int id;
+
+        public View(int id) {
+            this.id = id;
+        }
+
+        @Override
+        public void handle(ActionEvent event) {
+            new ShowDetail(id).show();
+        }
+
+    }
+
+    private class ShowDetail extends VBox {
+        private int id;
+
+        Stage stage;
+
+        public ShowDetail(int id) {
+            super(16);
+            this.id = id;
+            this.init();
+
+            Scene scene = new Scene(this, 600, 420);
+            stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.setAlwaysOnTop(false);
+            stage.setScene(scene);
+            stage.setTitle("View Detail");
+        }
+
+        private void init() {
+            this.setAlignment(Pos.TOP_CENTER);
+            this.getChildren().add(new ViewDetail(this.id));
+        }
+
+        public void show() {
+            stage.show();
+        }
+
     }
 
     private class CreateEmployee extends VBox {
