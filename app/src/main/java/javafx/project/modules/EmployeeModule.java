@@ -201,7 +201,7 @@ public class EmployeeModule extends VBox {
             this.id = id;
             this.init();
 
-            Scene scene = new Scene(this, 600, 420);
+            Scene scene = new Scene(this, 600, 600);
             stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
