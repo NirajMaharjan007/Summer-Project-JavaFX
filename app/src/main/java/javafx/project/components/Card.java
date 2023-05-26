@@ -2,6 +2,7 @@ package javafx.project.components;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
 public class Card extends VBox {
@@ -13,13 +14,17 @@ public class Card extends VBox {
     public Card() {
         super();
         super.setSpacing(16);
-        VBox.setMargin(this, new Insets(10, 8, 12, 8));
+        this.init();
+    }
+
+    public Card(Node node) {
+        super(node);
         this.init();
     }
 
     private void init() {
         // -fx-background-radius: <top-left> <top-right> <bottom-right> <bottom-left>;
-
+        VBox.setMargin(this, new Insets(10, 8, 12, 8));
         this.setStyle(STYLE);
         this.setAlignment(Pos.TOP_CENTER);
     }
