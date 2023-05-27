@@ -3,9 +3,12 @@ package javafx.project.modules;
 import java.sql.ResultSet;
 import java.util.*;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -17,6 +20,7 @@ import javafx.project.database.*;
 
 public class EmployeeModule extends VBox {
     private EmpDatabase empData = new EmpDatabase(AdminDatabase.getInstance().getId());
+    private ResultSet data = empData.getData();
 
     public EmployeeModule() {
         super();
@@ -96,7 +100,7 @@ public class EmployeeModule extends VBox {
 
         private void employeeCards() {
             List<Card> card_list = new ArrayList<>();
-            ResultSet data = empData.getData();
+
             int row = 0, col = 0;
             try {
                 while (data.next()) {
@@ -114,15 +118,6 @@ public class EmployeeModule extends VBox {
                     view.setTextColor("#FFF");
                     view.setRippleColor(Color.web("#AFD3E2"));
                     view.setOnAction(event -> {
-                        System.out.println("EmployeeModule.EmployeeBox.employeeCards() " +
-                                event.getSource());
-                    });
-
-                    MainBtn delete = new MainBtn("Delete");
-                    delete.setBgColor(Elements.DANGER_COLOR.getName());
-                    delete.setTextColor("#FFF");
-                    delete.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
-                    delete.setOnAction(event -> {
                         System.out.println("EmployeeModule.EmployeeBox.employeeCards() " +
                                 event.getSource());
                     });
