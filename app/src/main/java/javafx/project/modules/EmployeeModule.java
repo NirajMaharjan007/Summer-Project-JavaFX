@@ -122,6 +122,12 @@ public class EmployeeModule extends VBox {
                                 event.getSource());
                     });
 
+                    MainBtn delete = new MainBtn("Delete");
+                    delete.setBgColor(Elements.DANGER_COLOR.getName());
+                    delete.setTextColor("#FFF");
+                    delete.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
+                    // delete.setOnAction();
+
                     HBox box = new HBox(12);
                     box.getChildren().addAll(view, delete);
                     box.autosize();
