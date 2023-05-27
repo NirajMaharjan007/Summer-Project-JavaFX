@@ -13,8 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import javafx.project.enuma.*;
-import javafx.project.modules.submodules.EmployeeEdit;
-import javafx.project.modules.submodules.ViewDetail;
+import javafx.project.modules.submodules.*;
 import javafx.project.components.*;
 import javafx.project.database.*;
 
@@ -203,7 +202,7 @@ public class EmployeeModule extends VBox {
             this.id = id;
             this.init();
 
-            Scene scene = new Scene(this, 500, 300);
+            Scene scene = new Scene(this, 600, 320);
             stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
