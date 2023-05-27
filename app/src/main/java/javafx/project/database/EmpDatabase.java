@@ -45,6 +45,17 @@ public class EmpDatabase {
         }
     }
 
+    public int deleteEmployee(String id) {
+        String sql = "DELETE FROM employees WHERE emp_id=? ";
+        try (PreparedStatement statement = connection.prepareStatement(sql);) {
+            statement.setString(1, id);
+            return statement.executeUpdate();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return -1;
+        }
+    }
+
     public int updateEmployee(int id, String name, String department, String address, String salary,
             String gender) {
         try {

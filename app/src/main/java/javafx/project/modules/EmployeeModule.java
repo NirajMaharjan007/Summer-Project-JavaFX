@@ -7,7 +7,6 @@ import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -112,7 +111,9 @@ public class EmployeeModule extends VBox {
                 alert.setContentText("You are deleting the Id " + this.id);
                 alert.showAndWait().ifPresent(response -> {
                     if (response == ButtonType.OK) {
-                        System.out.println(this.id);
+                        System.out.println(String.valueOf(this.id));
+                        if (empData.deleteEmployee(String.valueOf(this.id)) > -1)
+                            System.out.println(this.id + ":Id is deleted");
                     } else {
                         alert.close();
                     }
@@ -225,6 +226,8 @@ public class EmployeeModule extends VBox {
     private class CreateEmployee extends VBox {
         Stage stage;
 
+        EmployeeEdit edit = new EmployeeEdit();
+
         public CreateEmployee() {
             super(16);
             this.init();
@@ -239,7 +242,7 @@ public class EmployeeModule extends VBox {
 
         private void init() {
             this.setAlignment(Pos.CENTER);
-            this.getChildren().add(new EmployeeEdit());
+            this.getChildren().add(edit);
         }
 
         public void show() {
