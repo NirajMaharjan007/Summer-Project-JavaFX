@@ -13,12 +13,13 @@ import javafx.scene.paint.Color;
 
 import javafx.project.enuma.*;
 import javafx.project.modules.submodules.*;
+import javafx.project.panels.Dashboard;
 import javafx.project.components.*;
 import javafx.project.database.*;
 
 public class EmployeeModule extends VBox {
     private EmpDatabase empData = new EmpDatabase(AdminDatabase.getInstance().getId());
-    private ResultSet data = empData.getData();
+    private int adminId = AdminDatabase.getInstance().getId();
 
     public EmployeeModule() {
         super();
@@ -98,8 +99,10 @@ public class EmployeeModule extends VBox {
 
         private class Delete implements EventHandler<ActionEvent> {
             private int id;
+            private Pane node;
 
-            public Delete(int id) {
+            public Delete(Pane node, int id) {
+                this.node = node;
                 this.id = id;
             }
 
@@ -112,8 +115,10 @@ public class EmployeeModule extends VBox {
                 alert.showAndWait().ifPresent(response -> {
                     if (response == ButtonType.OK) {
                         System.out.println(String.valueOf(this.id));
-                        if (empData.deleteEmployee(String.valueOf(this.id)) > -1)
+                        if (empData.deleteEmployee(String.valueOf(this.id)) > -1) {
                             System.out.println(this.id + ":Id is deleted");
+                            new SwitchNode(node).updateNode();
+                        }
                     } else {
                         alert.close();
                     }
@@ -126,7 +131,7 @@ public class EmployeeModule extends VBox {
             List<Card> card_list = new ArrayList<>();
 
             int row = 0, col = 0;
-            try {
+            try (ResultSet data = new EmpDatabase(adminId).getData();) {
                 while (data.next()) {
                     Card card = new Card();
 
@@ -147,7 +152,7 @@ public class EmployeeModule extends VBox {
                     delete.setBgColor(Elements.DANGER_COLOR.getName());
                     delete.setTextColor("#FFF");
                     delete.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
-                    delete.setOnAction(new Delete(data.getInt(1)));
+                    delete.setOnAction(new Delete(this, data.getInt(1)));
 
                     HBox box = new HBox(12);
                     box.getChildren().addAll(view, delete);

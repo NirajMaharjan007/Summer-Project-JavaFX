@@ -26,7 +26,6 @@ public class EmployeeEdit extends BorderPane {
 
     public EmployeeEdit() {
         super();
-
         this.init();
     }
 
@@ -85,7 +84,7 @@ public class EmployeeEdit extends BorderPane {
                     Alert alert = new Alert(AlertType.CONFIRMATION);
                     alert.setTitle("Succeed");
                     alert.setHeaderText("successfully added employee");
-                    alert.show();
+                    alert.showAndWait();
                 } else {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Failed");
