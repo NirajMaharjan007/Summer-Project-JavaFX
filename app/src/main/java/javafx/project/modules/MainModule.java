@@ -4,7 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-
+import javafx.scene.paint.Color;
 import javafx.project.database.*;
 import javafx.project.components.*;
 import javafx.project.enuma.MainStyle;
@@ -26,11 +26,30 @@ public class MainModule extends VBox {
 
         Label header1 = new Label("Dashboard");
         Label header2 = new Label("Summary");
+        Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
+        refresh_icon.setPadding(new Insets(1, 8, 1, 4));
+
+        MainBtn refresh = new MainBtn("Refresh");
 
         header1.getStyleClass().add("header1");
         header2.getStyleClass().add("header2");
 
-        this.getChildren().addAll(header1, header2, new Pane());
+        VBox box = new VBox(16, new Pane());
+        VBox.setVgrow(box, Priority.ALWAYS);
+        VBox.setMargin(box, new Insets(16, 4, 8, 4));
+
+        refresh.setAlignment(Pos.BASELINE_CENTER);
+        refresh.setGraphic(refresh_icon);
+        refresh.setBgColor("#36cee6");
+        refresh.setTextColor("#fff");
+        refresh.setRippleColor(Color.web("#84DED2"));
+        refresh.setOnAction(event -> {
+            System.out.println("Refreshed");
+            box.getChildren().clear();
+            box.getChildren().add(new Pane());
+        });
+
+        this.getChildren().addAll(header1, header2, refresh, box);
     }
 
     private class Pane extends GridPane {

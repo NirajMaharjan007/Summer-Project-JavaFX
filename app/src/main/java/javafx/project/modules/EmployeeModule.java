@@ -48,8 +48,6 @@ public class EmployeeModule extends VBox {
 
         Label add_icon = new ImgIcon("src/main/resources/img/add.png").getIcon();
         add_icon.setPadding(new Insets(1, 8, 1, 2));
-        Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
-        refresh_icon.setPadding(new Insets(1, 8, 1, 2));
 
         MainBtn create = new MainBtn("Add Employee");
         create.setGraphic(add_icon);
@@ -69,6 +67,9 @@ public class EmployeeModule extends VBox {
         scrollPanel.setMinViewportHeight(360);
         scrollPanel.setMinViewportWidth(360);
         scrollPanel.setContent(emp_box);
+
+        Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
+        refresh_icon.setPadding(new Insets(1, 8, 1, 2));
 
         MainBtn refresh = new MainBtn("Refresh");
         refresh.setAlignment(Pos.BASELINE_CENTER);
