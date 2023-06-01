@@ -171,7 +171,7 @@ public class Dashboard extends BorderPane {
 
             Label menuLabel = new Label("Components");
             menuLabel.setStyle(Elements.HEADER2.getName() + "-fx-text-fill:#484b6a");
-            menuLabel.setPadding(new Insets(20, 8, 2, 8));
+            menuLabel.setPadding(new Insets(16, 8, 4, 8));
             this.getChildren().add(menuLabel);
 
             ScrollPanel scrollPane = new ScrollPanel();

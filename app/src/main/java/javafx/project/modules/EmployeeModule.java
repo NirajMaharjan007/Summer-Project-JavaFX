@@ -13,13 +13,16 @@ import javafx.scene.paint.Color;
 
 import javafx.project.enuma.*;
 import javafx.project.modules.submodules.*;
-import javafx.project.panels.Dashboard;
+// import javafx.project.panels.Dashboard;
 import javafx.project.components.*;
 import javafx.project.database.*;
 
 public class EmployeeModule extends VBox {
-    private EmpDatabase empData = new EmpDatabase(AdminDatabase.getInstance().getId());
     private int adminId = AdminDatabase.getInstance().getId();
+    private EmpDatabase empData = new EmpDatabase(adminId);
+
+    private ScrollPanel scrollPanel = new ScrollPanel();
+    private EmployeeBox emp_box = new EmployeeBox();
 
     public EmployeeModule() {
         super();
@@ -28,6 +31,12 @@ public class EmployeeModule extends VBox {
         VBox.setMargin(this, new Insets(8));
 
         this.init();
+    }
+
+    public void doUpdate() {
+        System.out.println("updated");
+        emp_box.getChildren().clear();
+        scrollPanel.setContent(new EmployeeBox());
     }
 
     private void init() {
@@ -39,6 +48,8 @@ public class EmployeeModule extends VBox {
 
         Label add_icon = new ImgIcon("src/main/resources/img/add.png").getIcon();
         add_icon.setPadding(new Insets(1, 8, 1, 2));
+        Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
+        refresh_icon.setPadding(new Insets(1, 8, 1, 2));
 
         MainBtn create = new MainBtn("Add Employee");
         create.setGraphic(add_icon);
@@ -50,12 +61,6 @@ public class EmployeeModule extends VBox {
             new CreateEmployee().show();
         });
 
-        BorderPane box = new BorderPane();
-
-        box.setLeft(header1);
-        box.setRight(create);
-
-        ScrollPanel scrollPanel = new ScrollPanel();
         VBox.setVgrow(scrollPanel, Priority.ALWAYS);
         scrollPanel.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPanel.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -63,9 +68,27 @@ public class EmployeeModule extends VBox {
         scrollPanel.setFitToWidth(true);
         scrollPanel.setMinViewportHeight(360);
         scrollPanel.setMinViewportWidth(360);
-        scrollPanel.setContent(new EmployeeBox());
+        scrollPanel.setContent(emp_box);
 
-        this.getChildren().addAll(box, new Label("Hello."), scrollPanel);
+        MainBtn refresh = new MainBtn("Refresh");
+        refresh.setAlignment(Pos.BASELINE_CENTER);
+        refresh.setGraphic(refresh_icon);
+        refresh.setBgColor("#36cee6");
+        refresh.setTextColor("#fff");
+        refresh.setRippleColor(Color.web("#84DED2"));
+        refresh.setOnAction(event -> {
+            System.out.println("Refreshed");
+            emp_box.getChildren().clear();
+            scrollPanel.setContent(new EmployeeBox());
+        });
+
+        HBox box = new HBox(16);
+        HBox.setHgrow(box, Priority.ALWAYS);
+        HBox.setMargin(box, new Insets(16, 4, 8, 4));
+
+        box.getChildren().addAll(create, refresh);
+
+        this.getChildren().addAll(header1, box, scrollPanel);
     }
 
     private class EmployeeBox extends GridPane {
@@ -99,10 +122,8 @@ public class EmployeeModule extends VBox {
 
         private class Delete implements EventHandler<ActionEvent> {
             private int id;
-            private Pane node;
 
-            public Delete(Pane node, int id) {
-                this.node = node;
+            public Delete(int id) {
                 this.id = id;
             }
 
@@ -114,11 +135,8 @@ public class EmployeeModule extends VBox {
                 alert.setContentText("You are deleting the Id " + this.id);
                 alert.showAndWait().ifPresent(response -> {
                     if (response == ButtonType.OK) {
-                        System.out.println(String.valueOf(this.id));
-                        if (empData.deleteEmployee(String.valueOf(this.id)) > -1) {
+                        if (empData.deleteEmployee(String.valueOf(this.id)) > -1)
                             System.out.println(this.id + ":Id is deleted");
-                            new SwitchNode(node).updateNode();
-                        }
                     } else {
                         alert.close();
                     }
@@ -152,7 +170,7 @@ public class EmployeeModule extends VBox {
                     delete.setBgColor(Elements.DANGER_COLOR.getName());
                     delete.setTextColor("#FFF");
                     delete.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
-                    delete.setOnAction(new Delete(this, data.getInt(1)));
+                    delete.setOnAction(new Delete(data.getInt(1)));
 
                     HBox box = new HBox(12);
                     box.getChildren().addAll(view, delete);
