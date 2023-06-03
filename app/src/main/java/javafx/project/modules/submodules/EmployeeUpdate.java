@@ -56,6 +56,9 @@ public class EmployeeUpdate extends Card {
     }
 
     private void init() {
+        VBox.setMargin(this, new Insets(32));
+        VBox.setVgrow(this, Priority.ALWAYS);
+
         this.getChildren().add(pane);
         this.atLeft();
         this.atRight();
@@ -70,50 +73,57 @@ public class EmployeeUpdate extends Card {
         HBox hbox = new HBox(8);
         VBox gender_box = new VBox(8);
 
-        name = new MainTextField("above");
-        name.setFloatingText("Enter a employee name");
-
-        department = new MainTextField("above");
-        department.setFloatingText("Enter a department");
-
-        address = new MainTextField("above");
-        address.setFloatingText("Enter a address");
-
-        salary = new MainTextField("above");
-        salary.setFloatingText("Enter a salary");
-
         Label gender = new Label("Select a gender");
         MFXRadioButton male = new MFXRadioButton("Male");
         MFXRadioButton female = new MFXRadioButton("Female");
         genderToggleGroup = new ToggleGroup();
 
-        male.setToggleGroup(genderToggleGroup);
-        female.setToggleGroup(genderToggleGroup);
-
-        genderToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                RadioButton selectedRadioButton = (RadioButton) newValue;
-                gender_text = selectedRadioButton.getText();
-                System.out.println("Selected radio button: " + gender_text);
-            }
-        });
         HBox radioBox = new HBox(male, female);
-        radioBox.setSpacing(16);
-        radioBox.setAlignment(Pos.BASELINE_CENTER);
 
-        gender_box.setAlignment(Pos.TOP_CENTER);
-        gender_box.getChildren().addAll(gender, radioBox);
+        try {
+            name = new MainTextField("above");
+            name.setFloatingText("Enter a employee name");
 
-        hbox.setAlignment(Pos.BASELINE_CENTER);
-        // hbox.getChildren().add(save);
+            department = new MainTextField("above");
+            department.setFloatingText("Enter a department");
 
-        box.setPadding(new Insets(25, 16, 12, 16));
-        box.setAlignment(Pos.CENTER);
-        box.getChildren().addAll(name, department, address, salary, gender_box, hbox);
+            address = new MainTextField("above");
+            address.setFloatingText("Enter a address");
 
-        mainBox.getChildren().add(box);
+            salary = new MainTextField("above");
+            salary.setFloatingText("Enter a salary");
 
-        pane.setLeft(mainBox);
+            male.setToggleGroup(genderToggleGroup);
+            female.setToggleGroup(genderToggleGroup);
+
+            genderToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    RadioButton selectedRadioButton = (RadioButton) newValue;
+                    gender_text = selectedRadioButton.getText();
+                    System.out.println("Selected radio button: " + gender_text);
+                }
+            });
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            radioBox.setSpacing(16);
+            radioBox.setAlignment(Pos.BASELINE_CENTER);
+            gender_box.setAlignment(Pos.TOP_CENTER);
+            gender_box.getChildren().addAll(gender, radioBox);
+
+            hbox.setAlignment(Pos.BASELINE_CENTER);
+            // hbox.getChildren().add(save);
+
+            box.setPadding(new Insets(25, 16, 12, 16));
+            box.setAlignment(Pos.CENTER);
+            box.getChildren().addAll(name, department, address, salary, gender_box, hbox);
+
+            mainBox.getChildren().add(box);
+
+            pane.setLeft(mainBox);
+        }
+
     }
 
     private void atBottom() {
