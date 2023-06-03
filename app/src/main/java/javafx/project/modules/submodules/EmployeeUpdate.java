@@ -1,15 +1,21 @@
 package javafx.project.modules.submodules;
 
+import io.github.palexdev.materialfx.controls.MFXRadioButton;
+import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
+import io.github.palexdev.materialfx.css.themes.Themes;
+
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.*;
 import javafx.geometry.*;
 
 import javafx.project.components.*;
 import javafx.project.database.*;
 import javafx.project.enuma.*;
 
-public class EmployeeUpdate extends VBox {
+public class EmployeeUpdate extends Card {
     MainTextField name;
     MainTextField department;
     MainTextField address;
@@ -21,18 +27,45 @@ public class EmployeeUpdate extends VBox {
 
     ToggleGroup genderToggleGroup;
 
+    private Stage stage = new Stage();
+
+    private BorderPane pane = new BorderPane();
+
     private EmpDatabase data = new EmpDatabase(AdminDatabase.getInstance().getId());
 
     private int id;
 
     public EmployeeUpdate(int id) {
-        super(16);
+        super.setSpacing(16);
+
         this.id = id;
         this.init();
+
+        Scene scene = new Scene(this, 600, 450);
+        MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
+
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.setAlwaysOnTop(false);
+        stage.setScene(scene);
+        stage.setTitle("Create Employee");
+    }
+
+    public void show() {
+        stage.show();
     }
 
     private void init() {
-        Card card = new Card();
+        this.getChildren().add(pane);
+        this.atLeft();
+        this.atRight();
+        this.atBottom();
+    }
+
+    private void atLeft() {
+        VBox mainBox = new VBox(10);
+        mainBox.setPadding(new Insets(16));
+
         VBox box = new VBox(26);
         HBox hbox = new HBox(8);
         VBox gender_box = new VBox(8);
@@ -50,8 +83,8 @@ public class EmployeeUpdate extends VBox {
         salary.setFloatingText("Enter a salary");
 
         Label gender = new Label("Select a gender");
-        RadioButton male = new RadioButton("Male");
-        RadioButton female = new RadioButton("Female");
+        MFXRadioButton male = new MFXRadioButton("Male");
+        MFXRadioButton female = new MFXRadioButton("Female");
         genderToggleGroup = new ToggleGroup();
 
         male.setToggleGroup(genderToggleGroup);
@@ -71,6 +104,19 @@ public class EmployeeUpdate extends VBox {
         gender_box.setAlignment(Pos.TOP_CENTER);
         gender_box.getChildren().addAll(gender, radioBox);
 
+        hbox.setAlignment(Pos.BASELINE_CENTER);
+        // hbox.getChildren().add(save);
+
+        box.setPadding(new Insets(25, 16, 12, 16));
+        box.setAlignment(Pos.CENTER);
+        box.getChildren().addAll(name, department, address, salary, gender_box, hbox);
+
+        mainBox.getChildren().add(box);
+
+        pane.setLeft(mainBox);
+    }
+
+    private void atBottom() {
         MainBtn save = new MainBtn("Save");
         save.setBgColor(Elements.SUCCESS_COLOR.getName());
         save.setTextColor("#FFFFFF");
@@ -94,17 +140,23 @@ public class EmployeeUpdate extends VBox {
             }
         });
 
+        MainBtn cancel = new MainBtn("Cancel");
+        cancel.setBgColor(Elements.DANGER_COLOR.getName());
+        cancel.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
+        cancel.setTextColor("White");
+
+        cancel.setOnAction(event -> {
+            stage.close();
+        });
+
+        HBox hbox = new HBox(16, save, cancel);
         hbox.setAlignment(Pos.BASELINE_CENTER);
-        hbox.getChildren().add(save);
 
-        box.setPadding(new Insets(25, 16, 12, 16));
-        box.setAlignment(Pos.CENTER);
-        box.getChildren().addAll(name, department, address, salary, gender_box, hbox);
+        pane.setBottom(hbox);
+    }
 
-        card.setPadding(new Insets(10));
-        card.getChildren().add(box);
+    private void atRight() {
 
-        this.getChildren().addAll(card);
     }
 
     protected boolean isEmpty() {
@@ -124,7 +176,7 @@ public class EmployeeUpdate extends VBox {
             errors.append("- Please enter a address.\n");
         }
         if (genderToggleGroup.getSelectedToggle() == null) {
-            errors.append("- Please enter a gender.\n");
+            errors.append("- Please select a gender.\n");
         }
 
         // If any missing information is found, show the error messages and return false

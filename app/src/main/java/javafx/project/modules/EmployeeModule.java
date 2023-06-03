@@ -3,6 +3,8 @@ package javafx.project.modules;
 import java.sql.ResultSet;
 import java.util.*;
 
+import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
+import io.github.palexdev.materialfx.css.themes.Themes;
 import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.Scene;
@@ -227,8 +229,11 @@ public class EmployeeModule extends VBox {
             this.id = id;
             this.init();
 
-            Scene scene = new Scene(this, 600, 320);
             stage = new Stage();
+
+            Scene scene = new Scene(this, 600, 350);
+            MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
+
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.setAlwaysOnTop(false);
@@ -255,7 +260,10 @@ public class EmployeeModule extends VBox {
         public CreateEmployee() {
             super(16);
             this.init();
+
             Scene scene = new Scene(this, 600, 420);
+            MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
+
             stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
