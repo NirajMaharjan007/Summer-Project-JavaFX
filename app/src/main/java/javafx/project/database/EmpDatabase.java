@@ -61,7 +61,7 @@ public class EmpDatabase {
         try {
             String sql = "UPDATE employees set" +
                     "set name =?, department =?, address=?,salary =?, gender=?" +
-                    "WHERE emp_id = ? and admin_id=?";
+                    "WHERE emp_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             statement.setString(2, department);
@@ -69,7 +69,6 @@ public class EmpDatabase {
             statement.setString(4, salary);
             statement.setString(5, gender);
             statement.setInt(6, id);
-            statement.setInt(7, this.adminId);
             int i = statement.executeUpdate();
             return i;
         } catch (Exception e) {
@@ -90,27 +89,21 @@ public class EmpDatabase {
         }
     }
 
-    public ResultSet getAltData(int id) {
-        try (Statement statement = connection.createStatement()) {
-            String sql = "Select * from employees_details where emp_id=" + id;
-            return statement.executeQuery(sql);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
-    }
-
     public int setData(String name, String department, String address, String salary, String gender) {
         try {
-            String sql = "INSERT INTO employees (name,department,address,salary,gender,admin_id)" +
-                    " VALUES (?,?,?,?,?,?);";
+            String sql = "INSERT INTO employees" +
+                    "(name,department,address,salary,gender,emp_img,email,phone,admin_id)" +
+                    " VALUES (?,?,?,?,?,?,?,?);";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             statement.setString(2, department);
             statement.setString(3, address);
             statement.setString(4, salary);
             statement.setString(5, gender);
-            statement.setInt(6, this.adminId);
+            statement.setString(6, "src/main/resources/img/uploads/default-pic.png");
+            statement.setString(7, "N/A");
+            statement.setString(8, "N/A");
+            statement.setInt(9, this.adminId);
             int i = statement.executeUpdate();
             return i;
         } catch (Exception e) {
@@ -118,5 +111,4 @@ public class EmpDatabase {
             return -1;
         }
     }
-
 }

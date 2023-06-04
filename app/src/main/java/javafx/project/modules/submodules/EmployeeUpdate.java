@@ -1,5 +1,7 @@
 package javafx.project.modules.submodules;
 
+import java.sql.ResultSet;
+
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
 import io.github.palexdev.materialfx.css.themes.Themes;
@@ -31,7 +33,7 @@ public class EmployeeUpdate extends Card {
 
     private BorderPane pane = new BorderPane();
 
-    private EmpDatabase data = new EmpDatabase(AdminDatabase.getInstance().getId());
+    private EmpDatabase empData = new EmpDatabase(AdminDatabase.getInstance().getId());
 
     private int id;
 
@@ -80,30 +82,33 @@ public class EmployeeUpdate extends Card {
 
         HBox radioBox = new HBox(male, female);
 
-        try {
-            name = new MainTextField("above");
-            name.setFloatingText("Enter a employee name");
+        name = new MainTextField("above");
+        name.setFloatingText("Enter a employee name");
 
-            department = new MainTextField("above");
-            department.setFloatingText("Enter a department");
+        department = new MainTextField("above");
+        department.setFloatingText("Enter a department");
 
-            address = new MainTextField("above");
-            address.setFloatingText("Enter a address");
+        address = new MainTextField("above");
+        address.setFloatingText("Enter a address");
 
-            salary = new MainTextField("above");
-            salary.setFloatingText("Enter a salary");
+        salary = new MainTextField("above");
+        salary.setFloatingText("Enter a salary");
 
-            male.setToggleGroup(genderToggleGroup);
-            female.setToggleGroup(genderToggleGroup);
+        male.setToggleGroup(genderToggleGroup);
+        female.setToggleGroup(genderToggleGroup);
 
-            genderToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null) {
-                    RadioButton selectedRadioButton = (RadioButton) newValue;
-                    gender_text = selectedRadioButton.getText();
-                    System.out.println("Selected radio button: " + gender_text);
-                }
-            });
+        genderToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                RadioButton selectedRadioButton = (RadioButton) newValue;
+                gender_text = selectedRadioButton.getText();
+                System.out.println("Selected radio button: " + gender_text);
+            }
+        });
 
+        try (ResultSet data = empData.getData(this.id)) {
+            while (data.next()) {
+
+            }
         } catch (Exception e) {
             System.err.println(e.getMessage());
         } finally {
@@ -134,7 +139,7 @@ public class EmployeeUpdate extends Card {
 
         save.setOnAction(event -> {
             if (this.isEmpty()) {
-                if (data.updateEmployee(this.id, name.getText(), department.getText(), address.getText(),
+                if (empData.updateEmployee(this.id, name.getText(), department.getText(), address.getText(),
                         salary.getText(),
                         gender_text) > -1) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

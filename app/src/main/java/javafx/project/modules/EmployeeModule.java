@@ -16,7 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.project.enuma.*;
 import javafx.project.modules.submodules.*;
 import javafx.project.panels.Dashboard;
-// import javafx.project.panels.Dashboard;
 import javafx.project.components.*;
 import javafx.project.database.*;
 
@@ -234,7 +233,7 @@ public class EmployeeModule extends VBox {
 
             stage = new Stage();
 
-            Scene scene = new Scene(this, 600, 350);
+            Scene scene = new Scene(this, 600, 400);
             MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
             stage.initModality(Modality.APPLICATION_MODAL);
