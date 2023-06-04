@@ -88,7 +88,16 @@ public class EmpDatabase {
             System.err.println(e.getMessage());
             return null;
         }
+    }
 
+    public ResultSet getAltData(int id) {
+        try (Statement statement = connection.createStatement()) {
+            String sql = "Select * from employees_details where emp_id=" + id;
+            return statement.executeQuery(sql);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
 
     public int setData(String name, String department, String address, String salary, String gender) {
