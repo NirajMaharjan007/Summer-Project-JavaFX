@@ -2,7 +2,7 @@ package javafx.project.modules;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-
+import javafx.project.components.Card;
 import javafx.project.enuma.Elements;
 
 public class Attendence extends VBox {
@@ -16,7 +16,12 @@ public class Attendence extends VBox {
         Label header = new Label("Attendence of Employees");
         header.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a");
 
-        this.getChildren().addAll(header);
+        Card card = new Card();
+        card.setSpacing(12);
+
+        VBox box = new VBox(16, card);
+
+        this.getChildren().addAll(header, box);
     }
 
 }

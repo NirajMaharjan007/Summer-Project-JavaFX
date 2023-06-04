@@ -6,6 +6,7 @@ import java.io.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.geometry.*;
 
 import javafx.project.components.*;
@@ -28,6 +29,11 @@ public class ViewDetail extends BorderPane {
 
     private void init() {
 
+        this.atTop();
+        this.atCenter();
+    }
+
+    private void atTop() {
         Label header = new Label("Detail of Employee id: " + this.id);
         header.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a");
 
@@ -35,7 +41,6 @@ public class ViewDetail extends BorderPane {
         top.setPadding(PADDING);
 
         this.setTop(top);
-        this.atCenter();
     }
 
     private void atCenter() {
@@ -52,7 +57,7 @@ public class ViewDetail extends BorderPane {
             pane.setCenter(box);
 
             Card card = new Card(pane);
-            card.setPadding(PADDING);
+            card.setPadding(new Insets(16, 4, 16, 4));
             card.setMinHeight(180);
 
             VBox center = new VBox(16, card);
@@ -68,15 +73,17 @@ public class ViewDetail extends BorderPane {
             imageView.setFitHeight(128);
             imageView.setPreserveRatio(true);
 
+            MainBtn update_btn = new MainBtn("Update details");
+            update_btn.setBgColor("#17a2b8");
+            update_btn.setTextColor("#FFF");
+            update_btn.setRippleColor(Color.web("#AFD3E2"));
+
             while (data.next()) {
-                /*
-                 * Label name = new Label("Name: " + data.getString(2));
-                 * Label department = new Label("Department: " + data.getString(3));
-                 * Label address = new Label("Address: " + data.getString(4));
-                 * Label salary = new Label("Salary: " + data.getString(5));
-                 * Label gender = new Label("Gender: " + data.getString(6));
-                 * box.getChildren().addAll(name, department, address, salary, gender);
-                 */
+                int employeeId = data.getInt(1);
+                update_btn.setOnAction(event -> {
+                    new EmployeeUpdate(employeeId).show();
+                });
+
                 Label label[] = new Label[5];
                 HBox hbox[] = new HBox[5];
                 for (int i = 0; i < 5; i++) {
@@ -100,6 +107,7 @@ public class ViewDetail extends BorderPane {
                 }
 
                 box.getChildren().addAll(hbox);
+                box.getChildren().add(update_btn);
                 image_box.getChildren().add(imageView);
                 pane.setLeft(image_box);
             }

@@ -3,6 +3,7 @@ package javafx.project.modules.submodules;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import io.github.palexdev.materialfx.controls.MFXRadioButton;
 import javafx.geometry.*;
 import javafx.scene.paint.Color;
 
@@ -51,8 +52,8 @@ public class EmployeeEdit extends BorderPane {
         salary.setFloatingText("Enter a salary");
 
         Label gender = new Label("Select a gender");
-        RadioButton male = new RadioButton("Male");
-        RadioButton female = new RadioButton("Female");
+        MFXRadioButton male = new MFXRadioButton("Male");
+        MFXRadioButton female = new MFXRadioButton("Female");
         genderToggleGroup = new ToggleGroup();
 
         male.setToggleGroup(genderToggleGroup);
@@ -106,7 +107,7 @@ public class EmployeeEdit extends BorderPane {
 
         left_Vbox.setPadding(new Insets(16));
         left_Vbox.setAlignment(Pos.CENTER);
-        left_Vbox.getChildren().addAll(new Label("Hello World"));
+        left_Vbox.getChildren().add(new Label("\t"));
 
         this.setLeft(left_Vbox);
         this.setCenter(card);
@@ -130,7 +131,7 @@ public class EmployeeEdit extends BorderPane {
             errors.append("- Please enter a address.\n");
         }
         if (genderToggleGroup.getSelectedToggle() == null) {
-            errors.append("- Please enter a gender.\n");
+            errors.append("- Please select a gender.\n");
         }
 
         // If any missing information is found, show the error messages and return false
