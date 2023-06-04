@@ -16,7 +16,7 @@ import javafx.project.modules.*;
 public class Dashboard extends BorderPane {
     public static VBox container = MainDash.container;
 
-    static Stage stage, newStage;
+    private static Stage stage, newStage;
 
     public Dashboard(Stage stage) {
         super();

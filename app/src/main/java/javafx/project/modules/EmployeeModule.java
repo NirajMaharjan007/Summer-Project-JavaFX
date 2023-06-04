@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 
 import javafx.project.enuma.*;
 import javafx.project.modules.submodules.*;
+import javafx.project.panels.Dashboard;
 // import javafx.project.panels.Dashboard;
 import javafx.project.components.*;
 import javafx.project.database.*;
@@ -66,8 +67,8 @@ public class EmployeeModule extends VBox {
         scrollPanel.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPanel.setFitToHeight(true);
         scrollPanel.setFitToWidth(true);
-        scrollPanel.setMinViewportHeight(360);
-        scrollPanel.setMinViewportWidth(360);
+        scrollPanel.setMinViewportWidth(600);
+        scrollPanel.setMinViewportHeight(600);
         scrollPanel.setContent(emp_box);
 
         Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
@@ -101,18 +102,20 @@ public class EmployeeModule extends VBox {
             GridPane.setHgrow(this, Priority.ALWAYS);
             GridPane.setFillWidth(this, true);
             GridPane.setFillHeight(this, true);
-            GridPane.setMargin(this, new Insets(32));
+            GridPane.setMargin(this, new Insets(16));
+
             super.setPadding(new Insets(8, 32, 16, 32));
-            super.setMinWidth(125);
-            super.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            super.setMinWidth(Dashboard.getStage().getMinWidth());
+            super.setPrefHeight(Dashboard.getStage().getHeight());
+            super.setMaxSize(Dashboard.getStage().getMaxWidth(), Dashboard.getStage().getMaxHeight());
 
             this.init();
         }
 
         private void init() {
             this.setAlignment(Pos.TOP_CENTER);
-            this.setHgap(32);
-            this.setVgap(16);
+            this.setHgap(64);
+            this.setVgap(32);
 
             if (empData.count() >= 1) {
                 this.employeeCards();
@@ -181,7 +184,7 @@ public class EmployeeModule extends VBox {
 
                     card.setAlignment(Pos.TOP_LEFT);
                     card.setSpacing(12);
-                    card.setMinWidth(185);
+                    card.setMinWidth(180);
                     card.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                     card.setPadding(new Insets(16));
                     card.getChildren().addAll(id, name, department, address, salary, gender,
