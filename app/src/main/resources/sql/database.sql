@@ -23,6 +23,9 @@ CREATE TABLE
         address VARCHAR(100),
         salary DECIMAL(12, 2),
         gender VARCHAR(128),
+        emp_img BLOB,
+        email VARCHAR(255),
+        phone VARCHAR(255),
         admin_id INT NOT NULL,
         FOREIGN KEY (admin_id) REFERENCES admin(id) ON DELETE CASCADE ON UPDATE CASCADE
     );
@@ -36,6 +39,9 @@ INSERT INTO
         address,
         salary,
         gender,
+        emp_img,
+        email,
+        phone,
         admin_id
     )
 VALUES (
@@ -44,15 +50,8 @@ VALUES (
         '123 Main St, Anytown USA',
         50000.00,
         "male",
+        "src/main/resources/img/uploads/default-pic.png",
+        "N/A",
+        "N/A",
         1
-    );
-
-CREATE Table
-    employees_details(
-        id int PRIMARY KEY NOT NULL,
-        emp_img BLOB,
-        email VARCHAR(255),
-        phone VARCHAR(255),
-        emp_id int NOT NULL,
-        Foreign Key (emp_id) REFERENCES employees (emp_id) ON DELETE CASCADE ON UPDATE CASCADE
     );
