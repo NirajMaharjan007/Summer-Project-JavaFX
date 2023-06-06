@@ -57,18 +57,17 @@ public class EmpDatabase {
     }
 
     public int updateEmployee(int id, String name, String department, String address, String salary,
-            String gender) {
-        try {
-            String sql = "UPDATE employees set" +
-                    "set name =?, department =?, address=?,salary =?, gender=?" +
-                    "WHERE emp_id = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            String gender, String email, String phone) {
+        String sql = "UPDATE employees SET name = ?, department = ?, address= ?,salary = ?, gender = ?,email=?,phone=? WHERE emp_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, name);
             statement.setString(2, department);
             statement.setString(3, address);
             statement.setString(4, salary);
             statement.setString(5, gender);
-            statement.setInt(6, id);
+            statement.setString(6, email);
+            statement.setString(7, phone);
+            statement.setInt(8, id);
             int i = statement.executeUpdate();
             return i;
         } catch (Exception e) {
@@ -93,7 +92,7 @@ public class EmpDatabase {
         try {
             String sql = "INSERT INTO employees" +
                     "(name,department,address,salary,gender,emp_img,email,phone,admin_id)" +
-                    " VALUES (?,?,?,?,?,?,?,?);";
+                    " VALUES (?,?,?,?,?,?,?,?,?);";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             statement.setString(2, department);

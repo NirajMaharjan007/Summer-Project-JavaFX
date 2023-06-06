@@ -27,7 +27,6 @@ public class ViewDetail extends BorderPane {
     }
 
     private void init() {
-
         this.atTop();
         this.atCenter();
     }

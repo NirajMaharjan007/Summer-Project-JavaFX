@@ -16,6 +16,7 @@ import javafx.geometry.*;
 import javafx.project.components.*;
 import javafx.project.database.*;
 import javafx.project.enuma.*;
+import javafx.project.modules.EmployeeModule;
 
 public class EmployeeUpdate extends Card {
     MainTextField name;
@@ -23,7 +24,8 @@ public class EmployeeUpdate extends Card {
     MainTextField address;
     MainTextField salary;
     MainTextField gender;
-    // private int id;
+    MainTextField email;
+    MainTextField phone;
 
     String gender_text;
 
@@ -107,7 +109,10 @@ public class EmployeeUpdate extends Card {
 
         try (ResultSet data = empData.getData(this.id)) {
             while (data.next()) {
-
+                name.setText(data.getString("name"));
+                department.setText(data.getString("department"));
+                address.setText(data.getString("address"));
+                salary.setText(data.getString("salary"));
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -120,7 +125,7 @@ public class EmployeeUpdate extends Card {
             hbox.setAlignment(Pos.BASELINE_CENTER);
             // hbox.getChildren().add(save);
 
-            box.setPadding(new Insets(25, 16, 12, 16));
+            box.setPadding(new Insets(25, 8, 12, 16));
             box.setAlignment(Pos.CENTER);
             box.getChildren().addAll(name, department, address, salary, gender_box, hbox);
 
@@ -139,17 +144,20 @@ public class EmployeeUpdate extends Card {
 
         save.setOnAction(event -> {
             if (this.isEmpty()) {
-                if (empData.updateEmployee(this.id, name.getText(), department.getText(), address.getText(),
-                        salary.getText(),
-                        gender_text) > -1) {
+                if (empData.updateEmployee(this.id, name.getText(), department.getText(),
+                        address.getText(), salary.getText(), gender_text, email.getText(), phone.getText()) > -1) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Succeed");
                     alert.setHeaderText("successfully Updated employee");
-                    alert.show();
+                    alert.setContentText("Required to Refresh");
+                    alert.showAndWait().ifPresent(action -> {
+                        stage.close();
+                        EmployeeModule.stage.close();
+                    });
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Failed");
-                    alert.setHeaderText("Failed added employee");
+                    alert.setHeaderText("Failed update employee");
                     alert.show();
                 }
             }
@@ -171,6 +179,34 @@ public class EmployeeUpdate extends Card {
     }
 
     private void atRight() {
+        VBox mainBox = new VBox(10);
+        mainBox.setPadding(new Insets(16));
+
+        VBox box = new VBox(26);
+
+        email = new MainTextField("Above");
+        email.setFloatingText("Enter a email");
+
+        phone = new MainTextField("Above");
+        phone.setFloatingText("Enter a phone number");
+
+        try (ResultSet data = empData.getData(id)) {
+            while (data.next()) {
+                email.setText(data.getString("email"));
+                phone.setText(data.getString("phone"));
+            }
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            box.setPadding(new Insets(25, 16, 12, 8));
+            box.setAlignment(Pos.CENTER);
+            box.getChildren().addAll(email, phone);
+
+            mainBox.getChildren().add(box);
+
+            pane.setRight(mainBox);
+        }
 
     }
 
@@ -192,6 +228,12 @@ public class EmployeeUpdate extends Card {
         }
         if (genderToggleGroup.getSelectedToggle() == null) {
             errors.append("- Please select a gender.\n");
+        }
+        if (phone.getText().trim().isEmpty() || phone.getText().trim().equalsIgnoreCase("n/a")) {
+            errors.append("- Please enter contact number.\n");
+        }
+        if (email.getText().trim().isEmpty() || email.getText().trim().equalsIgnoreCase("n/a")) {
+            errors.append("- Please enter email address.\n");
         }
 
         // If any missing information is found, show the error messages and return false

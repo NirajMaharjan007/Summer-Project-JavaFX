@@ -20,6 +20,8 @@ import javafx.project.components.*;
 import javafx.project.database.*;
 
 public class EmployeeModule extends VBox {
+    public static Stage stage;
+
     private int adminId = AdminDatabase.getInstance().getId();
     private EmpDatabase empData = new EmpDatabase(adminId);
 
@@ -66,8 +68,8 @@ public class EmployeeModule extends VBox {
         scrollPanel.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPanel.setFitToHeight(true);
         scrollPanel.setFitToWidth(true);
-        scrollPanel.setMinViewportWidth(600);
-        scrollPanel.setMinViewportHeight(600);
+        scrollPanel.setMinViewportWidth(400);
+        scrollPanel.setMinViewportHeight(360);
         scrollPanel.setContent(emp_box);
 
         Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
@@ -224,18 +226,15 @@ public class EmployeeModule extends VBox {
     private class ShowDetail extends VBox {
         private int id;
 
-        Stage stage;
-
         public ShowDetail(int id) {
             super(16);
             this.id = id;
             this.init();
 
-            stage = new Stage();
-
             Scene scene = new Scene(this, 600, 400);
             MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
+            stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.setAlwaysOnTop(false);
