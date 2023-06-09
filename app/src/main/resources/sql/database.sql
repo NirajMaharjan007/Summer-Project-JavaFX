@@ -30,6 +30,19 @@ CREATE TABLE
         FOREIGN KEY (admin_id) REFERENCES admin(id) ON DELETE CASCADE ON UPDATE CASCADE
     );
 
+--
+
+CREATE TABLE
+    status (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        date_time DATE,
+        status INT,
+        time_in TIME,
+        time_out TIME,
+        emp_id INT,
+        FOREIGN KEY (emp_id) REFERENCES employees (emp_id) ON DELETE CASCADE ON UPDATE CASCADE
+    );
+
 -- For Testing
 
 INSERT INTO

@@ -52,6 +52,12 @@ public class MainModule extends VBox {
         this.getChildren().addAll(header1, header2, refresh, box);
     }
 
+    private class ChartPane extends VBox {
+        public ChartPane() {
+            super();
+        }
+    }
+
     private class Pane extends GridPane {
         private BorderPane[] pane = new BorderPane[2];
 

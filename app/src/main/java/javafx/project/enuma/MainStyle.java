@@ -7,10 +7,7 @@ public enum MainStyle {
     public final String label;
 
     private MainStyle(String location) {
-        // String string = new
-        // File("/src/main/resources/css/style.css").toURI().toString();
         String path = getClass().getClassLoader().getResource(location).toExternalForm();
-        // System.out.println("MainStyle.MainStyle(); " + path);
         this.label = path;
     }
 
