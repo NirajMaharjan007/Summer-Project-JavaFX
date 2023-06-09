@@ -173,7 +173,7 @@ public class EmployeeUpdate extends Card {
         });
 
         HBox hbox = new HBox(16, save, cancel);
-        hbox.setAlignment(Pos.BASELINE_CENTER);
+        hbox.setAlignment(Pos.CENTER);
 
         pane.setBottom(hbox);
     }

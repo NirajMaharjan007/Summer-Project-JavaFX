@@ -82,13 +82,12 @@ public class Dashboard extends BorderPane {
                 newStage.close();
             });
 
-            ImgIcon icon = new ImgIcon("src/main/resources/img/settings.png");
-
-            icon.getBtnIcon().setOnAction(value -> {
-
+            MainBtn btn = new ImgIcon("src/main/resources/img/settings.png").getBtnIcon();
+            btn.setOnAction(event -> {
+                System.out.println("Dashboard.TopBar.init()" + event.getSource());
             });
 
-            box.getChildren().addAll(icon.getBtnIcon(), logout);
+            box.getChildren().addAll(btn, logout);
 
             HBox logoSide = new HBox();
             logoSide.setPadding(new Insets(8));

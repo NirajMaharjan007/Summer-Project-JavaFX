@@ -227,11 +227,11 @@ public class EmployeeModule extends VBox {
         private int id;
 
         public ShowDetail(int id) {
-            super(16);
+            super(8);
             this.id = id;
             this.init();
 
-            Scene scene = new Scene(this, 600, 400);
+            Scene scene = new Scene(this, 800, 400);
             MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
             stage = new Stage();
@@ -243,7 +243,7 @@ public class EmployeeModule extends VBox {
         }
 
         private void init() {
-            this.setAlignment(Pos.TOP_CENTER);
+            this.setAlignment(Pos.CENTER);
             this.getChildren().add(new ViewDetail(this.id));
         }
 

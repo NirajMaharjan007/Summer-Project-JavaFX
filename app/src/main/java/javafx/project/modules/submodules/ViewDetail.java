@@ -42,24 +42,26 @@ public class ViewDetail extends BorderPane {
     }
 
     private void atCenter() {
-        VBox box = new VBox(16);
-        box.setPadding(new Insets(8, 12, 8, 16));
-        box.setAlignment(Pos.BASELINE_LEFT);
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(8, 12, 4, 16));
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(32);
+        gridPane.setVgap(32);
 
         VBox image_box = new VBox(16);
-        image_box.setPadding(new Insets(4, 16, 8, 8));
-        image_box.setAlignment(Pos.CENTER);
+        // image_box.setPadding(new Insets(4, 16, 8, 8));
+        image_box.setAlignment(Pos.CENTER_RIGHT);
 
         BorderPane pane = new BorderPane();
         pane.setPadding(PADDING);
-        pane.setCenter(new HBox(16, box));
+        pane.setCenter(gridPane);
 
         Card card = new Card(pane);
         card.setPadding(new Insets(16, 4, 16, 4));
         card.setMinHeight(265);
 
-        VBox center = new VBox(16, card);
-        center.setPadding(PADDING);
+        VBox center = new VBox(6, card);
+        center.setAlignment(Pos.CENTER);
 
         MainBtn update_btn = new MainBtn("Update details");
         update_btn.setBgColor("#17a2b8");
@@ -69,7 +71,7 @@ public class ViewDetail extends BorderPane {
         HBox btn_box = new HBox(16, update_btn);
         btn_box.setPadding(PADDING);
         btn_box.setAlignment(Pos.BASELINE_CENTER);
-
+        int row = 0, col = 0;
         try (ResultSet data = empDatabase.getData(this.id)) {
             while (data.next()) {
                 int employeeId = data.getInt(1);
@@ -109,7 +111,16 @@ public class ViewDetail extends BorderPane {
                     }
                 }
 
-                box.getChildren().addAll(hbox);
+                for (int i = 0; i < 7; i++) {
+                    if (col == 2) {
+                        row++;
+                        col = 0;
+                    }
+
+                    gridPane.add(hbox[i], col, row);
+                    col++;
+                }
+
                 image_box.getChildren().add(imageView);
                 pane.setLeft(image_box);
             }
