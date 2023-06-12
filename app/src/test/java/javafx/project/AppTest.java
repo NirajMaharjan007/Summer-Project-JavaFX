@@ -5,9 +5,7 @@ package javafx.project;
 
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-
+import java.lang.reflect.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
@@ -19,6 +17,5 @@ class AppTest {
         assertTrue(Modifier.isStatic(mainMethod.getModifiers()));
         assertEquals(void.class, mainMethod.getReturnType());
     }
-
 
 }
