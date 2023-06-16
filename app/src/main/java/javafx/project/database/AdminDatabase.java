@@ -65,13 +65,15 @@ public class AdminDatabase {
     }
 
     public ResultSet getDetail() {
-        String sql = "SELECT * from admin where id=" + getId();
-        try (Statement statement = conn.createStatement()) {
+        try {
+            Statement statement = conn.createStatement();
+            String sql = "SELECT * from admin_detail where admin_id=" + getId();
             ResultSet result = statement.executeQuery(sql);
             return result;
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return null;
         }
+
     }
 }

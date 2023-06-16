@@ -1,4 +1,4 @@
--- Active: 1657020369972@@127.0.0.1@3306@my_data
+-- Active: 1683132803907@@127.0.0.1@3306@hr_data
 
 CREATE DATABASE IF NOT EXISTS hr_data ;
 
@@ -11,9 +11,9 @@ CREATE TABLE
         password VARCHAR(255)
     );
 
-INSERT INTO admin VALUES ("1","admin", "admin");
+INSERT INTO admin VALUES ("1","admin", "");
 
-INSERT INTO admin VALUES ("2","admin", "");
+INSERT INTO admin VALUES ("2","admin", "admin");
 
 CREATE TABLE
     employees (
@@ -66,5 +66,28 @@ VALUES (
         "N/A",
         "N/A",
         "src/main/resources/img/uploads/default-pic.png",
+        1
+    );
+
+CREATE TABLE
+    admin_detail(
+        id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+        picture BLOB,
+        name VARCHAR(255),
+        email VARCHAR(255),
+        phone VARCHAR(255),
+        admin_id INT NOT NULL,
+        Foreign Key (admin_id) REFERENCES admin (id) ON DELETE CASCADE
+    );
+
+-- Test
+
+INSERT INTO admin_detail
+VALUES (
+        15,
+        null,
+        "Niraj Maharjan",
+        "niraj@maharjan.com",
+        9813545029,
         1
     );

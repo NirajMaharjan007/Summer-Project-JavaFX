@@ -1,5 +1,7 @@
 package javafx.project.modules.submodules;
 
+import java.sql.ResultSet;
+
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
 import io.github.palexdev.materialfx.css.themes.Themes;
 
@@ -8,14 +10,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.geometry.*;
+
 import javafx.project.components.*;
-import javafx.project.enuma.Elements;
-import javafx.project.enuma.MainStyle;
-import javafx.project.modules.Attendence;
-import javafx.project.modules.EmployeeModule;
-import javafx.project.modules.MainModule;
+import javafx.project.database.AdminDatabase;
+import javafx.project.enuma.*;
 
 public class AdminOption extends Pane {
     private Stage stage;
@@ -58,8 +57,9 @@ public class AdminOption extends Pane {
         }
 
         private void atCenter() {
-            container.setPadding(new Insets(4, 8, 2, 16));
+            container.setPadding(new Insets(6, 8, 4, 18));
             container.getChildren().add(new AdminDetail());
+            container.autosize();
             this.setCenter(container);
         }
 
@@ -71,22 +71,61 @@ public class AdminOption extends Pane {
     private class AdminDetail extends Card {
         public AdminDetail() {
             super();
-            this.setPrefHeight(580);
-            this.setPrefWidth(500);
+            super.setPrefWidth(500);
             this.setAlignment(Pos.TOP_CENTER);
             this.init();
         }
 
         private void init() {
+            HBox hbox[] = new HBox[3];
+            Label label[] = new Label[3];
+            Label detail_label[] = new Label[3];
+
+            String detail[] = new String[3];
+            String string[] = { "Real Name: ", "Email: ", "Phone Number: " };
+
             VBox box = new VBox(16);
-            box.setAlignment(Pos.CENTER);
+            box.setAlignment(Pos.TOP_CENTER);
+            box.setPadding(new Insets(4, 2, 8, 2));
 
             Label title = new Label("Admin's Details");
             title.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a");
+            box.getChildren().add(title);
 
-            box.getChildren().addAll(title);
+            for (int i = 0; i < hbox.length; i++) {
+                hbox[i] = new HBox();
+                hbox[i].setAlignment(Pos.BASELINE_CENTER);
 
-            this.getChildren().addAll(new Label("GG"), box);
+                label[i] = new Label();
+                label[i].setStyle("-fx-text-fill:#484b6a;-fx-font-weight:bold;");
+                label[i].setText(string[i]);
+
+                detail_label[i] = new Label();
+            }
+
+            try (ResultSet resultSet = AdminDatabase.getInstance().getDetail()) {
+                while (resultSet.next()) {
+                    detail = new String[] { resultSet.getString("name"), resultSet.getString("email"),
+                            resultSet.getString("phone") };
+                }
+
+                for (int i = 0; i < detail_label.length; i++) {
+                    detail_label[i].setText(detail[i]);
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            } finally {
+                for (int i = 0; i < hbox.length; i++) {
+                    if (detail_label[i].getText() == null) {
+                        detail = new String[] { "N/A", "N/A", "N/A" };
+                        detail_label[i].setText(detail[i]);
+                    }
+                    hbox[i].getChildren().addAll(label[i], detail_label[i]);
+                    box.getChildren().add(hbox[i]);
+                }
+            }
+
+            this.getChildren().add(box);
         }
     }
 
@@ -94,8 +133,8 @@ public class AdminOption extends Pane {
         public SideBar() {
             super();
             super.setSpacing(12);
-            super.setPrefHeight(600);
             super.setPrefWidth(250);
+            super.setPrefHeight(600);
             // super.autosize();
 
             this.init();
