@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.project.components.*;
 import javafx.project.enuma.*;
 import javafx.project.modules.*;
+import javafx.project.modules.submodules.AdminOption;
 
 public class Dashboard extends BorderPane {
     public static VBox container = MainDash.container;
@@ -82,9 +83,9 @@ public class Dashboard extends BorderPane {
                 newStage.close();
             });
 
-            MainBtn btn = new ImgIcon("src/main/resources/img/settings.png").getBtnIcon();
+            Button btn = new ImgIcon("src/main/resources/img/settings.png").getBtnIcon();
             btn.setOnAction(event -> {
-                System.out.println("Dashboard.TopBar.init()" + event.getSource());
+                new AdminOption().show();
             });
 
             box.getChildren().addAll(btn, logout);
