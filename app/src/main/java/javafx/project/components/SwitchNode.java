@@ -12,6 +12,11 @@ public class SwitchNode {
         this.button = button;
     }
 
+    public SwitchNode(Button button, Pane root) {
+        this.root = root;
+        this.button = button;
+    }
+
     public void switchNode(Pane node) {
         this.button.setOnAction(event -> switchLayout(node));
     }

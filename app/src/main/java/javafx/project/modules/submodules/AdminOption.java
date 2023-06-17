@@ -2,8 +2,7 @@ package javafx.project.modules.submodules;
 
 import java.sql.ResultSet;
 
-import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
-import io.github.palexdev.materialfx.css.themes.Themes;
+import io.github.palexdev.materialfx.css.themes.*;
 
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -58,6 +57,7 @@ public class AdminOption extends Pane {
 
         private void atCenter() {
             container.setPadding(new Insets(6, 8, 4, 18));
+            container.getChildren().clear();
             container.getChildren().add(new AdminDetail());
             container.autosize();
             this.setCenter(container);
@@ -129,6 +129,24 @@ public class AdminOption extends Pane {
         }
     }
 
+    private class AdminUpdate extends Card {
+        MainTextField textField;
+
+        public AdminUpdate() {
+            super();
+            super.setPrefWidth(500);
+            this.setAlignment(Pos.TOP_CENTER);
+
+            this.init();
+        }
+
+        private void init() {
+            textField = new MainTextField("Above");
+            this.getChildren().add(textField);
+        }
+
+    }
+
     private class SideBar extends VBox {
         public SideBar() {
             super();
@@ -193,6 +211,9 @@ public class AdminOption extends Pane {
 
             btn[2].setGraphic(attend_icon);
             btn[2].setText("About us");
+
+            new SwitchNode(AdminOption.container, btn[0]).switchNode(new AdminDetail());
+            new SwitchNode(AdminOption.container, btn[1]).switchNode(new AdminUpdate());
 
             navBar.getChildren().addAll(btn[0], btn[1], btn[2]);
 
