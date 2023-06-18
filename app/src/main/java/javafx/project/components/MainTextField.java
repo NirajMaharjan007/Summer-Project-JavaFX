@@ -25,6 +25,10 @@ public class MainTextField extends MFXTextField {
                 case "normal":
                     break;
 
+                case "inline":
+                    this.floatModeProperty().set(FloatMode.INLINE);
+                    break;
+
                 default:
                     throw new IllegalArgumentException(type + " not found");
             }

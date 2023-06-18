@@ -1,19 +1,18 @@
 package javafx.project.modules.submodules;
 
-import java.sql.ResultSet;
 import java.io.*;
-
+import java.sql.ResultSet;
+import javafx.geometry.*;
+import javafx.project.components.*;
+import javafx.project.database.*;
+import javafx.project.enuma.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.geometry.*;
-
-import javafx.project.components.*;
-import javafx.project.database.*;
-import javafx.project.enuma.*;
 
 public class ViewDetail extends BorderPane {
+
     private final Insets PADDING = new Insets(2, 16, 4, 16);
     private int id;
     private EmpDatabase empDatabase = new EmpDatabase(AdminDatabase.getInstance().getId());

@@ -1,21 +1,22 @@
 package javafx.project.modules.submodules;
 
-import java.sql.ResultSet;
-
 import io.github.palexdev.materialfx.css.themes.*;
-
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.*;
+import java.io.*;
+import java.sql.ResultSet;
 import javafx.geometry.*;
-
 import javafx.project.components.*;
 import javafx.project.database.AdminDatabase;
 import javafx.project.enuma.*;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.*;
 
 public class AdminOption extends Pane {
+
     private Stage stage;
     private Scene scene;
 
@@ -48,6 +49,7 @@ public class AdminOption extends Pane {
     }
 
     private class MainPanel extends BorderPane {
+
         public MainPanel() {
             super();
 
@@ -69,11 +71,34 @@ public class AdminOption extends Pane {
     }
 
     private class AdminDetail extends Card {
+
         public AdminDetail() {
             super();
             super.setPrefWidth(500);
             this.setAlignment(Pos.TOP_CENTER);
             this.init();
+        }
+
+        private VBox getImageViewer() {
+            VBox box = new VBox(8);
+
+            try (ResultSet rs = AdminDatabase.getInstance().getDetail()) {
+                while (rs.next()) {
+                    InputStream stream = new FileInputStream(rs.getString("picture"));
+                    Image image = new Image(stream);
+                    ImageView imageView = new ImageView();
+                    imageView.setImage(image);
+                    imageView.setFitHeight(128);
+                    imageView.setPreserveRatio(true);
+                    box.getChildren().add(imageView);
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            } finally {
+                box.setPadding(new Insets(16, 8, 4, 8));
+                box.setAlignment(Pos.TOP_CENTER);
+                return box;
+            }
         }
 
         private void init() {
@@ -82,7 +107,7 @@ public class AdminOption extends Pane {
             Label detail_label[] = new Label[3];
 
             String detail[] = new String[3];
-            String string[] = { "Real Name: ", "Email: ", "Phone Number: " };
+            String string[] = {"Real Name: ", "Email: ", "Phone Number: "};
 
             VBox box = new VBox(16);
             box.setAlignment(Pos.TOP_CENTER);
@@ -105,8 +130,8 @@ public class AdminOption extends Pane {
 
             try (ResultSet resultSet = AdminDatabase.getInstance().getDetail()) {
                 while (resultSet.next()) {
-                    detail = new String[] { resultSet.getString("name"), resultSet.getString("email"),
-                            resultSet.getString("phone") };
+                    detail = new String[]{resultSet.getString("name"), resultSet.getString("email"),
+                        resultSet.getString("phone")};
                 }
 
                 for (int i = 0; i < detail_label.length; i++) {
@@ -115,21 +140,22 @@ public class AdminOption extends Pane {
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             } finally {
+                box.getChildren().add(this.getImageViewer());
                 for (int i = 0; i < hbox.length; i++) {
                     if (detail_label[i].getText() == null) {
-                        detail = new String[] { "N/A", "N/A", "N/A" };
+                        detail = new String[]{"N/A", "N/A", "N/A"};
                         detail_label[i].setText(detail[i]);
                     }
                     hbox[i].getChildren().addAll(label[i], detail_label[i]);
                     box.getChildren().add(hbox[i]);
                 }
             }
-
             this.getChildren().add(box);
         }
     }
 
     private class AdminUpdate extends Card {
+
         MainTextField textField;
 
         public AdminUpdate() {
@@ -141,13 +167,46 @@ public class AdminOption extends Pane {
         }
 
         private void init() {
-            textField = new MainTextField("Above");
-            this.getChildren().add(textField);
+            BorderPane toggle_box = new BorderPane();
+
+            Label label = new Label("For Security purposes");
+            label.setStyle("-fx-font-weight:bold");
+
+            MainBtn btn = new MainBtn("Unlock");
+            btn.setBgColor(Elements.INFO_COLOR.getName());
+            btn.setRippleColor(Color.web(Elements.INFO_ALT_COLOR.getName()));
+            btn.setTextColor("#fff");
+
+            toggle_box.setLeft(label);
+            toggle_box.setRight(btn);
+
+            VBox field_box = new VBox(8);
+            field_box.setAlignment(Pos.TOP_CENTER);
+
+            this.setPadding(new Insets(16, 8, 4, 8));
+
+            textField = new MainTextField("inline");
+            textField.setFloatingText("Enter the admin name:");
+
+            this.setDisable();
+
+            field_box.getChildren().addAll(textField);
+
+            this.getChildren().addAll(toggle_box, field_box);
+        }
+
+        private void setDisable() {
+            textField.setDisable(true);
+        }
+
+        private void setEnable() {
+            textField.setDisable(false);
         }
 
     }
 
     private class SideBar extends VBox {
+
         public SideBar() {
             super();
             super.setSpacing(12);
@@ -200,8 +259,8 @@ public class AdminOption extends Pane {
             Label update_icon = new ImgIcon("src/main/resources/img/briefcase.png").getIcon();
             update_icon.setPadding(new Insets(4, 8, 4, 2));
 
-            Label attend_icon = new ImgIcon("src/main/resources/img/attendence.png").getIcon();
-            attend_icon.setPadding(new Insets(4, 8, 4, 2));
+            Label log_icon = new ImgIcon("src/main/resources/img/history.png").getIcon();
+            log_icon.setPadding(new Insets(4, 8, 4, 2));
 
             btn[0].setGraphic(detail_icon);
             btn[0].setText("Admin Detail");
@@ -209,8 +268,8 @@ public class AdminOption extends Pane {
             btn[1].setGraphic(update_icon);
             btn[1].setText("Admin Update");
 
-            btn[2].setGraphic(attend_icon);
-            btn[2].setText("About us");
+            btn[2].setGraphic(log_icon);
+            btn[2].setText("Activity");
 
             new SwitchNode(AdminOption.container, btn[0]).switchNode(new AdminDetail());
             new SwitchNode(AdminOption.container, btn[1]).switchNode(new AdminUpdate());
