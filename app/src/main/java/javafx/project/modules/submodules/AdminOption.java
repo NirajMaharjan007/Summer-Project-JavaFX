@@ -97,8 +97,8 @@ public class AdminOption extends Pane {
             } finally {
                 box.setPadding(new Insets(16, 8, 4, 8));
                 box.setAlignment(Pos.TOP_CENTER);
-                return box;
             }
+            return box;
         }
 
         private void init() {
@@ -107,7 +107,7 @@ public class AdminOption extends Pane {
             Label detail_label[] = new Label[3];
 
             String detail[] = new String[3];
-            String string[] = {"Real Name: ", "Email: ", "Phone Number: "};
+            String string[] = { "Real Name: ", "Email: ", "Phone Number: " };
 
             VBox box = new VBox(16);
             box.setAlignment(Pos.TOP_CENTER);
@@ -130,8 +130,8 @@ public class AdminOption extends Pane {
 
             try (ResultSet resultSet = AdminDatabase.getInstance().getDetail()) {
                 while (resultSet.next()) {
-                    detail = new String[]{resultSet.getString("name"), resultSet.getString("email"),
-                        resultSet.getString("phone")};
+                    detail = new String[] { resultSet.getString("name"), resultSet.getString("email"),
+                            resultSet.getString("phone") };
                 }
 
                 for (int i = 0; i < detail_label.length; i++) {
@@ -143,7 +143,7 @@ public class AdminOption extends Pane {
                 box.getChildren().add(this.getImageViewer());
                 for (int i = 0; i < hbox.length; i++) {
                     if (detail_label[i].getText() == null) {
-                        detail = new String[]{"N/A", "N/A", "N/A"};
+                        detail = new String[] { "N/A", "N/A", "N/A" };
                         detail_label[i].setText(detail[i]);
                     }
                     hbox[i].getChildren().addAll(label[i], detail_label[i]);
@@ -156,7 +156,11 @@ public class AdminOption extends Pane {
 
     private class AdminUpdate extends Card {
 
+        VBox field_box, admin_box, admin_detailbox, current;
+        MainBtn next;
+
         MainTextField textField;
+        MainPasswordField passwordField;
 
         public AdminUpdate() {
             super();
@@ -167,42 +171,67 @@ public class AdminOption extends Pane {
         }
 
         private void init() {
-            BorderPane toggle_box = new BorderPane();
+            next = new MainBtn("Next");
+            next.setAlignment(Pos.CENTER);
+            next.setBgColor(Elements.INFO_COLOR.getName());
+            next.setRippleColor(Color.web(Elements.INFO_ALT_COLOR.getName()));
+            next.setTextColor("#fff");
+            next.setOnAction(event -> {
+                if (current == admin_box) {
+                    field_box.getChildren().clear();
+                    field_box.setPrefHeight(300);
+                    current = admin_detailbox;
+                } else {
+                    field_box.getChildren().clear();
+                    field_box.setPrefHeight(250);
+                    current = admin_box;
+                }
 
-            Label label = new Label("For Security purposes");
-            label.setStyle("-fx-font-weight:bold");
+                field_box.getChildren().add(current);
+            });
 
-            MainBtn btn = new MainBtn("Unlock");
-            btn.setBgColor(Elements.INFO_COLOR.getName());
-            btn.setRippleColor(Color.web(Elements.INFO_ALT_COLOR.getName()));
-            btn.setTextColor("#fff");
-
-            toggle_box.setLeft(label);
-            toggle_box.setRight(btn);
-
-            VBox field_box = new VBox(8);
+            field_box = new VBox(8);
             field_box.setAlignment(Pos.TOP_CENTER);
 
+            HBox toggle_box = new HBox(8);
+            toggle_box.setAlignment(Pos.CENTER_RIGHT);
+            toggle_box.getChildren().add(next);
+
+            this.initAdminChange();
+            this.initAdminDetailChange();
+
+            current = admin_box;
+            field_box.getChildren().clear();
+            field_box.setPrefHeight(250);
+            field_box.getChildren().add(current);
+
             this.setPadding(new Insets(16, 8, 4, 8));
+            this.getChildren().addAll(toggle_box, field_box);
+        }
+
+        private void initAdminChange() {
+
+            admin_box = new VBox(16);
+            admin_box.setAlignment(Pos.BASELINE_CENTER);
+
+            Label label = new Label("Change admin name and password");
+            label.setStyle("-fx-font-weight:bold");
+            label.setAlignment(Pos.CENTER);
 
             textField = new MainTextField("inline");
             textField.setFloatingText("Enter the admin name:");
 
-            this.setDisable();
+            passwordField = new MainPasswordField("inline");
+            passwordField.setFloatingText("Enter the admin name:");
 
-            field_box.getChildren().addAll(textField);
-
-            this.getChildren().addAll(toggle_box, field_box);
+            admin_box.getChildren().addAll(label, textField, passwordField);
         }
 
-        private void setDisable() {
-            textField.setDisable(true);
-        }
+        private void initAdminDetailChange() {
+            admin_detailbox = new VBox(16);
 
-        private void setEnable() {
-            textField.setDisable(false);
+            admin_detailbox.getChildren().addAll(new Label("GG Test"));
         }
-
     }
 
     private class SideBar extends VBox {
