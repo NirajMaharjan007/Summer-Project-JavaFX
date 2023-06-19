@@ -179,11 +179,11 @@ public class AdminOption extends Pane {
             next.setOnAction(event -> {
                 if (current == admin_box) {
                     field_box.getChildren().clear();
-                    field_box.setPrefHeight(300);
+                    field_box.setPrefHeight(280);
                     current = admin_detailbox;
                 } else {
                     field_box.getChildren().clear();
-                    field_box.setPrefHeight(250);
+                    field_box.setPrefHeight(225);
                     current = admin_box;
                 }
 
@@ -210,13 +210,26 @@ public class AdminOption extends Pane {
         }
 
         private void initAdminChange() {
-
             admin_box = new VBox(16);
-            admin_box.setAlignment(Pos.BASELINE_CENTER);
+            admin_box.setAlignment(Pos.TOP_CENTER);
+
+            HBox box = new HBox(10);
+            box.setAlignment(Pos.BASELINE_CENTER);
 
             Label label = new Label("Change admin name and password");
             label.setStyle("-fx-font-weight:bold");
             label.setAlignment(Pos.CENTER);
+
+            Label icon = new ImgIcon("src/main/resources/img/check-mark.png").getIcon();
+            icon.setPadding(new Insets(1, 8, 1, 2));
+
+            MainBtn save = new MainBtn("Save");
+            save.setBgColor(Elements.SUCCESS_COLOR.getName());
+            save.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
+            save.setTextColor("#fff");
+            save.setGraphic(icon);
+
+            box.getChildren().addAll(save);
 
             textField = new MainTextField("inline");
             textField.setFloatingText("Enter the admin name:");
@@ -224,13 +237,40 @@ public class AdminOption extends Pane {
             passwordField = new MainPasswordField("inline");
             passwordField.setFloatingText("Enter the admin name:");
 
-            admin_box.getChildren().addAll(label, textField, passwordField);
+            admin_box.getChildren().addAll(label, textField, passwordField, box);
         }
 
         private void initAdminDetailChange() {
             admin_detailbox = new VBox(16);
+            admin_detailbox.setAlignment(Pos.TOP_CENTER);
 
-            admin_detailbox.getChildren().addAll(new Label("GG Test"));
+            HBox box = new HBox(10);
+            box.setAlignment(Pos.BASELINE_CENTER);
+
+            MainTextField name = new MainTextField("inline");
+            MainTextField email = new MainTextField("inline");
+            MainTextField phone = new MainTextField("inline");
+
+            name.setFloatingText("Enter your real name:");
+            email.setFloatingText("Enter your email:");
+            phone.setFloatingText("Enter your phone:");
+
+            Label label = new Label("Change your detail");
+            label.setStyle("-fx-font-weight:bold");
+            label.setAlignment(Pos.CENTER);
+
+            Label icon = new ImgIcon("src/main/resources/img/check-mark.png").getIcon();
+            icon.setPadding(new Insets(1, 8, 1, 2));
+
+            MainBtn save = new MainBtn("Save");
+            save.setBgColor(Elements.SUCCESS_COLOR.getName());
+            save.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
+            save.setTextColor("#fff");
+            save.setGraphic(icon);
+
+            box.getChildren().addAll(save);
+
+            admin_detailbox.getChildren().addAll(label, name, email, phone, box);
         }
     }
 
