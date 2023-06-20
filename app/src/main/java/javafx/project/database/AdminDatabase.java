@@ -74,6 +74,13 @@ public class AdminDatabase {
             System.err.println(e.getMessage());
             return null;
         }
+    }
 
+    public int updateAdmin(String admin, String password) throws SQLException {
+        String sql = "update admin set name=?, password=? where id=" + getId();
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, admin);
+        statement.setString(2, password);
+        return statement.executeUpdate();
     }
 }

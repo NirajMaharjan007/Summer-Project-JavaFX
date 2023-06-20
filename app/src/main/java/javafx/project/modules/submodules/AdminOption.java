@@ -9,6 +9,7 @@ import javafx.project.database.AdminDatabase;
 import javafx.project.enuma.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -202,7 +203,7 @@ public class AdminOption extends Pane {
 
             current = admin_box;
             field_box.getChildren().clear();
-            field_box.setPrefHeight(250);
+            field_box.setPrefHeight(225);
             field_box.getChildren().add(current);
 
             this.setPadding(new Insets(16, 8, 4, 8));
@@ -216,6 +217,12 @@ public class AdminOption extends Pane {
             HBox box = new HBox(10);
             box.setAlignment(Pos.BASELINE_CENTER);
 
+            textField = new MainTextField("inline");
+            textField.setFloatingText("Enter the admin name:");
+
+            passwordField = new MainPasswordField("inline");
+            passwordField.setFloatingText("Enter the admin password:");
+
             Label label = new Label("Change admin name and password");
             label.setStyle("-fx-font-weight:bold");
             label.setAlignment(Pos.CENTER);
@@ -228,14 +235,41 @@ public class AdminOption extends Pane {
             save.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
             save.setTextColor("#fff");
             save.setGraphic(icon);
+            save.setOnAction(event -> {
+                Alert alert = new Alert(null);
+                try {
+                    String admin = textField.getText(), password = passwordField.getText();
+                    boolean flag = admin != null && password != null && !admin.isBlank() && !password.isBlank();
+                    if (flag) {
+                        int i = AdminDatabase.getInstance().updateAdmin(admin, password);
+                        if (i > -1) {
+                            alert.setAlertType(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Success");
+                            alert.setHeaderText("Success to Update");
+                            alert.setContentText("Required to logout.");
+                            System.out.println("Done");
+                        } else {
+                            alert.setAlertType(Alert.AlertType.ERROR);
+                            alert.setTitle("Failed");
+                            alert.setHeaderText("Failed to Update");
+                            alert.setContentText("Try another time.");
+                            System.out.println("Failed");
+                        }
+                    } else {
+                        alert.setAlertType(Alert.AlertType.WARNING);
+                        alert.setTitle("Failed");
+                        alert.setHeaderText("Failed to Update");
+                        alert.setContentText("Either admin field is blank or password field is blank");
+                        System.out.println("Blank");
+                    }
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                } finally {
+                    alert.showAndWait();
+                }
+            });
 
             box.getChildren().addAll(save);
-
-            textField = new MainTextField("inline");
-            textField.setFloatingText("Enter the admin name:");
-
-            passwordField = new MainPasswordField("inline");
-            passwordField.setFloatingText("Enter the admin name:");
 
             admin_box.getChildren().addAll(label, textField, passwordField, box);
         }
@@ -275,7 +309,6 @@ public class AdminOption extends Pane {
     }
 
     private class SideBar extends VBox {
-
         public SideBar() {
             super();
             super.setSpacing(12);
