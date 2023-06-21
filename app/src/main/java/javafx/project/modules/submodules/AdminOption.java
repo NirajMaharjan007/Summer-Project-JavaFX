@@ -9,7 +9,6 @@ import javafx.project.database.AdminDatabase;
 import javafx.project.enuma.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -248,6 +247,7 @@ public class AdminOption extends Pane {
                             alert.setHeaderText("Success to Update");
                             alert.setContentText("Required to logout.");
                             System.out.println("Done");
+                            stage.close();
                         } else {
                             alert.setAlertType(Alert.AlertType.ERROR);
                             alert.setTitle("Failed");
@@ -265,7 +265,7 @@ public class AdminOption extends Pane {
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
                 } finally {
-                    alert.showAndWait();
+                    alert.show();
                 }
             });
 
