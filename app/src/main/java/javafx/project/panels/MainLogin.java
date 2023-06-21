@@ -1,6 +1,9 @@
 package javafx.project.panels;
 
+import java.io.*;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javafx.event.*;
 import javafx.geometry.*;
@@ -25,6 +28,10 @@ public class MainLogin extends VBox {
 
     Stage stage;
 
+    SimpleDateFormat formatter;
+    Date date;
+    String dateString;
+
     public MainLogin(Stage stage) {
         super();
         super.setPadding(new Insets(8, 16, 8, 16));
@@ -34,10 +41,23 @@ public class MainLogin extends VBox {
         passwordField = new MainPasswordField();
         adminField = new MainTextField();
 
+        formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        date = new Date();
+        dateString = formatter.format(date);
+
         if (data != null)
             init();
         else
             failed();
+    }
+
+    private void log(String text) {
+        try (FileWriter writer = new FileWriter(new File("src/main/resources/log/activity.log"), true)) {
+            writer.write(text + "\n");
+            writer.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     private void failed() {
@@ -116,6 +136,10 @@ public class MainLogin extends VBox {
                     new Dashboard(stage);
                     System.out.println("Login");
                     stage.close();
+
+                    String text = "Logged in: " + adminField.getText() +
+                            "\nTime: " + dateString;
+                    log(text + "\n");
                 } else if (data == null) {
                     System.err.println("Can't connect to the database");
                     Alert alert = new Alert(AlertType.WARNING);
@@ -130,6 +154,8 @@ public class MainLogin extends VBox {
                     alert.setHeaderText("Invalid Credentials");
                     alert.setContentText("Please try again");
                     alert.show();
+                    String text = "Logged in failed:\nTime: " + dateString;
+                    log(text + "\n\n");
                 }
             }
         }
@@ -144,7 +170,11 @@ public class MainLogin extends VBox {
                 passwordField.setText("");
                 new Dashboard(stage);
                 stage.close();
+
                 System.out.println("Login");
+                String text = "Logged in: " + adminField.getText() +
+                        "\nTime: " + dateString;
+                log(text + "\n");
             } else if (data == null) {
                 System.err.println("Can't connect to the database");
                 Alert alert = new Alert(AlertType.WARNING);
@@ -159,6 +189,9 @@ public class MainLogin extends VBox {
                 alert.setHeaderText("Invalid Credentials");
                 alert.setContentText("Please try again");
                 alert.show();
+
+                String text = "Logged in failed:\nTime: " + dateString;
+                log(text + "\n\n");
             }
         }
     }
