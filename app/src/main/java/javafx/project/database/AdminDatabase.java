@@ -1,6 +1,7 @@
 package javafx.project.database;
 
 import java.sql.*;
+import java.util.Random;
 
 public class AdminDatabase {
     private static AdminDatabase instances;
@@ -82,5 +83,45 @@ public class AdminDatabase {
         statement.setString(1, admin);
         statement.setString(2, password);
         return statement.executeUpdate();
+    }
+
+    public int updateAdminDetail(String name, String email, String phone) throws SQLException {
+        boolean flag = isNullAdminDetail();
+        int id = new Random().nextInt(16, Integer.MAX_VALUE);
+        String sql = "";
+
+        if (flag) {
+            sql = "insert into admin_detail values(?,?,?,?,?,?)";
+        } else {
+            sql = "update admin_detail set id=?, picture=?,name=?,email=?,phone=? where id=?";
+        }
+
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, id);
+        statement.setString(2, "src/main/resources/img/uploads/default-pic.png");
+        statement.setString(3, name);
+        statement.setString(4, email);
+        statement.setString(5, phone);
+        statement.setInt(6, getId());
+        return statement.executeUpdate();
+    }
+
+    private boolean isNullAdminDetail() {
+        try (Statement statement = conn.createStatement()) {
+            String sql = "SELECT COUNT(*) FROM admin_detail where admin_id=" + getId();
+            ResultSet rs = statement.executeQuery(sql);
+            rs.next();
+            int rowCount = rs.getInt(1);
+            if (rowCount == 0) {
+                System.out.println("admin_detail is empty");
+                return false;
+            } else {
+                System.out.println("admin_detail is not empty");
+                return true;
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
     }
 }

@@ -301,6 +301,40 @@ public class AdminOption extends Pane {
             save.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
             save.setTextColor("#fff");
             save.setGraphic(icon);
+            save.setOnAction(event -> {
+                Alert alert = new Alert(null);
+                String name_text = name.getText(), email_text = email.getText(),
+                        phone_text = phone.getText();
+                try {
+                    if (!name_text.isBlank() && !email_text.isBlank() && !phone_text.isBlank()) {
+                        int i = AdminDatabase.getInstance().updateAdminDetail(name_text, email_text, phone_text);
+                        if (i > -1) {
+                            alert.setAlertType(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Success");
+                            alert.setHeaderText("Success to Update your detail");
+                            alert.setContentText("Required to logout.");
+                            System.out.println("Done");
+                            stage.close();
+                        } else {
+                            alert.setAlertType(Alert.AlertType.ERROR);
+                            alert.setTitle("Failed");
+                            alert.setHeaderText("Failed to Update");
+                            alert.setContentText("Try another time");
+                            System.out.println("Failed");
+                        }
+                    } else {
+                        alert.setAlertType(Alert.AlertType.WARNING);
+                        alert.setTitle("Failed");
+                        alert.setHeaderText("Failed to Update");
+                        alert.setContentText("The Field is blank\nPlease Check it");
+                        System.out.println("Blank");
+                    }
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                } finally {
+                    alert.show();
+                }
+            });
 
             box.getChildren().addAll(save);
 
