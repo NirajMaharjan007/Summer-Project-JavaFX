@@ -1,9 +1,6 @@
 package javafx.project.panels;
 
-import java.io.*;
 import java.sql.Connection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javafx.event.*;
 import javafx.geometry.*;

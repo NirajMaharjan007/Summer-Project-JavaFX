@@ -69,7 +69,7 @@ public class EmployeeModule extends VBox {
         scrollPanel.setFitToHeight(true);
         scrollPanel.setFitToWidth(true);
         scrollPanel.setMinViewportWidth(400);
-        scrollPanel.setMinViewportHeight(360);
+        scrollPanel.setMinViewportHeight(560);
         scrollPanel.setContent(emp_box);
 
         Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
