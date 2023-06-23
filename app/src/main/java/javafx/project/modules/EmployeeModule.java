@@ -28,6 +28,8 @@ public class EmployeeModule extends VBox {
     private ScrollPanel scrollPanel = new ScrollPanel();
     private EmployeeBox emp_box = new EmployeeBox();
 
+    public static MainBtn exit = new MainBtn("Exit");
+
     public EmployeeModule() {
         super();
         super.setSpacing(16);

@@ -2,18 +2,21 @@ package javafx.project.modules.submodules;
 
 import java.io.*;
 import java.sql.ResultSet;
+
+import javafx.scene.paint.Color;
 import javafx.geometry.*;
+
 import javafx.project.components.*;
 import javafx.project.database.*;
 import javafx.project.enuma.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.project.modules.EmployeeModule;
 
 public class ViewDetail extends BorderPane {
-
-    private final Insets PADDING = new Insets(2, 16, 4, 16);
+    private MainBtn exit = EmployeeModule.exit;
+    private final Insets PADDING = new Insets(4, 16, 8, 16);
     private int id;
     private EmpDatabase empDatabase = new EmpDatabase(AdminDatabase.getInstance().getId());
 
@@ -48,15 +51,15 @@ public class ViewDetail extends BorderPane {
         gridPane.setVgap(32);
 
         VBox image_box = new VBox(16);
-        // image_box.setPadding(new Insets(4, 16, 8, 8));
-        image_box.setAlignment(Pos.CENTER_RIGHT);
+        image_box.setPadding(new Insets(4, 16, 6, 4));
+        image_box.setAlignment(Pos.CENTER);
 
-        BorderPane pane = new BorderPane();
+        FlowPane pane = new FlowPane(Orientation.HORIZONTAL);
         pane.setPadding(PADDING);
-        pane.setCenter(gridPane);
+        pane.setAlignment(Pos.CENTER);
 
         Card card = new Card(pane);
-        card.setPadding(new Insets(16, 4, 16, 4));
+        card.setPadding(new Insets(16, 8, 16, 8));
         card.setMinHeight(265);
 
         VBox center = new VBox(6, card);
@@ -67,7 +70,14 @@ public class ViewDetail extends BorderPane {
         update_btn.setTextColor("#FFF");
         update_btn.setRippleColor(Color.web("#AFD3E2"));
 
-        HBox btn_box = new HBox(16, update_btn);
+        exit.setBgColor(Elements.DANGER_COLOR.getName());
+        exit.setTextColor("#FFF");
+        exit.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
+        exit.setOnAction(event -> {
+            EmployeeModule.stage.close();
+        });
+
+        HBox btn_box = new HBox(16, update_btn, exit);
         btn_box.setPadding(PADDING);
         btn_box.setAlignment(Pos.BASELINE_CENTER);
         int row = 0, col = 0;
@@ -121,7 +131,7 @@ public class ViewDetail extends BorderPane {
                 }
 
                 image_box.getChildren().add(imageView);
-                pane.setLeft(image_box);
+                pane.getChildren().addAll(image_box, gridPane);
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
