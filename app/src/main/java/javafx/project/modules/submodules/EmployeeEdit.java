@@ -82,7 +82,7 @@ public class EmployeeEdit extends BorderPane {
             if (this.isEmpty()) {
                 if (data.setData(name.getText(), department.getText(), address.getText(), salary.getText(),
                         gender_text) > -1) {
-                    Alert alert = new Alert(AlertType.CONFIRMATION);
+                    Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Succeed");
                     alert.setHeaderText("successfully added employee");
                     alert.setContentText("Required to Refresh");
