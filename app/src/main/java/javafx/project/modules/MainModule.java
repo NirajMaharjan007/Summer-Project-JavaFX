@@ -1,6 +1,7 @@
 package javafx.project.modules;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -38,6 +39,8 @@ public class MainModule extends VBox {
         VBox.setVgrow(box, Priority.ALWAYS);
         VBox.setMargin(box, new Insets(16, 4, 8, 4));
 
+        box.setAlignment(Pos.CENTER);
+
         refresh.setAlignment(Pos.BASELINE_CENTER);
         refresh.setGraphic(refresh_icon);
         refresh.setBgColor("#36cee6");
@@ -58,29 +61,30 @@ public class MainModule extends VBox {
         }
     }
 
-    private class Pane extends GridPane {
+    private class Pane extends FlowPane {
         private BorderPane[] pane = new BorderPane[2];
 
         private Card[] card = new Card[2];
 
+        final Insets PADDING = new Insets(4, 8, 6, 8);
+
         public Pane() {
             super();
-
-            Insets padding = new Insets(4, 8, 6, 8);
-
-            super.setPadding(padding);
+            super.setPadding(PADDING);
+            super.setOrientation(Orientation.HORIZONTAL);
             super.getStylesheets().add(MainStyle.ALT_STYLESHEET.getLocation());
 
             for (int i = 0; i < 2; i++) {
                 pane[i] = new BorderPane();
-                pane[i].setPadding(padding);
+                pane[i].setPadding(PADDING);
 
                 card[i] = new Card();
-                card[i].setPadding(padding);
+                card[i].setPadding(PADDING);
                 card[i].setBgColor("#C7E0EA");
             }
 
             this.init();
+            super.autosize();
         }
 
         private void init() {
@@ -137,7 +141,7 @@ public class MainModule extends VBox {
 
             for (int i = 0; i < 2; i++) {
                 card[i].getChildren().add(pane[i]);
-                this.add(card[i], i, 0);
+                this.getChildren().add(card[i]);
             }
 
         }

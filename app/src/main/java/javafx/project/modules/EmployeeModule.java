@@ -71,7 +71,7 @@ public class EmployeeModule extends VBox {
         scrollPanel.setFitToHeight(true);
         scrollPanel.setFitToWidth(true);
         scrollPanel.setMinViewportWidth(400);
-        scrollPanel.setMinViewportHeight(560);
+        scrollPanel.setMinViewportHeight(480);
         scrollPanel.setContent(emp_box);
 
         Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
@@ -98,19 +98,15 @@ public class EmployeeModule extends VBox {
         this.getChildren().addAll(header1, box, scrollPanel);
     }
 
-    private class EmployeeBox extends GridPane {
+    private class EmployeeBox extends FlowPane {
         public EmployeeBox() {
             super();
-            GridPane.setVgrow(this, Priority.ALWAYS);
-            GridPane.setHgrow(this, Priority.ALWAYS);
-            GridPane.setFillWidth(this, true);
-            GridPane.setFillHeight(this, true);
-            GridPane.setMargin(this, new Insets(16));
 
-            super.setPadding(new Insets(8, 32, 16, 32));
+            super.setOrientation(Orientation.HORIZONTAL);
+            super.setPadding(new Insets(8, 16, 12, 16));
+            super.setMaxSize(Dashboard.getStage().getMaxWidth(), Dashboard.getStage().getMaxHeight());
             super.setMinWidth(Dashboard.getStage().getMinWidth());
             super.setPrefHeight(Dashboard.getStage().getHeight());
-            super.setMaxSize(Dashboard.getStage().getMaxWidth(), Dashboard.getStage().getMaxHeight());
 
             this.init();
         }
@@ -146,18 +142,20 @@ public class EmployeeModule extends VBox {
                     if (response == ButtonType.OK) {
                         if (empData.deleteEmployee(String.valueOf(this.id)) > -1)
                             System.out.println(this.id + ":Id is deleted");
+                        Alert info = new Alert(Alert.AlertType.INFORMATION);
+                        info.setTitle("Information");
+                        info.setHeaderText("Required to Refresh");
+                        info.show();
                     } else {
                         alert.close();
                     }
                 });
             }
-
         }
 
         private void employeeCards() {
             List<Card> card_list = new ArrayList<>();
 
-            int row = 0, col = 0;
             try (ResultSet data = new EmpDatabase(adminId).getData();) {
                 while (data.next()) {
                     Card card = new Card();
@@ -186,28 +184,18 @@ public class EmployeeModule extends VBox {
                     box.autosize();
 
                     card.setAlignment(Pos.TOP_LEFT);
-                    card.setSpacing(12);
-                    card.setMinWidth(180);
+                    card.setSpacing(16);
+                    card.setMinWidth(200);
                     card.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                     card.setPadding(new Insets(16));
-                    card.getChildren().addAll(id, name, department, address, salary, gender,
-                            box);
+                    card.getChildren().addAll(id, name, department, address, salary,
+                            gender, box);
                     card_list.add(card);
                 }
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
-
-            for (int i = 0; i < card_list.size(); i++) {
-                if (col == 3) {
-                    row++;
-                    col = 0;
-                }
-
-                this.add(card_list.get(i), col, row);
-                col++;
-            }
-
+            this.getChildren().addAll(card_list);
         }
     }
 

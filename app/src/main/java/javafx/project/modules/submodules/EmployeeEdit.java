@@ -84,7 +84,8 @@ public class EmployeeEdit extends BorderPane {
                         gender_text) > -1) {
                     Alert alert = new Alert(AlertType.CONFIRMATION);
                     alert.setTitle("Succeed");
-                    alert.setHeaderText("successfully added employee\nRequired to Refresh");
+                    alert.setHeaderText("successfully added employee");
+                    alert.setContentText("Required to Refresh");
                     alert.showAndWait();
                 } else {
                     Alert alert = new Alert(AlertType.ERROR);
