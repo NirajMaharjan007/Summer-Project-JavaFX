@@ -119,7 +119,8 @@ public class MainLogin extends VBox {
                     new Dashboard(stage);
                     System.out.println("Login");
                     stage.close();
-                    log.setLog("Logged in by admin: " + adminField.getText());
+                    log.setLog("Logged in by admin: " + adminField.getText() + " Id =>"
+                            + AdminDatabase.getInstance().getId());
                 } else if (data == null) {
                     System.err.println("Can't connect to the database");
                     Alert alert = new Alert(AlertType.WARNING);
@@ -150,7 +151,8 @@ public class MainLogin extends VBox {
                 new Dashboard(stage);
                 System.out.println("Login");
                 stage.close();
-                log.setLog("Logged in by admin: " + adminField.getText());
+                log.setLog("Logged in by admin: " + adminField.getText() + " Id =>"
+                        + AdminDatabase.getInstance().getId());
             } else if (data == null) {
                 System.err.println("Can't connect to the database");
                 Alert alert = new Alert(AlertType.WARNING);
