@@ -306,26 +306,47 @@ public class AdminOption extends Pane {
                 String name_text = name.getText(), email_text = email.getText(),
                         phone_text = phone.getText();
                 try {
+                    int i = -1;
                     if (!name_text.isBlank() && !email_text.isBlank() && !phone_text.isBlank()) {
-                        int i = AdminDatabase.getInstance().updateAdminDetail(name_text, email_text, phone_text);
-                        if (i > -1) {
-                            alert.setAlertType(Alert.AlertType.INFORMATION);
-                            alert.setTitle("Success");
-                            alert.setHeaderText("Success to Update your detail");
-                            alert.setContentText("Required to logout.");
-                            System.out.println("Done");
-                            stage.close();
+                        if (AdminDatabase.getInstance().isNullAdminDetail() == false) {
+                            i = AdminDatabase.getInstance().insertAdminDetail(name_text,
+                                    email_text, phone_text);
+                            if (i > -1) {
+                                alert.setAlertType(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Success");
+                                alert.setHeaderText("Success to Insert your detail");
+                                alert.setContentText("Required to logout.");
+                                System.out.println("Inserted");
+                                stage.close();
+                            } else {
+                                alert.setAlertType(Alert.AlertType.ERROR);
+                                alert.setTitle("Failed");
+                                alert.setHeaderText("Failed to Insert");
+                                alert.setContentText("Try another time");
+                                System.out.println("Failed");
+                            }
                         } else {
-                            alert.setAlertType(Alert.AlertType.ERROR);
-                            alert.setTitle("Failed");
-                            alert.setHeaderText("Failed to Update");
-                            alert.setContentText("Try another time");
-                            System.out.println("Failed");
+                            i = AdminDatabase.getInstance().updateAdminDetail(name_text,
+                                    email_text, phone_text);
+                            if (i > -1) {
+                                alert.setAlertType(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Success");
+                                alert.setHeaderText("Success to Updated your detail");
+                                alert.setContentText("Required to logout.");
+                                System.out.println("updated");
+                                stage.close();
+                            } else {
+                                alert.setAlertType(Alert.AlertType.ERROR);
+                                alert.setTitle("Failed");
+                                alert.setHeaderText("Failed to Updated");
+                                alert.setContentText("Try another time");
+                                System.out.println("Failed");
+                            }
                         }
                     } else {
                         alert.setAlertType(Alert.AlertType.WARNING);
                         alert.setTitle("Failed");
-                        alert.setHeaderText("Failed to Update");
+                        alert.setHeaderText("Failed to Do");
                         alert.setContentText("The Field is blank\nPlease Check it");
                         System.out.println("Blank");
                     }
