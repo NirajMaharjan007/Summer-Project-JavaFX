@@ -42,21 +42,20 @@ public class ViewDetail extends BorderPane {
 
     private void atCenter() {
         GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(8, 12, 4, 16));
-        gridPane.setAlignment(Pos.CENTER);
-        gridPane.setHgap(32);
+        gridPane.setPadding(new Insets(16, 6, 4, 6));
+        gridPane.setAlignment(Pos.BASELINE_CENTER);
+        gridPane.setHgap(16);
         gridPane.setVgap(32);
 
-        VBox image_box = new VBox(16);
-        // image_box.setPadding(new Insets(4, 16, 8, 8));
-        image_box.setAlignment(Pos.CENTER_RIGHT);
+        FlowPane image_box = new FlowPane();
+        image_box.setOrientation(Orientation.HORIZONTAL);
+        image_box.setAlignment(Pos.CENTER);
 
         BorderPane pane = new BorderPane();
-        pane.setPadding(PADDING);
+        BorderPane.setAlignment(pane, Pos.CENTER);
         pane.setCenter(gridPane);
 
         Card card = new Card(pane);
-        card.setPadding(new Insets(16, 4, 16, 4));
         card.setMinHeight(265);
 
         VBox center = new VBox(6, card);
