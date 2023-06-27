@@ -46,8 +46,8 @@ public class Attendence extends VBox {
         VBox inner_container = new VBox();
         VBox.setVgrow(inner_container, Priority.ALWAYS);
         inner_container.setAlignment(Pos.TOP_CENTER);
-        inner_container.setPadding(new Insets(16));
-        inner_container.setMinHeight(360);
+        inner_container.setPadding(new Insets(8));
+        inner_container.setMinHeight(380);
         inner_container.getChildren().addAll(new Panel());
 
         this.getChildren().addAll(header, btn_box, inner_container);
@@ -63,24 +63,7 @@ public class Attendence extends VBox {
             this.init();
         }
 
-        private void init() {
-            ScrollPanel scrollPane = new ScrollPanel();
-            VBox.setVgrow(scrollPane, Priority.ALWAYS);
-            VBox.setMargin(scrollPane, new Insets(4));
-            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            scrollPane.setFitToHeight(true);
-            scrollPane.setFitToWidth(true);
-            scrollPane.setMinViewportHeight(300);
-
-            table = new TableView<Employee>();
-            TableColumn<Employee, Integer> idColumn = new TableColumn<>("ID");
-            TableColumn<Employee, String> nameCol = new TableColumn<>("Name");
-            TableColumn<Employee, String> departmentCol = new TableColumn<>("Department");
-
-            idColumn.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("id"));
-            nameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
-            departmentCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("department"));
-
+        private void fetchData() {
             int adminId = AdminDatabase.getInstance().getId();
             try (ResultSet rs = new EmpDatabase(adminId).getData()) {
                 while (rs.next()) {
@@ -92,30 +75,49 @@ public class Attendence extends VBox {
                 }
             } catch (Exception e) {
                 System.err.println(e.getMessage());
-            } finally {
-                table.setTableMenuButtonVisible(true);
-                table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-                table.getColumns().add(idColumn);
-                table.getColumns().add(nameCol);
-                table.getColumns().add(departmentCol);
-                table.getColumns().forEach(column -> {
-                    column.setMinWidth(32);
-                    column.setEditable(false);
-                    column.setStyle("-fx-alignment: TOP_CENTER");
-                });
-
-                table.autosize();
-
-                scrollPane.setContent(table);
-
-                this.getChildren().add(scrollPane);
-
-                refresh.setOnAction(event -> {
-                    data.clear();
-                    System.out.println("Attendence.Panel.init() GG");
-                });
             }
+        }
 
+        private void init() {
+            ScrollPanel scrollPane = new ScrollPanel();
+            VBox.setVgrow(scrollPane, Priority.ALWAYS);
+            VBox.setMargin(scrollPane, new Insets(4));
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setFitToHeight(true);
+            scrollPane.setFitToWidth(true);
+            scrollPane.setMinViewportHeight(360);
+
+            table = new TableView<Employee>();
+            TableColumn<Employee, Integer> idColumn = new TableColumn<>("ID");
+            TableColumn<Employee, String> nameCol = new TableColumn<>("Name");
+            TableColumn<Employee, String> departmentCol = new TableColumn<>("Department");
+
+            idColumn.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("id"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
+            departmentCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("department"));
+
+            table.setTableMenuButtonVisible(true);
+            table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+            table.getColumns().add(idColumn);
+            table.getColumns().add(nameCol);
+            table.getColumns().add(departmentCol);
+            table.getColumns().forEach(column -> {
+                column.setMinWidth(32);
+                column.setEditable(false);
+                column.setStyle("-fx-alignment: TOP_CENTER");
+            });
+            table.autosize();
+
+            scrollPane.setContent(table);
+
+            this.fetchData();
+            this.getChildren().add(scrollPane);
+
+            refresh.setOnAction(event -> {
+                table.getItems().clear();
+                this.fetchData();
+                System.out.println("Attendence.Panel.init()=> Updated");
+            });
         }
     }
 }

@@ -52,7 +52,7 @@ public class EmployeeUpdate extends Card {
         stage.setResizable(false);
         stage.setAlwaysOnTop(false);
         stage.setScene(scene);
-        stage.setTitle("Create Employee");
+        stage.setTitle("Update Employee");
     }
 
     public void show() {
@@ -113,6 +113,13 @@ public class EmployeeUpdate extends Card {
                 department.setText(data.getString("department"));
                 address.setText(data.getString("address"));
                 salary.setText(data.getString("salary"));
+
+                String text = data.getString("gender");
+
+                if (text.equalsIgnoreCase("male"))
+                    male.setSelected(true);
+                else
+                    female.setSelected(true);
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());

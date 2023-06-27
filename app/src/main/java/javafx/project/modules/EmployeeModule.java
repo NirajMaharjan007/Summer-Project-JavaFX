@@ -65,14 +65,14 @@ public class EmployeeModule extends VBox {
             new CreateEmployee().show();
         });
 
-        VBox.setVgrow(scrollPanel, Priority.ALWAYS);
         scrollPanel.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPanel.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPanel.setFitToHeight(true);
-        scrollPanel.setFitToWidth(true);
         scrollPanel.setMinViewportWidth(400);
         scrollPanel.setMinViewportHeight(480);
+        scrollPanel.setFitToHeight(true);
+        scrollPanel.setFitToWidth(true);
         scrollPanel.setContent(emp_box);
+        VBox.setVgrow(scrollPanel, Priority.ALWAYS);
 
         Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
         refresh_icon.setPadding(new Insets(1, 8, 1, 2));
@@ -244,8 +244,6 @@ public class EmployeeModule extends VBox {
     }
 
     private class CreateEmployee extends VBox {
-        Stage stage;
-
         EmployeeEdit edit = new EmployeeEdit();
 
         public CreateEmployee() {

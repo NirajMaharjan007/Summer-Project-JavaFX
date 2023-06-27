@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.project.components.*;
 import javafx.project.database.*;
 import javafx.project.enuma.Elements;
+import javafx.project.modules.EmployeeModule;
 
 public class EmployeeEdit extends BorderPane {
     MainTextField name;
@@ -96,8 +97,15 @@ public class EmployeeEdit extends BorderPane {
             }
         });
 
+        MainBtn cancel = new MainBtn("Cancel");
+        cancel.setBgColor(Elements.DANGER_COLOR.getName());
+        cancel.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
+        cancel.setTextColor("White");
+
+        cancel.setOnAction(event -> EmployeeModule.stage.close());
+
         hbox.setAlignment(Pos.BASELINE_CENTER);
-        hbox.getChildren().add(save);
+        hbox.getChildren().addAll(save, cancel);
 
         box.setPadding(new Insets(25, 16, 12, 16));
         box.setAlignment(Pos.CENTER);
