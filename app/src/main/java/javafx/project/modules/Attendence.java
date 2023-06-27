@@ -40,21 +40,23 @@ public class Attendence extends VBox {
         refresh.setBgColor("#36cee6");
         refresh.setTextColor("#fff");
         refresh.setRippleColor(Color.web("#84DED2"));
-        refresh.setOnAction(event -> {
-            System.out.println("Attendence.Panel.init()\tRefreshed");
-        });
 
         btn_box.getChildren().addAll(refresh);
 
         VBox inner_container = new VBox();
-        inner_container.setAlignment(Pos.TOP_LEFT);
-
+        VBox.setVgrow(inner_container, Priority.ALWAYS);
+        inner_container.setAlignment(Pos.TOP_CENTER);
+        inner_container.setPadding(new Insets(16));
+        inner_container.setMinHeight(360);
         inner_container.getChildren().addAll(new Panel());
 
         this.getChildren().addAll(header, btn_box, inner_container);
     }
 
     private class Panel extends VBox {
+        TableView<Employee> table;
+        ObservableList<Employee> data;
+
         public Panel() {
             super();
             this.setAlignment(Pos.TOP_CENTER);
@@ -62,44 +64,57 @@ public class Attendence extends VBox {
         }
 
         private void init() {
-            ObservableList<Employee> data = FXCollections.observableArrayList(
-                    new Employee(5, "Niraj maharjan", "GG"));
+            ScrollPanel scrollPane = new ScrollPanel();
+            VBox.setVgrow(scrollPane, Priority.ALWAYS);
+            VBox.setMargin(scrollPane, new Insets(4));
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setFitToHeight(true);
+            scrollPane.setFitToWidth(true);
+            scrollPane.setMinViewportHeight(300);
 
-            TableView<Employee> table = new TableView<>();
+            table = new TableView<Employee>();
             TableColumn<Employee, Integer> idColumn = new TableColumn<>("ID");
             TableColumn<Employee, String> nameCol = new TableColumn<>("Name");
             TableColumn<Employee, String> departmentCol = new TableColumn<>("Department");
 
-            idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-            nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-            departmentCol.setCellValueFactory(new PropertyValueFactory<>("department"));
+            idColumn.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("id"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
+            departmentCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("department"));
 
-            // Set the editable property of each column to false
-            idColumn.setEditable(false);
-            nameCol.setEditable(false);
-            departmentCol.setEditable(false);
-            departmentCol.setMaxWidth(1f * Integer.MAX_VALUE);
+            int adminId = AdminDatabase.getInstance().getId();
+            try (ResultSet rs = new EmpDatabase(adminId).getData()) {
+                while (rs.next()) {
+                    data = FXCollections.observableArrayList(
+                            new Employee(rs.getInt("emp_id"),
+                                    rs.getString("name"),
+                                    rs.getString("department")));
+                    table.getItems().addAll(data);
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            } finally {
+                table.setTableMenuButtonVisible(true);
+                table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+                table.getColumns().add(idColumn);
+                table.getColumns().add(nameCol);
+                table.getColumns().add(departmentCol);
+                table.getColumns().forEach(column -> {
+                    column.setMinWidth(32);
+                    column.setEditable(false);
+                    column.setStyle("-fx-alignment: TOP_CENTER");
+                });
 
-            table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-            table.getColumns().add(idColumn);
-            table.getColumns().add(nameCol);
-            table.getColumns().add(departmentCol);
-            table.setItems(data);
-            // table.getColumns().forEach(column -> column.setMinWidth(128));
-            // table.autosize();
+                table.autosize();
 
-            this.getChildren().add(table);
+                scrollPane.setContent(table);
 
-            /*
-             * int adminId = AdminDatabase.getInstance().getId();
-             * try (ResultSet data = new EmpDatabase(adminId).getData()) {
-             * while (data.next()) {
-             * }
-             * } catch (Exception e) {
-             * System.err.println(e.getMessage());
-             * } finally {
-             * }
-             */
+                this.getChildren().add(scrollPane);
+
+                refresh.setOnAction(event -> {
+                    data.clear();
+                    System.out.println("Attendence.Panel.init() GG");
+                });
+            }
 
         }
     }

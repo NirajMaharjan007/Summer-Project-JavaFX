@@ -5,7 +5,8 @@ public class Employee {
      * 
      * Only for table creation
      */
-    private String name, department;
+    private String name;
+    private String department;
     private int emp_id;
 
     public Employee() {
