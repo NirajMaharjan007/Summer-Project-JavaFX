@@ -91,20 +91,23 @@ public class Attendence extends VBox {
             TableColumn<Employee, Integer> idColumn = new TableColumn<>("ID");
             TableColumn<Employee, String> nameCol = new TableColumn<>("Name");
             TableColumn<Employee, String> departmentCol = new TableColumn<>("Department");
+            TableColumn<Employee, String> attent = new TableColumn<>("Attendance");
 
             idColumn.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("id"));
             nameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
             departmentCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("department"));
+            attent.setCellValueFactory(new PropertyValueFactory<Employee, String>("box"));
 
             table.setTableMenuButtonVisible(true);
             table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
             table.getColumns().add(idColumn);
             table.getColumns().add(nameCol);
             table.getColumns().add(departmentCol);
+            table.getColumns().add(attent);
             table.getColumns().forEach(column -> {
                 column.setMinWidth(32);
                 column.setEditable(false);
-                column.setStyle("-fx-alignment: TOP_CENTER");
+                column.setStyle("-fx-alignment: CENTER");
             });
             table.autosize();
 

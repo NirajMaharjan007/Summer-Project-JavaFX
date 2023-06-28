@@ -1,24 +1,31 @@
 package javafx.project.log;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.project.components.MainComboBox;
+
 public class Employee {
     /*
      * 
      * Only for table creation
      */
-    private String name;
-    private String department;
+    private String name, department;
     private int emp_id;
+    private MainComboBox<String> box;
 
-    public Employee() {
-        this.name = "";
-        this.department = "";
-        this.emp_id = 0;
-    }
+    private ObservableList<String> options = FXCollections.observableArrayList(
+            "Present", "Absent");
 
     public Employee(int id, String name, String department) {
         this.emp_id = id;
         this.name = name;
         this.department = department;
+        this.box = new MainComboBox<String>(options);
+        this.box.setFloatingText("Attendance");
+    }
+
+    public void setBox(MainComboBox<String> box) {
+        this.box = box;
     }
 
     public void setDepartment(String department) {
@@ -43,6 +50,10 @@ public class Employee {
 
     public String getName() {
         return name;
+    }
+
+    public MainComboBox<String> getBox() {
+        return box;
     }
 
     public String getAll() {
