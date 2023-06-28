@@ -100,8 +100,7 @@ public class MainLogin extends VBox {
             System.exit(0);
         });
 
-        hlayout.getChildren().add(btn);
-        hlayout.getChildren().add(cancel);
+        hlayout.getChildren().addAll(btn, cancel);
 
         stage.setTitle("Login Panel");
 

@@ -2,6 +2,7 @@ package javafx.project.components;
 
 import io.github.palexdev.materialfx.controls.*;
 import javafx.geometry.Insets;
+import javafx.scene.shape.Circle;
 
 public class MainComboBox extends MFXComboBox<String> {
 
@@ -12,7 +13,7 @@ public class MainComboBox extends MFXComboBox<String> {
 
     private void init() {
         MFXButton btn = new ImgIcon("src/main/resources/img/down-arrow.png").getBtnIcon();
-        btn.setPadding(new Insets(4));
+        btn.setPadding(new Insets(5.75f));
 
         this.setTrailingIcon(btn);
         this.setAllowEdit(false);
