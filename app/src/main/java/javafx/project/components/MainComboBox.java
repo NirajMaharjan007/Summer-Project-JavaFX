@@ -2,7 +2,6 @@ package javafx.project.components;
 
 import io.github.palexdev.materialfx.controls.*;
 import javafx.geometry.Insets;
-import javafx.scene.shape.Circle;
 
 public class MainComboBox extends MFXComboBox<String> {
 
