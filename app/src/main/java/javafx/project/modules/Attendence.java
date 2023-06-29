@@ -6,8 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.collections.*;
 import javafx.geometry.*;
 
 import javafx.project.components.*;
@@ -41,13 +40,15 @@ public class Attendence extends VBox {
         refresh.setTextColor("#fff");
         refresh.setRippleColor(Color.web("#84DED2"));
 
-        btn_box.getChildren().addAll(refresh);
+        MainBtn save = new MainBtn("Save");
+
+        btn_box.getChildren().addAll(refresh, save);
 
         VBox inner_container = new VBox();
         VBox.setVgrow(inner_container, Priority.ALWAYS);
         inner_container.setAlignment(Pos.TOP_CENTER);
         inner_container.setPadding(new Insets(8));
-        inner_container.setMinHeight(380);
+        inner_container.setPrefHeight(360);
         inner_container.getChildren().addAll(new Panel());
 
         this.getChildren().addAll(header, btn_box, inner_container);
@@ -98,7 +99,7 @@ public class Attendence extends VBox {
             departmentCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("department"));
             attent.setCellValueFactory(new PropertyValueFactory<Employee, String>("box"));
 
-            table.setTableMenuButtonVisible(true);
+            table.setTableMenuButtonVisible(false);
             table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
             table.getColumns().add(idColumn);
             table.getColumns().add(nameCol);
@@ -109,6 +110,7 @@ public class Attendence extends VBox {
                 column.setEditable(false);
                 column.setStyle("-fx-alignment: CENTER");
             });
+            table.setSelectionModel(null);
             table.autosize();
 
             scrollPane.setContent(table);
