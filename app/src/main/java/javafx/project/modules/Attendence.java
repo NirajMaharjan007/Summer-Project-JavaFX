@@ -1,6 +1,8 @@
 package javafx.project.modules;
 
 import java.sql.ResultSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,8 +17,7 @@ import javafx.project.enuma.*;
 import javafx.project.log.Employee;
 
 public class Attendence extends VBox {
-    int adminId = AdminDatabase.getInstance().getId();
-    MainBtn refresh;
+    MainBtn refresh, save;
 
     public Attendence() {
         super(16);
@@ -33,6 +34,9 @@ public class Attendence extends VBox {
         Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
         refresh_icon.setPadding(new Insets(1, 8, 1, 4));
 
+        Label save_icon = new ImgIcon("src/main/resources/img/check-mark.png").getIcon();
+        save_icon.setPadding(new Insets(1, 8, 1, 4));
+
         refresh = new MainBtn("Refresh");
         refresh.setAlignment(Pos.BASELINE_CENTER);
         refresh.setGraphic(refresh_icon);
@@ -40,7 +44,12 @@ public class Attendence extends VBox {
         refresh.setTextColor("#fff");
         refresh.setRippleColor(Color.web("#84DED2"));
 
-        MainBtn save = new MainBtn("Save");
+        save = new MainBtn("Save");
+        save.setAlignment(Pos.BASELINE_CENTER);
+        save.setGraphic(save_icon);
+        save.setBgColor(Elements.SUCCESS_COLOR.getName());
+        save.setTextColor("#fff");
+        save.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
 
         btn_box.getChildren().addAll(refresh, save);
 
@@ -88,16 +97,16 @@ public class Attendence extends VBox {
             scrollPane.setFitToWidth(true);
             scrollPane.setMinViewportHeight(360);
 
-            table = new TableView<Employee>();
+            table = new TableView<>();
             TableColumn<Employee, Integer> idColumn = new TableColumn<>("ID");
             TableColumn<Employee, String> nameCol = new TableColumn<>("Name");
             TableColumn<Employee, String> departmentCol = new TableColumn<>("Department");
             TableColumn<Employee, String> attent = new TableColumn<>("Attendance");
 
-            idColumn.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("id"));
-            nameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
-            departmentCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("department"));
-            attent.setCellValueFactory(new PropertyValueFactory<Employee, String>("box"));
+            idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+            departmentCol.setCellValueFactory(new PropertyValueFactory<>("department"));
+            attent.setCellValueFactory(new PropertyValueFactory<>("box"));
 
             table.setTableMenuButtonVisible(false);
             table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
@@ -122,6 +131,16 @@ public class Attendence extends VBox {
                 table.getItems().clear();
                 this.fetchData();
                 System.out.println("Attendence.Panel.init()=> Updated");
+            });
+
+            save.setOnAction(event -> {
+                List<Employee> selectedEmployees = table.getItems().stream()
+                        .filter(Employee::isSelected)
+                        .collect(Collectors.toList());
+
+                for (Employee employee : selectedEmployees) {
+                    System.out.println("Saved employee with ID: " + employee.getId() + " for " + employee.getResult());
+                }
             });
         }
     }

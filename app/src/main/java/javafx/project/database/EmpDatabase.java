@@ -6,13 +6,10 @@ public class EmpDatabase {
     private final Connection connection = Database.getConnection();
 
     // private static EmpDatabase instance;
-
     // private AdminDatabase admin = AdminDatabase.getInstance();
-
     private int adminId;
 
     // private int id;
-
     private ResultSet data;
 
     public EmpDatabase(int adminId) {
@@ -90,9 +87,9 @@ public class EmpDatabase {
 
     public int setData(String name, String department, String address, String salary, String gender) {
         try {
-            String sql = "INSERT INTO employees" +
-                    "(name,department,address,salary,gender,emp_img,email,phone,admin_id)" +
-                    " VALUES (?,?,?,?,?,?,?,?,?);";
+            String sql = "INSERT INTO employees"
+                    + "(name,department,address,salary,gender,emp_img,email,phone,admin_id)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?);";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             statement.setString(2, department);
@@ -109,5 +106,22 @@ public class EmpDatabase {
             System.err.println(e.getMessage());
             return -1;
         }
+    }
+
+    public int setStatus() {
+        String sql = "";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+        } catch (Exception e) {
+        }
+        return -1;
+    }
+
+    public int updateStatus() {
+        return -1;
+    }
+
+    public ResultSet getStatus() {
+        return null;
     }
 }

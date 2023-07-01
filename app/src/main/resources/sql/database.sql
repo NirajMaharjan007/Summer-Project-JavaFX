@@ -1,4 +1,4 @@
--- Active: 1683132803907@@127.0.0.1@3306@hr_data
+-- Active: 1687705679172@@127.0.0.1@3306@hr_data
 
 CREATE DATABASE IF NOT EXISTS hr_data ;
 
@@ -36,9 +36,8 @@ CREATE TABLE
     status (
         id INT PRIMARY KEY AUTO_INCREMENT,
         date_time DATE,
-        status INT,
-        time_in TIME,
-        time_out TIME,
+        status VARCHAR(32),
+        time_set TIME,
         emp_id INT,
         FOREIGN KEY (emp_id) REFERENCES employees (emp_id) ON DELETE CASCADE ON UPDATE CASCADE
     );
