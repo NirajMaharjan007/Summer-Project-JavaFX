@@ -17,6 +17,8 @@ import javafx.project.enuma.*;
 import javafx.project.log.Employee;
 
 public class Attendence extends VBox {
+    int adminId = AdminDatabase.getInstance().getId();
+
     MainBtn refresh, save;
 
     public Attendence() {
@@ -74,7 +76,6 @@ public class Attendence extends VBox {
         }
 
         private void fetchData() {
-            int adminId = AdminDatabase.getInstance().getId();
             try (ResultSet rs = new EmpDatabase(adminId).getData()) {
                 while (rs.next()) {
                     data = FXCollections.observableArrayList(
@@ -138,9 +139,35 @@ public class Attendence extends VBox {
                         .filter(Employee::isSelected)
                         .collect(Collectors.toList());
 
+                Alert alert = new Alert(null);
+                int i, j;
+                i = j = -1;
                 for (Employee employee : selectedEmployees) {
-                    System.out.println("Saved employee with ID: " + employee.getId() + " for " + employee.getResult());
+                    EmpDatabase empData = new EmpDatabase(adminId);
+                    try (ResultSet resultSet = empData.getStatus(employee.getId())) {
+                        if (resultSet == null) {
+                            i = empData.setStatus(employee.getAttendance(), employee.getId());
+                        } else {
+                            j = empData.updateStatus(employee.getAttendance(), employee.getId());
+                        }
+                    } catch (Exception e) {
+                        System.err.println(e.getMessage());
+                    } finally {
+                        System.out.println("Employee with ID: " + employee.getId()
+                                + " for " + employee.getAttendance());
+                    }
                 }
+
+                if (i > -1 || j > -1) {
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setHeaderText("Notification");
+                    alert.setContentText("Success to set in database");
+                } else {
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setHeaderText("Notification");
+                    alert.setContentText("Failed to set in database");
+                }
+                alert.show();
             });
         }
     }

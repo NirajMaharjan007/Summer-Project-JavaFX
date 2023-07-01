@@ -1,19 +1,26 @@
 package javafx.project.database;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class EmpDatabase {
     private final Connection connection = Database.getConnection();
 
-    // private static EmpDatabase instance;
-    // private AdminDatabase admin = AdminDatabase.getInstance();
     private int adminId;
 
-    // private int id;
     private ResultSet data;
 
+    String dateString, timeString;
+
     public EmpDatabase(int adminId) {
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
+
         this.adminId = adminId;
+        this.dateString = formatter.format(date);
+        this.timeString = timeFormatter.format(date);
     }
 
     public int count() {
@@ -100,28 +107,45 @@ public class EmpDatabase {
             statement.setString(7, "N/A");
             statement.setString(8, "N/A");
             statement.setInt(9, this.adminId);
-            int i = statement.executeUpdate();
-            return i;
+            return statement.executeUpdate();
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return -1;
         }
     }
 
-    public int setStatus() {
-        String sql = "";
+    public int setStatus(String status, int id) {
+        String sql = "INSERT INTO status(date_time,status,time_set,emp_id) VALUES (?,?,?,?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-
+            statement.setString(1, dateString);
+            statement.setString(2, status);
+            statement.setString(3, timeString);
+            statement.setInt(4, id);
+            return statement.executeUpdate();
         } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return -1;
         }
-        return -1;
     }
 
-    public int updateStatus() {
-        return -1;
+    public int updateStatus(String status, int id) {
+        String sql = "UPDATE status SET status=?  where emp_id=" + id + " and date_time='" + dateString + "'";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, status);
+            return statement.executeUpdate();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return -1;
+        }
     }
 
-    public ResultSet getStatus() {
-        return null;
+    public ResultSet getStatus(int id) {
+        try (Statement statement = connection.createStatement()) {
+            String sql = "Select count(*) from status where emp_id=" + id + " and date_time='" + dateString + "'";
+            return statement.executeQuery(sql);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
 }

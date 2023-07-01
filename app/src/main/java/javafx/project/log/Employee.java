@@ -1,12 +1,8 @@
 package javafx.project.log;
 
-import java.sql.ResultSet;
-
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
 
 import javafx.geometry.Pos;
-import javafx.project.database.AdminDatabase;
-import javafx.project.database.EmpDatabase;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 
@@ -41,19 +37,9 @@ public class Employee {
         this.group_box.setAlignment(Pos.CENTER);
     }
 
-    public String getResult() {
+    public String getAttendance() {
         String str = this.present.isSelected() ? "Present" : "Absent";
         return str;
-    }
-
-    public static void doSave(int id) {
-        int admin_id = AdminDatabase.getInstance().getId();
-        EmpDatabase empDatabase = new EmpDatabase(admin_id);
-        int i = empDatabase.setStatus();
-        if (i > -1) {
-            System.out.println("OKAY");
-        }
-        System.out.println("You in" + id);
     }
 
     public void setDepartment(String department) {
