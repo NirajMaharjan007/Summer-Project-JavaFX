@@ -367,6 +367,8 @@ public class AdminOption extends Pane {
     private class Activity extends Card {
         public Activity() {
             super();
+            super.setPrefWidth(500);
+
             this.init();
         }
 
@@ -376,7 +378,11 @@ public class AdminOption extends Pane {
             Label label = new Label("Activity Log");
             label.setStyle(Elements.HEADER1.getName());
 
+            Label clear_icon = new ImgIcon("src/main/resources/img/bin.png").getIcon();
+            clear_icon.setPadding(new Insets(1, 8, 1, 2));
+
             MainBtn clear = new MainBtn("Clear");
+            clear.setGraphic(clear_icon);
             clear.setBgColor("#17a2b8");
             clear.setTextColor("#FFF");
             clear.setRippleColor(Color.web("#AFD3E2"));
@@ -384,12 +390,12 @@ public class AdminOption extends Pane {
             header_box.getChildren().addAll(label, clear);
 
             FlowPane pane = new FlowPane(Orientation.VERTICAL);
-            pane.setPadding(new Insets(8));
+            pane.setPadding(new Insets(10));
+
             pane.getChildren().addAll(header_box);
 
             this.setSpacing(16);
             this.getChildren().add(pane);
-            this.autosize();
         }
     }
 
