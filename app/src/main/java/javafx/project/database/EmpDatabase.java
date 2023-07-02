@@ -156,10 +156,15 @@ public class EmpDatabase {
         }
     }
 
-    public ResultSet getStatus() {
+    public String getStatus(int id) {
         try (Statement statement = connection.createStatement()) {
-            String sql = "Select * from status where date_time='" + dateString + "'";
-            return statement.executeQuery(sql);
+            String sql = "Select * from status where date_time='" + dateString + "' and emp_id=" + id;
+            ResultSet rs = statement.executeQuery(sql);
+            String result = "";
+            while (rs.next()) {
+                result = rs.getString("status");
+            }
+            return result;
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return null;

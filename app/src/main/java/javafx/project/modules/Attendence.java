@@ -129,8 +129,20 @@ public class Attendence extends VBox {
             this.getChildren().add(scrollPane);
 
             refresh.setOnAction(event -> {
+                List<Employee> employees = table.getItems();
+                EmpDatabase empData = new EmpDatabase(adminId);
+
                 table.getItems().clear();
                 this.fetchData();
+
+                for (Employee employee : employees) {
+                    String result = empData.getStatus(employee.getId());
+                    System.out.println(result);
+                    if (result.equalsIgnoreCase("present"))
+                        employee.present.setSelected(true);
+                    else
+                        employee.absent.setSelected(true);
+                }
                 System.out.println("Attendence.Panel.init()=> Updated");
             });
 
@@ -146,8 +158,10 @@ public class Attendence extends VBox {
                 for (Employee employee : selectedEmployees) {
                     EmpDatabase empData = new EmpDatabase(adminId);
                     boolean empty = empData.isStatusEmpty(employee.getId());
+
                     if (empty == false)
                         i = empData.setStatus(employee.getAttendance(), employee.getId());
+
                     else
                         j = empData.updateStatus(employee.getAttendance(), employee.getId());
 
