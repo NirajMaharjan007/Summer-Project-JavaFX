@@ -31,7 +31,7 @@ public class Attendence extends VBox {
         HBox btn_box = new HBox(16);
 
         Label header = new Label("Attendence of Employees");
-        header.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a");
+        header.setStyle(Elements.HEADER1.getName());
 
         Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
         refresh_icon.setPadding(new Insets(1, 8, 1, 4));
@@ -140,8 +140,13 @@ public class Attendence extends VBox {
                     System.out.println(result);
                     if (result.equalsIgnoreCase("present"))
                         employee.present.setSelected(true);
-                    else
+                    else if (result.equalsIgnoreCase("absent"))
                         employee.absent.setSelected(true);
+
+                    else {
+                        employee.present.setSelected(false);
+                        employee.absent.setSelected(false);
+                    }
                 }
                 System.out.println("Attendence.Panel.init()=> Updated");
             });

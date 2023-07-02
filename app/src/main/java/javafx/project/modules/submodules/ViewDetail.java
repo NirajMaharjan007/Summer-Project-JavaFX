@@ -35,7 +35,7 @@ public class ViewDetail extends BorderPane {
 
     private void atTop() {
         Label header = new Label("Detail of Employee id: " + this.id);
-        header.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a");
+        header.setStyle(Elements.HEADER1.getName());
 
         VBox top = new VBox(8, new Card(header));
         top.setPadding(PADDING);

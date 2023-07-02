@@ -2,10 +2,10 @@ package javafx.project.enuma;
 
 public enum Elements {
     HEADER1("-fx-font-size: 24;" +
-            "-fx-text-fill: Black;-fx-font-weight:bold;"),
+            "-fx-text-fill:#484b6a;-fx-font-weight:bold;"),
 
     HEADER2("-fx-font-size: 16;" +
-            "-fx-text-fill: Black;-fx-font-weight:bold;"),
+            "-fx-text-fill:#484b6a;-fx-font-weight:bold;"),
 
     DANGER_COLOR("#f53b3b"),
 
