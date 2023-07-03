@@ -144,7 +144,8 @@ public class Attendence extends VBox {
                 i = j = -1;
                 for (Employee employee : selectedEmployees) {
                     EmpDatabase empData = new EmpDatabase(adminId);
-                    try (ResultSet resultSet = empData.getStatus(employee.getId())) {
+                    try {
+                        ResultSet resultSet = empData.getStatus(employee.getId());
                         if (resultSet == null) {
                             i = empData.setStatus(employee.getAttendance(), employee.getId());
                         } else {

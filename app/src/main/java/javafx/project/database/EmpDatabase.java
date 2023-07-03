@@ -121,6 +121,7 @@ public class EmpDatabase {
             statement.setString(2, status);
             statement.setString(3, timeString);
             statement.setInt(4, id);
+            System.out.println("EmpDatabase.setStatus()=> set status");
             return statement.executeUpdate();
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -132,6 +133,7 @@ public class EmpDatabase {
         String sql = "UPDATE status SET status=?  where emp_id=" + id + " and date_time='" + dateString + "'";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, status);
+            System.out.println("EmpDatabase.setStatus()=> updated status");
             return statement.executeUpdate();
         } catch (Exception e) {
             System.err.println(e.getMessage());
