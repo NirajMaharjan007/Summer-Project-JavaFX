@@ -3,14 +3,15 @@ package javafx.project.modules.submodules;
 import io.github.palexdev.materialfx.css.themes.*;
 import java.io.*;
 import java.sql.ResultSet;
-import javafx.geometry.*;
+
 import javafx.project.components.*;
 import javafx.project.database.AdminDatabase;
 import javafx.project.enuma.*;
+
+import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
@@ -114,7 +115,7 @@ public class AdminOption extends Pane {
             box.setPadding(new Insets(4, 2, 8, 2));
 
             Label title = new Label("Admin's Details");
-            title.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a");
+            title.setStyle(Elements.HEADER1.getName());
             box.getChildren().add(title);
 
             for (int i = 0; i < hbox.length; i++) {
@@ -363,6 +364,41 @@ public class AdminOption extends Pane {
         }
     }
 
+    private class Activity extends Card {
+        public Activity() {
+            super();
+            super.setPrefWidth(500);
+
+            this.init();
+        }
+
+        private void init() {
+            VBox header_box = new VBox(8);
+
+            Label label = new Label("Activity Log");
+            label.setStyle(Elements.HEADER1.getName());
+
+            Label clear_icon = new ImgIcon("src/main/resources/img/bin.png").getIcon();
+            clear_icon.setPadding(new Insets(1, 8, 1, 2));
+
+            MainBtn clear = new MainBtn("Clear");
+            clear.setGraphic(clear_icon);
+            clear.setBgColor("#17a2b8");
+            clear.setTextColor("#FFF");
+            clear.setRippleColor(Color.web("#AFD3E2"));
+
+            header_box.getChildren().addAll(label, clear);
+
+            FlowPane pane = new FlowPane(Orientation.VERTICAL);
+            pane.setPadding(new Insets(10));
+
+            pane.getChildren().addAll(header_box);
+
+            this.setSpacing(16);
+            this.getChildren().add(pane);
+        }
+    }
+
     private class SideBar extends VBox {
         public SideBar() {
             super();
@@ -380,7 +416,7 @@ public class AdminOption extends Pane {
             this.getStyleClass().addAll("sidebar");
 
             Label menuLabel = new Label("Admin's Sidebar menu");
-            menuLabel.setStyle(Elements.HEADER2.getName() + "-fx-text-fill:#484b6a");
+            menuLabel.setStyle(Elements.HEADER2.getName());
             menuLabel.setPadding(new Insets(8, 2, 4, 2));
             this.getChildren().add(menuLabel);
 
@@ -430,6 +466,7 @@ public class AdminOption extends Pane {
 
             new SwitchNode(AdminOption.container, btn[0]).switchNode(new AdminDetail());
             new SwitchNode(AdminOption.container, btn[1]).switchNode(new AdminUpdate());
+            new SwitchNode(AdminOption.container, btn[2]).switchNode(new Activity());
 
             navBar.getChildren().addAll(btn[0], btn[1], btn[2]);
 

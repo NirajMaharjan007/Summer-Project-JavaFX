@@ -120,7 +120,7 @@ public class EmployeeModule extends VBox {
                 this.employeeCards();
             } else {
                 Label label = new Label("No Employee");
-                label.setStyle(Elements.HEADER2.getName() + "-fx-text-fill:#484b6a");
+                label.setStyle(Elements.HEADER2.getName());
                 this.getChildren().add(label);
             }
         }

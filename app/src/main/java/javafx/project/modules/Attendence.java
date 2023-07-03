@@ -31,7 +31,7 @@ public class Attendence extends VBox {
         HBox btn_box = new HBox(16);
 
         Label header = new Label("Attendence of Employees");
-        header.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a");
+        header.setStyle(Elements.HEADER1.getName());
 
         Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
         refresh_icon.setPadding(new Insets(1, 8, 1, 4));
@@ -129,8 +129,25 @@ public class Attendence extends VBox {
             this.getChildren().add(scrollPane);
 
             refresh.setOnAction(event -> {
+                List<Employee> employees = table.getItems();
+                EmpDatabase empData = new EmpDatabase(adminId);
+
                 table.getItems().clear();
                 this.fetchData();
+
+                for (Employee employee : employees) {
+                    String result = empData.getStatus(employee.getId());
+                    System.out.println(result);
+                    if (result.equalsIgnoreCase("present"))
+                        employee.present.setSelected(true);
+                    else if (result.equalsIgnoreCase("absent"))
+                        employee.absent.setSelected(true);
+
+                    else {
+                        employee.present.setSelected(false);
+                        employee.absent.setSelected(false);
+                    }
+                }
                 System.out.println("Attendence.Panel.init()=> Updated");
             });
 
@@ -140,35 +157,33 @@ public class Attendence extends VBox {
                         .collect(Collectors.toList());
 
                 Alert alert = new Alert(null);
+                alert.setTitle("Notifications");
                 int i, j;
                 i = j = -1;
                 for (Employee employee : selectedEmployees) {
                     EmpDatabase empData = new EmpDatabase(adminId);
-                    try {
-                        ResultSet resultSet = empData.getStatus(employee.getId());
-                        if (resultSet == null) {
-                            i = empData.setStatus(employee.getAttendance(), employee.getId());
-                        } else {
-                            j = empData.updateStatus(employee.getAttendance(), employee.getId());
-                        }
-                    } catch (Exception e) {
-                        System.err.println(e.getMessage());
-                    } finally {
-                        System.out.println("Employee with ID: " + employee.getId()
-                                + " for " + employee.getAttendance());
-                    }
+                    boolean empty = empData.isStatusEmpty(employee.getId());
+
+                    if (empty == false)
+                        i = empData.setStatus(employee.getAttendance(), employee.getId());
+
+                    else
+                        j = empData.updateStatus(employee.getAttendance(), employee.getId());
+
+                    System.out.println("Employee with ID: " + employee.getId()
+                            + " for " + employee.getAttendance());
                 }
 
                 if (i > -1 || j > -1) {
                     alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setHeaderText("Notification");
+                    alert.setHeaderText("Success Notification");
                     alert.setContentText("Success to set in database");
                 } else {
                     alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setHeaderText("Notification");
+                    alert.setHeaderText("Error Notification");
                     alert.setContentText("Failed to set in database");
                 }
-                alert.show();
+                alert.showAndWait();
             });
         }
     }

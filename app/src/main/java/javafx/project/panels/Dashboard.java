@@ -165,12 +165,12 @@ public class Dashboard extends BorderPane {
             this.getStyleClass().addAll("sidebar");
 
             Label headerLabel = new Label("Side Bar");
-            headerLabel.setStyle(Elements.HEADER1.getName() + "-fx-text-fill:#484b6a");
+            headerLabel.setStyle(Elements.HEADER1.getName());
             headerLabel.setGraphicTextGap(4);
             this.getChildren().add(headerLabel);
 
             Label menuLabel = new Label("Components");
-            menuLabel.setStyle(Elements.HEADER2.getName() + "-fx-text-fill:#484b6a");
+            menuLabel.setStyle(Elements.HEADER2.getName());
             menuLabel.setPadding(new Insets(16, 8, 4, 8));
             this.getChildren().add(menuLabel);
 

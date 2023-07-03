@@ -141,10 +141,32 @@ public class EmpDatabase {
         }
     }
 
-    public ResultSet getStatus(int id) {
+    public boolean isStatusEmpty(int id) {
         try (Statement statement = connection.createStatement()) {
             String sql = "Select count(*) from status where emp_id=" + id + " and date_time='" + dateString + "'";
-            return statement.executeQuery(sql);
+            ResultSet rs = statement.executeQuery(sql);
+            rs.next();
+            int rowCount = rs.getInt(1);
+            System.out.println("Status: " + rowCount);
+            if (rowCount == 0)
+                return false;
+            else
+                return true;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public String getStatus(int id) {
+        try (Statement statement = connection.createStatement()) {
+            String sql = "Select * from status where date_time='" + dateString + "' and emp_id=" + id;
+            ResultSet rs = statement.executeQuery(sql);
+            String result = "";
+            while (rs.next()) {
+                result = rs.getString("status");
+            }
+            return result;
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return null;

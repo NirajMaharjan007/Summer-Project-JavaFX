@@ -11,10 +11,11 @@ public class Employee {
      *
      * Only for table creation
      */
+    public MFXRadioButton present, absent;
+
     private String name, department;
     private int emp_id;
 
-    private MFXRadioButton present, absent;
     private ToggleGroup group;
 
     private HBox group_box;
