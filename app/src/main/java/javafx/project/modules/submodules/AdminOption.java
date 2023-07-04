@@ -7,10 +7,11 @@ import java.sql.ResultSet;
 import javafx.project.components.*;
 import javafx.project.database.AdminDatabase;
 import javafx.project.enuma.*;
-
+import javafx.project.log.Log;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -365,9 +366,13 @@ public class AdminOption extends Pane {
     }
 
     private class Activity extends Card {
+        private Log log = Log.getInstance();
+        private TextArea textArea = new TextArea();
+
         public Activity() {
             super();
-            super.setPrefWidth(500);
+            super.setPrefWidth(480);
+            super.setMinHeight(stage.getHeight());
 
             this.init();
         }
@@ -386,13 +391,44 @@ public class AdminOption extends Pane {
             clear.setBgColor("#17a2b8");
             clear.setTextColor("#FFF");
             clear.setRippleColor(Color.web("#AFD3E2"));
+            clear.setOnAction(event -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Conformation");
+                alert.setHeaderText("Confomation alert");
+                alert.setContentText("Are you sure about that");
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        Alert info = new Alert(Alert.AlertType.INFORMATION);
+                        info.setTitle("Information");
+                        info.setHeaderText("You have cleared the Log File");
+                        info.setContentText("Cleared");
+                        textArea.setText("");
+                        log.clear();
+                        info.show();
+                    } else {
+                        alert.close();
+                    }
+                });
+            });
 
             header_box.getChildren().addAll(label, clear);
 
-            FlowPane pane = new FlowPane(Orientation.VERTICAL);
-            pane.setPadding(new Insets(10));
+            VBox pane = new VBox();
+            VBox.setVgrow(pane, Priority.ALWAYS);
+            pane.setPadding(new Insets(8));
 
-            pane.getChildren().addAll(header_box);
+            String string = log.getLog();
+
+            textArea.setPrefWidth(460);
+            textArea.setMinHeight(460);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+            textArea.setText(string);
+
+            VBox text_box = new VBox(textArea);
+            text_box.setPadding(new Insets(8));
+
+            pane.getChildren().addAll(header_box, text_box);
 
             this.setSpacing(16);
             this.getChildren().add(pane);

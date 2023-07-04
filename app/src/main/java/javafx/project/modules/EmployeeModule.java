@@ -221,7 +221,7 @@ public class EmployeeModule extends VBox {
             this.id = id;
             this.init();
 
-            Scene scene = new Scene(this, 800, 400);
+            Scene scene = new Scene(this, 600, 400);
             MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
             stage = new Stage();

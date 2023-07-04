@@ -45,7 +45,7 @@ public class EmployeeUpdate extends Card {
         this.id = id;
         this.init();
 
-        Scene scene = new Scene(this, 600, 450);
+        Scene scene = new Scene(this, 600, 400);
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -71,7 +71,7 @@ public class EmployeeUpdate extends Card {
 
     private void atLeft() {
         VBox mainBox = new VBox(10);
-        mainBox.setPadding(new Insets(16));
+        mainBox.setPadding(new Insets(8));
 
         VBox box = new VBox(26);
         HBox hbox = new HBox(8);
@@ -187,7 +187,7 @@ public class EmployeeUpdate extends Card {
 
     private void atRight() {
         VBox mainBox = new VBox(10);
-        mainBox.setPadding(new Insets(16));
+        mainBox.setPadding(new Insets(8));
 
         VBox box = new VBox(26);
 

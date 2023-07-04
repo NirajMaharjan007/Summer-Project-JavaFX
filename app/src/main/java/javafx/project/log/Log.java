@@ -45,4 +45,29 @@ public class Log {
             System.err.println(e.getMessage());
         }
     }
+
+    public String getLog() {
+        try (FileReader reader = new FileReader(file)) {
+            StringBuilder builder = new StringBuilder();
+            int c;
+            while ((c = reader.read()) != -1) {
+                builder.append((char) c);
+            }
+            reader.close();
+            return builder.toString();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public void clear() {
+        try (FileWriter writer = new FileWriter(file, false)) {
+            writer.write("");
+            writer.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
 }
