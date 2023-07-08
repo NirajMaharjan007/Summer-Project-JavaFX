@@ -4,6 +4,7 @@ import io.github.palexdev.materialfx.css.themes.*;
 
 import javafx.geometry.*;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -29,7 +30,7 @@ public class Dashboard extends BorderPane {
         super.autosize();
         // super.setPadding(new Insets(6, 12, 6, 12));
 
-        Scene scene = new Scene(this, 1200, 620);
+        Scene scene = new Scene(this, 1200, 620, true, SceneAntialiasing.BALANCED);
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
         init();

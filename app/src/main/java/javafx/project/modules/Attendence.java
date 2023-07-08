@@ -2,7 +2,6 @@ package javafx.project.modules;
 
 import java.sql.ResultSet;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -190,6 +189,10 @@ public class Attendence extends VBox {
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setHeaderText("Success Notification");
                     alert.setContentText("Success to set in database");
+                } else if (now.compareTo(startTime) < 0 || now.compareTo(endTime) > 0) {
+                    alert.setAlertType(Alert.AlertType.WARNING);
+                    alert.setHeaderText("WARNING Notification");
+                    alert.setContentText("WARNING: not in working time");
                 } else {
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setHeaderText("Error Notification");

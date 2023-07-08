@@ -12,8 +12,8 @@ import javafx.scene.layout.Pane;
 import javafx.project.panels.MainLogin;
 
 public class App extends Application {
-    Scene scene;
-    Stage stage;
+    protected Scene scene;
+    protected Stage stage;
 
     public static void main(String[] args) {
         launch(args);

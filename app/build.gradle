@@ -26,11 +26,11 @@ repositories {
 
 dependencies {
     // This dependency is used by the application.
-    //implementation 'com.jfoenix:jfoenix:9.0.10'
-    implementation 'com.google.guava:guava:31.1-jre'
     implementation 'mysql:mysql-connector-java:8.0.15'
     implementation 'io.github.palexdev:materialfx:11.16.1'
     implementation 'eu.hansolo.fx:charts:17.1.35'
+    implementation "org.testfx:testfx-junit5:4.0.16-alpha"
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
 }
 
 testing {
