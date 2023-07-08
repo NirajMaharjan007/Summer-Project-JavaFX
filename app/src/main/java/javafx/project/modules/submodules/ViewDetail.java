@@ -55,15 +55,16 @@ public class ViewDetail extends BorderPane {
         pane.setAlignment(Pos.CENTER);
 
         VBox image_box = new VBox(8);
-        image_box.setPadding(new Insets(4, 8, 6, 8));
-        image_box.setAlignment(Pos.CENTER);
+        image_box.setPadding(new Insets(4, 16, 6, 8));
+        image_box.setAlignment(Pos.TOP_CENTER);
 
         Card card = new Card(pane);
         card.setPadding(new Insets(16));
+        card.setAlignment(Pos.CENTER);
         card.setMinHeight(260);
 
         VBox center = new VBox(8, card);
-        center.setAlignment(Pos.CENTER);
+        center.setAlignment(Pos.TOP_CENTER);
 
         MainBtn update_btn = new MainBtn("Update details");
         update_btn.setBgColor("#17a2b8");

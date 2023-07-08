@@ -1,6 +1,8 @@
 package javafx.project.modules;
 
 import java.sql.ResultSet;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,10 +21,16 @@ import javafx.project.log.Employee;
 public class Attendence extends VBox {
     int adminId = AdminDatabase.getInstance().getId();
 
+    LocalTime startTime, endTime, now;
+
     MainBtn refresh, save;
 
     public Attendence() {
         super(16);
+
+        startTime = LocalTime.of(10, 45);
+        endTime = LocalTime.of(17, 30);
+        now = LocalTime.now();
 
         this.init();
     }
@@ -72,7 +80,12 @@ public class Attendence extends VBox {
         public Panel() {
             super();
             this.setAlignment(Pos.TOP_CENTER);
-            this.init();
+            if (now.compareTo(startTime) < 0 || now.compareTo(endTime) > 0) {
+                this.init();
+                table.setDisable(true);
+                System.out.println("Attendence.Panel.init() => false");
+            } else
+                this.init();
         }
 
         private void fetchData() {
@@ -142,7 +155,6 @@ public class Attendence extends VBox {
                         employee.present.setSelected(true);
                     else if (result.equalsIgnoreCase("absent"))
                         employee.absent.setSelected(true);
-
                     else {
                         employee.present.setSelected(false);
                         employee.absent.setSelected(false);
