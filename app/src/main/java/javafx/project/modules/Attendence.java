@@ -60,7 +60,7 @@ public class Attendence extends VBox {
         save.setTextColor("#fff");
         save.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
 
-        btn_box.getChildren().addAll(refresh, save);
+        btn_box.getChildren().addAll(save, refresh);
 
         VBox inner_container = new VBox();
         VBox.setVgrow(inner_container, Priority.ALWAYS);

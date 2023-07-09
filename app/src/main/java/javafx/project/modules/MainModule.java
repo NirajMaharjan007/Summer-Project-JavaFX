@@ -3,12 +3,27 @@ package javafx.project.modules;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.project.database.*;
-import javafx.project.components.*;
+import javafx.project.components.Card;
+import javafx.project.components.ImgIcon;
+import javafx.project.components.MainBtn;
+import javafx.project.components.ScrollPanel;
+import javafx.project.database.AdminDatabase;
+import javafx.project.database.EmpDatabase;
 import javafx.project.enuma.MainStyle;
+import javafx.project.panels.Dashboard;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class MainModule extends VBox {
     private int adminId = AdminDatabase.getInstance().getId();
@@ -26,20 +41,18 @@ public class MainModule extends VBox {
         this.getStylesheets().add(MainStyle.ALT_STYLESHEET.getLocation());
 
         Label header1 = new Label("Dashboard");
-        Label header2 = new Label("Summary");
+        header1.getStyleClass().add("header1");
+
         Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png").getIcon();
         refresh_icon.setPadding(new Insets(1, 8, 1, 4));
 
         MainBtn refresh = new MainBtn("Refresh");
 
-        header1.getStyleClass().add("header1");
-        header2.getStyleClass().add("header2");
-
-        VBox box = new VBox(16, new Pane());
+        VBox box = new VBox(16, new Pane(), new GraphPane());
         VBox.setVgrow(box, Priority.ALWAYS);
-        VBox.setMargin(box, new Insets(16, 4, 8, 4));
+        VBox.setMargin(box, new Insets(8, 4, 6, 4));
 
-        box.setAlignment(Pos.CENTER);
+        box.setAlignment(Pos.TOP_CENTER);
 
         refresh.setAlignment(Pos.BASELINE_CENTER);
         refresh.setGraphic(refresh_icon);
@@ -49,15 +62,56 @@ public class MainModule extends VBox {
         refresh.setOnAction(event -> {
             System.out.println("Refreshed");
             box.getChildren().clear();
-            box.getChildren().add(new Pane());
+            box.getChildren().addAll(new Pane(), new GraphPane());
         });
 
-        this.getChildren().addAll(header1, header2, refresh, box);
+        this.getChildren().addAll(header1, refresh, box);
     }
 
-    private class ChartPane extends VBox {
-        public ChartPane() {
+    private class GraphPane extends VBox {
+        public GraphPane() {
             super();
+            super.setPrefHeight(Dashboard.getStage().getHeight());
+            VBox.setVgrow(this, Priority.ALWAYS);
+            VBox.setMargin(this, new Insets(16, 2, 4, 2));
+
+            this.init();
+        }
+
+        private void init() {
+            NumberAxis xAxis = new NumberAxis();
+            NumberAxis yAxis = new NumberAxis();
+
+            xAxis.setLabel("Number of Month");
+
+            LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
+            lineChart.setTitle("Stock Monitoring, 2010");
+
+            Series<Number, Number> series = new Series<>();
+            series.setName("My portfolio");
+            series.getData().add(new XYChart.Data<>(1, 10));
+            series.getData().add(new XYChart.Data<>(2, 16));
+            series.getData().add(new XYChart.Data<>(3, 16));
+
+            lineChart.getData().add(series);
+            lineChart.setPrefHeight(360);
+
+            StackPane box = new StackPane(lineChart);
+            StackPane.setMargin(box, new Insets(8, 4, 6, 4));
+            StackPane.setAlignment(box, Pos.TOP_CENTER);
+
+            ScrollPanel scrollPane = new ScrollPanel();
+            VBox.setVgrow(scrollPane, Priority.ALWAYS);
+            VBox.setMargin(scrollPane, new Insets(2, 4, 12, 4));
+
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setFitToHeight(true);
+            scrollPane.setFitToWidth(true);
+            scrollPane.setMinViewportWidth(400);
+            scrollPane.setMinViewportHeight(356);
+            scrollPane.setContent(box);
+
+            this.getChildren().add(scrollPane);
         }
     }
 
@@ -117,7 +171,6 @@ public class MainModule extends VBox {
             }
 
             // card[0].setPrefWidth(1024);
-
             pane[0].setLeft(icon.getIcon());
             pane[0].setCenter(box);
 
