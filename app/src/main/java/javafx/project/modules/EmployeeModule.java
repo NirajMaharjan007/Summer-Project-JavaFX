@@ -241,7 +241,6 @@ public class EmployeeModule extends VBox {
         public void show() {
             stage.show();
         }
-
     }
 
     private class CreateEmployee extends VBox {
