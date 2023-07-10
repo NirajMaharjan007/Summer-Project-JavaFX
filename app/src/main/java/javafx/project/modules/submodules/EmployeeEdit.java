@@ -18,7 +18,6 @@ public class EmployeeEdit extends BorderPane {
     MainTextField address;
     MainTextField salary;
     MainTextField gender;
-    // private int id;
 
     String gender_text;
 
@@ -87,7 +86,7 @@ public class EmployeeEdit extends BorderPane {
                     alert.setTitle("Succeed");
                     alert.setHeaderText("successfully added employee");
                     alert.setContentText("Required to Refresh");
-                    alert.showAndWait();
+                    alert.show();
                 } else {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Failed");
@@ -149,8 +148,8 @@ public class EmployeeEdit extends BorderPane {
             alert.setTitle("Warning");
             alert.setHeaderText("Required Fields Empty");
             alert.setContentText(errors.toString());
-
             alert.show();
+
             return false;
         }
 

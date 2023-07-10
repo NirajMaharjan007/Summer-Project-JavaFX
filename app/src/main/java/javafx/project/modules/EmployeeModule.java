@@ -25,8 +25,8 @@ public class EmployeeModule extends VBox {
     private int adminId = AdminDatabase.getInstance().getId();
     private EmpDatabase empData = new EmpDatabase(adminId);
 
-    private ScrollPanel scrollPanel = new ScrollPanel();
-    private EmployeeBox emp_box = new EmployeeBox();
+    private ScrollPanel scrollPanel;
+    private EmployeeBox emp_box;
 
     public static MainBtn exit = new MainBtn("Exit");
 
@@ -36,11 +36,14 @@ public class EmployeeModule extends VBox {
         super.setPadding(new Insets(2, 6, 4, 8));
         VBox.setMargin(this, new Insets(8));
 
+        scrollPanel = new ScrollPanel();
+        emp_box = new EmployeeBox();
+
         this.init();
     }
 
-    public void doUpdate() {
-        System.out.println("updated");
+    public void justRefresh() {
+        System.out.println("Refreshed");
         emp_box.getChildren().clear();
         scrollPanel.setContent(new EmployeeBox());
     }
@@ -83,11 +86,7 @@ public class EmployeeModule extends VBox {
         refresh.setBgColor("#36cee6");
         refresh.setTextColor("#fff");
         refresh.setRippleColor(Color.web("#84DED2"));
-        refresh.setOnAction(event -> {
-            System.out.println("Refreshed");
-            emp_box.getChildren().clear();
-            scrollPanel.setContent(new EmployeeBox());
-        });
+        refresh.setOnAction(event -> justRefresh());
 
         HBox box = new HBox(16);
         HBox.setHgrow(box, Priority.ALWAYS);
@@ -140,12 +139,14 @@ public class EmployeeModule extends VBox {
                 alert.setContentText("You are deleting the Id " + this.id);
                 alert.showAndWait().ifPresent(response -> {
                     if (response == ButtonType.OK) {
-                        if (empData.deleteEmployee(String.valueOf(this.id)) > -1)
+                        if (empData.deleteEmployee(String.valueOf(this.id)) > -1) {
+                            Alert info = new Alert(Alert.AlertType.INFORMATION);
+                            info.setTitle("Information");
+                            info.setHeaderText("Employee Id: " + this.id + " has been deleted");
+                            info.show();
                             System.out.println(this.id + ":Id is deleted");
-                        Alert info = new Alert(Alert.AlertType.INFORMATION);
-                        info.setTitle("Information");
-                        info.setHeaderText("Required to Refresh");
-                        info.show();
+                            justRefresh();
+                        }
                     } else {
                         alert.close();
                     }
