@@ -65,6 +65,7 @@ public class MainModule extends VBox {
             box.getChildren().addAll(new Pane(), new GraphPane());
         });
 
+        this.setMinHeight(512);
         this.getChildren().addAll(header1, refresh, box);
     }
 
@@ -94,24 +95,15 @@ public class MainModule extends VBox {
             series.getData().add(new XYChart.Data<>(3, 16));
 
             lineChart.getData().add(series);
-            lineChart.setPrefHeight(360);
+            lineChart.autosize();
 
             StackPane box = new StackPane(lineChart);
             StackPane.setMargin(box, new Insets(8, 4, 6, 4));
             StackPane.setAlignment(box, Pos.TOP_CENTER);
 
-            ScrollPanel scrollPane = new ScrollPanel();
-            VBox.setVgrow(scrollPane, Priority.ALWAYS);
-            VBox.setMargin(scrollPane, new Insets(2, 4, 12, 4));
+            box.autosize();
 
-            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            scrollPane.setFitToHeight(true);
-            scrollPane.setFitToWidth(true);
-            scrollPane.setMinViewportWidth(400);
-            scrollPane.setMinViewportHeight(356);
-            scrollPane.setContent(box);
-
-            this.getChildren().add(scrollPane);
+            this.getChildren().add(box);
         }
     }
 
