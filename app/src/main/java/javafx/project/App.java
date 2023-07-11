@@ -6,36 +6,36 @@ package javafx.project;
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
 import io.github.palexdev.materialfx.css.themes.Themes;
 import javafx.application.Application;
-import javafx.stage.Stage;
+import javafx.project.panels.MainLogin;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.project.panels.MainLogin;
+import javafx.stage.Stage;
 
 public class App extends Application {
-    protected Scene scene;
-    protected Stage stage;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+  protected Scene scene;
+  protected Stage stage;
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        stage = primaryStage;
+  public static void main(String[] args) {
+    launch(args);
+  }
 
-        MainLogin login_layout = new MainLogin(stage);
-        Pane root = new Pane();
-        root.getChildren().add(login_layout);
+  @Override
+  public void start(Stage primaryStage) throws Exception {
+    stage = primaryStage;
 
-        scene = new Scene(root);
+    MainLogin login_layout = new MainLogin(stage);
+    Pane root = new Pane();
+    root.getChildren().add(login_layout);
 
-        MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
+    scene = new Scene(root);
 
-        stage.setScene(scene);
+    MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
-        stage.centerOnScreen();
-        stage.setResizable(false);
-        stage.show();
+    stage.setScene(scene);
 
-    }
+    stage.centerOnScreen();
+    stage.setResizable(false);
+    stage.show();
+  }
 }
