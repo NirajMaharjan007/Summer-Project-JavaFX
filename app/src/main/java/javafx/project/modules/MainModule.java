@@ -31,7 +31,7 @@ public class MainModule extends VBox {
     header1.getStyleClass().add("header1");
 
     Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png")
-      .getIcon();
+        .getIcon();
     refresh_icon.setPadding(new Insets(1, 8, 1, 4));
 
     MainBtn refresh = new MainBtn("Refresh");
@@ -58,6 +58,7 @@ public class MainModule extends VBox {
   }
 
   private class GraphPane extends VBox {
+    private EmpDatabase empData = new EmpDatabase(adminId);
 
     public GraphPane() {
       super();
@@ -72,13 +73,13 @@ public class MainModule extends VBox {
       NumberAxis xAxis = new NumberAxis();
       NumberAxis yAxis = new NumberAxis();
 
-      xAxis.setLabel("Number of Month");
+      xAxis.setLabel("Day");
 
       LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-      lineChart.setTitle("Stock Monitoring, 2010");
+      lineChart.setTitle("Attendance chart of week");
 
       Series<Number, Number> series = new Series<>();
-      series.setName("My portfolio");
+      series.setName("Total present");
       series.getData().add(new XYChart.Data<>(1, 10));
       series.getData().add(new XYChart.Data<>(2, 16));
       series.getData().add(new XYChart.Data<>(3, 16));
@@ -170,7 +171,7 @@ public class MainModule extends VBox {
       activeBox.getChildren().add(label4);
 
       Label label5 = new ImgIcon("src/main/resources/img/calendar.png")
-        .getIcon();
+          .getIcon();
       label5.setPadding(new Insets(12, 4, 2, 4));
       pane[1].setLeft(label5);
       pane[1].setCenter(activeBox);
