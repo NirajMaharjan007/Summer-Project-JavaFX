@@ -68,7 +68,7 @@ public class Dashboard extends BorderPane {
 
       MainBtn logout = new MainBtn("Logout");
       Label img_logout = new ImgIcon("src/main/resources/img/logout.png")
-        .getIcon();
+          .getIcon();
       img_logout.setPadding(new Insets(0, 6, 0, 0));
 
       box.setAlignment(Pos.CENTER);
@@ -84,8 +84,7 @@ public class Dashboard extends BorderPane {
         newStage.close();
       });
 
-      Button btn = new ImgIcon("src/main/resources/img/settings.png")
-        .getBtnIcon();
+      Button btn = new ImgIcon("src/main/resources/img/settings.png").getBtnIcon();
       btn.setOnAction(event -> {
         new AdminOption().show();
       });
@@ -96,11 +95,7 @@ public class Dashboard extends BorderPane {
       logoSide.setPadding(new Insets(8));
       logoSide.setSpacing(16);
       // logoSide.getChildren().add(new Label("Logo"));
-      logoSide
-        .getChildren()
-        .add(
-          new ImgIcon("src/main/resources/img/logolaxprinter.png").getIcon()
-        );
+      logoSide.getChildren().add(new ImgIcon("src/main/resources/img/logolaxprinter.png").getIcon());
 
       this.setRight(box);
       this.setLeft(logoSide);
@@ -203,23 +198,22 @@ public class Dashboard extends BorderPane {
         btn[i].setBgColor("#C7E0EA");
         btn[i].setRippleColor(Color.web("#ddecf2"));
         btn[i].setTextColor(
-            "#484b6a; -fx-font-weight: bold; -fx-font-size:14px"
-          );
+            "#484b6a; -fx-font-weight: bold; -fx-font-size:14px");
         btn[i].buttonTypeProperty()
-          .set(io.github.palexdev.materialfx.enums.ButtonType.RAISED);
+            .set(io.github.palexdev.materialfx.enums.ButtonType.RAISED);
         btn[i].depthLevelProperty()
-          .set(io.github.palexdev.materialfx.effects.DepthLevel.LEVEL1);
+            .set(io.github.palexdev.materialfx.effects.DepthLevel.LEVEL1);
       }
 
       Label emp_icon = new ImgIcon("src/main/resources/img/user.png").getIcon();
       emp_icon.setPadding(new Insets(4, 10, 4, 2));
 
       Label dash_icon = new ImgIcon("src/main/resources/img/monitor.png")
-        .getIcon();
+          .getIcon();
       dash_icon.setPadding(new Insets(4, 8, 4, 2));
 
       Label attend_icon = new ImgIcon("src/main/resources/img/attendence.png")
-        .getIcon();
+          .getIcon();
       attend_icon.setPadding(new Insets(4, 8, 4, 2));
 
       btn[0].setGraphic(dash_icon);
@@ -235,7 +229,7 @@ public class Dashboard extends BorderPane {
 
       new SwitchNode(MainDash.container, btn[0]).switchNode(new MainModule());
       new SwitchNode(MainDash.container, btn[1])
-        .switchNode(new EmployeeModule());
+          .switchNode(new EmployeeModule());
       new SwitchNode(MainDash.container, btn[2]).switchNode(new Attendence());
 
       scrollPane.setContent(navBar);
