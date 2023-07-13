@@ -1,93 +1,97 @@
 package javafx.project.log;
 
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 
 public class Employee {
-    /*
-     *
-     * Only for table creation
-     */
-    public MFXRadioButton present, absent;
 
-    private String name, department;
-    private int emp_id;
+  /*
+   *
+   * Only for table creation
+   */
+  public MFXRadioButton present, absent;
 
-    private ToggleGroup group;
+  private String name, department;
+  private int emp_id;
 
-    private HBox group_box;
+  private ToggleGroup group;
 
-    private boolean isSelected;
+  private HBox group_box;
 
-    public Employee(int id, String name, String department) {
-        this.emp_id = id;
-        this.name = name;
-        this.department = department;
+  private boolean isSelected;
 
-        this.group = new ToggleGroup();
-        this.present = new MFXRadioButton("Present");
-        this.present.setToggleGroup(group);
+  public Employee(int id, String name, String department) {
+    this.emp_id = id;
+    this.name = name;
+    this.department = department;
 
-        this.absent = new MFXRadioButton("Absent");
-        this.absent.setToggleGroup(group);
+    this.group = new ToggleGroup();
+    this.present = new MFXRadioButton("Present");
+    this.present.setToggleGroup(group);
 
-        this.group_box = new HBox(18, present, absent);
-        this.group_box.setAlignment(Pos.CENTER);
-    }
+    this.absent = new MFXRadioButton("Absent");
+    this.absent.setToggleGroup(group);
 
-    public String getAttendance() {
-        String str = this.present.isSelected() ? "Present" : "Absent";
-        return str;
-    }
+    this.group_box = new HBox(18, present, absent);
+    this.group_box.setAlignment(Pos.CENTER);
+  }
 
-    public void setDepartment(String department) {
-        this.department = department;
-    }
+  public String getAttendance() {
+    String str = this.present.isSelected() ? "Present" : "Absent";
+    return str;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setDepartment(String department) {
+    this.department = department;
+  }
 
-    public void setId(int emp_id) {
-        this.emp_id = emp_id;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public boolean isSelected() {
-        if (this.present.isSelected() || this.absent.isSelected())
-            this.isSelected = true;
-        else
-            this.isSelected = false;
+  public void setId(int emp_id) {
+    this.emp_id = emp_id;
+  }
 
-        return this.isSelected;
-    }
+  public boolean isSelected() {
+    if (this.present.isSelected() || this.absent.isSelected()) this.isSelected =
+      true; else this.isSelected = false;
 
-    public HBox getBox() {
-        return group_box;
-    }
+    return this.isSelected;
+  }
 
-    public int getId() {
-        return emp_id;
-    }
+  public HBox getBox() {
+    return group_box;
+  }
 
-    public String getDepartment() {
-        return department;
-    }
+  public int getId() {
+    return emp_id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getDepartment() {
+    return department;
+  }
 
-    public String getAll() {
-        return "Emp_id: " + this.emp_id + " Name: " + this.name
-                + " Department: " + this.department;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setAll(int id, String name, String department) {
-        this.emp_id = id;
-        this.name = name;
-        this.department = department;
-    }
+  public String getAll() {
+    return (
+      "Emp_id: " +
+      this.emp_id +
+      " Name: " +
+      this.name +
+      " Department: " +
+      this.department
+    );
+  }
+
+  public void setAll(int id, String name, String department) {
+    this.emp_id = id;
+    this.name = name;
+    this.department = department;
+  }
 }
