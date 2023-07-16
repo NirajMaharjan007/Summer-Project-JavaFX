@@ -3,6 +3,7 @@ package javafx.project.database;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javafx.scene.chart.XYChart;
 
 public class EmpDatabase {
 
@@ -198,7 +199,7 @@ public class EmpDatabase {
       ResultSet rs = statement.executeQuery(sql);
       String result = "";
       while (rs.next()) {
-        result = rs.getString("status");
+        result = rs.getString("categories");
       }
       return result;
     } catch (Exception e) {
@@ -207,7 +208,26 @@ public class EmpDatabase {
     }
   }
 
-  public void getPresent() {
-    // TODO
+  public XYChart.Series<Number, Number> getPresent() {
+    XYChart.Series<Number, Number> presentSeries = new XYChart.Series<>();
+    presentSeries.setName("Present");
+    try (Statement statement = connection.createStatement()) {
+      String query =
+        "SELECT date_time, count(categories) FROM status WHERE categories = 'Present'";
+      ResultSet resultSet = statement.executeQuery(query);
+
+      // Fetch data from the result set and add it to the series
+      while (resultSet.next()) {
+        Date weekNumber = resultSet.getDate("date_time");
+        // int attendance = resultSet.getInt("categories");
+
+        presentSeries
+          .getData()
+          .add(new XYChart.Data<>(weekNumber.getDate(), 5));
+      }
+    } catch (Exception e) {
+      System.err.println(e.getMessage());
+    }
+    return presentSeries;
   }
 }
