@@ -99,6 +99,13 @@ public class EmployeeEdit extends BorderPane {
           alert.setHeaderText("successfully added employee");
           alert.setContentText("Required to Refresh");
           alert.show();
+
+          name.setText("");
+          department.setText("");
+          address.setText("");
+          salary.setText("");
+          male.selectedProperty().set(false);
+          female.selectedProperty().set(false);
         } else {
           Alert alert = new Alert(AlertType.ERROR);
           alert.setTitle("Failed");
