@@ -1,5 +1,8 @@
 package javafx.project.modules;
 
+import java.util.Date;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.*;
 import javafx.project.components.*;
 import javafx.project.database.*;
@@ -9,6 +12,7 @@ import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import org.jfree.chart.axis.DateAxis;
 
 public class MainModule extends VBox {
 
@@ -30,7 +34,7 @@ public class MainModule extends VBox {
     header1.getStyleClass().add("header1");
 
     Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png")
-      .getIcon();
+        .getIcon();
     refresh_icon.setPadding(new Insets(1, 8, 1, 4));
 
     MainBtn refresh = new MainBtn("Refresh");
@@ -72,10 +76,13 @@ public class MainModule extends VBox {
     private void init() {
       NumberAxis xAxis = new NumberAxis();
       NumberAxis yAxis = new NumberAxis();
+      DateAxis dateAxis = new DateAxis();
 
       // Set the labels for the axes
-      xAxis.setLabel("Days");
+      dateAxis.setLabel("Days");
       yAxis.setLabel("Attendance");
+
+      ObservableList<XYChart.Series<Date, Number>> series = FXCollections.observableArrayList();
 
       // Create the line chart
       LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
@@ -84,17 +91,14 @@ public class MainModule extends VBox {
       // Create the series for the line chart
       XYChart.Series<Number, Number> presentSeries = empData.getPresent();
 
-      // Create the series for "Absent" attendance
-      // TODO
       // Add the series to the line chart
-      lineChart.getData().add(presentSeries);
 
       lineChart.autosize();
 
       StackPane box = new StackPane(lineChart);
+
       StackPane.setMargin(box, new Insets(8, 4, 6, 4));
       StackPane.setAlignment(box, Pos.TOP_CENTER);
-
       box.autosize();
 
       this.getChildren().add(box);
@@ -175,7 +179,7 @@ public class MainModule extends VBox {
       activeBox.getChildren().add(label4);
 
       Label label5 = new ImgIcon("src/main/resources/img/calendar.png")
-        .getIcon();
+          .getIcon();
       label5.setPadding(new Insets(12, 4, 2, 4));
       pane[1].setLeft(label5);
       pane[1].setCenter(activeBox);

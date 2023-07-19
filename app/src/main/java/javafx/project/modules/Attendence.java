@@ -39,15 +39,15 @@ public class Attendence extends VBox {
     header.setStyle(Elements.HEADER1.getName());
 
     Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png")
-      .getIcon();
+        .getIcon();
     refresh_icon.setPadding(new Insets(1, 8, 1, 4));
 
     Label save_icon = new ImgIcon("src/main/resources/img/check-mark.png")
-      .getIcon();
+        .getIcon();
     save_icon.setPadding(new Insets(1, 8, 1, 4));
 
     refresh = new MainBtn("Refresh");
-    refresh.setAlignment(Pos.BASELINE_CENTER);
+    refresh_icon.setAlignment(Pos.BASELINE_CENTER);
     refresh.setGraphic(refresh_icon);
     refresh.setBgColor("#36cee6");
     refresh.setTextColor("#fff");
@@ -84,20 +84,18 @@ public class Attendence extends VBox {
         this.init();
         table.setDisable(true);
         System.out.println("Attendence.Panel.init() => false");
-      } else this.init();
+      } else
+        this.init();
     }
 
     private void fetchData() {
       try (ResultSet rs = new EmpDatabase(adminId).getData()) {
         while (rs.next()) {
-          data =
-            FXCollections.observableArrayList(
+          data = FXCollections.observableArrayList(
               new Employee(
-                rs.getInt("emp_id"),
-                rs.getString("name"),
-                rs.getString("department")
-              )
-            );
+                  rs.getInt("emp_id"),
+                  rs.getString("name"),
+                  rs.getString("department")));
           table.getItems().addAll(data);
         }
       } catch (Exception e) {
@@ -118,32 +116,29 @@ public class Attendence extends VBox {
       TableColumn<Employee, Integer> idColumn = new TableColumn<>("ID");
       TableColumn<Employee, String> nameCol = new TableColumn<>("Name");
       TableColumn<Employee, String> departmentCol = new TableColumn<>(
-        "Department"
-      );
+          "Department");
       TableColumn<Employee, String> attent = new TableColumn<>("Attendance");
 
       idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
       nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
       departmentCol.setCellValueFactory(
-        new PropertyValueFactory<>("department")
-      );
+          new PropertyValueFactory<>("department"));
       attent.setCellValueFactory(new PropertyValueFactory<>("box"));
 
       table.setTableMenuButtonVisible(false);
       table.setColumnResizePolicy(
-        TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN
-      );
+          TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
       table.getColumns().add(idColumn);
       table.getColumns().add(nameCol);
       table.getColumns().add(departmentCol);
       table.getColumns().add(attent);
       table
-        .getColumns()
-        .forEach(column -> {
-          column.setMinWidth(32);
-          column.setEditable(false);
-          column.setStyle("-fx-alignment: CENTER");
-        });
+          .getColumns()
+          .forEach(column -> {
+            column.setMinWidth(32);
+            column.setEditable(false);
+            column.setStyle("-fx-alignment: CENTER");
+          });
       table.setSelectionModel(null);
       table.autosize();
 
@@ -162,11 +157,12 @@ public class Attendence extends VBox {
         for (Employee employee : employees) {
           String result = empData.getStatus(employee.getId());
           System.out.println(result);
-          if (result.equalsIgnoreCase("present")) employee.present.setSelected(
-            true
-          ); else if (
-            result.equalsIgnoreCase("absent")
-          ) employee.absent.setSelected(true); else {
+          if (result.equalsIgnoreCase("present"))
+            employee.present.setSelected(
+                true);
+          else if (result.equalsIgnoreCase("absent"))
+            employee.absent.setSelected(true);
+          else {
             employee.present.setSelected(false);
             employee.absent.setSelected(false);
           }
@@ -176,10 +172,10 @@ public class Attendence extends VBox {
 
       save.setOnAction(event -> {
         List<Employee> selectedEmployees = table
-          .getItems()
-          .stream()
-          .filter(Employee::isSelected)
-          .collect(Collectors.toList());
+            .getItems()
+            .stream()
+            .filter(Employee::isSelected)
+            .collect(Collectors.toList());
 
         Alert alert = new Alert(null);
         alert.setTitle("Notifications");
@@ -189,19 +185,18 @@ public class Attendence extends VBox {
           EmpDatabase empData = new EmpDatabase(adminId);
           boolean empty = empData.isStatusEmpty(employee.getId());
 
-          if (empty == false) i =
-            empData.setStatus(
-              employee.getAttendance(),
-              employee.getId()
-            ); else j =
-            empData.updateStatus(employee.getAttendance(), employee.getId());
+          if (empty == false)
+            i = empData.setStatus(
+                employee.getAttendance(),
+                employee.getId());
+          else
+            j = empData.updateStatus(employee.getAttendance(), employee.getId());
 
           System.out.println(
-            "Employee with ID: " +
-            employee.getId() +
-            " for " +
-            employee.getAttendance()
-          );
+              "Employee with ID: " +
+                  employee.getId() +
+                  " for " +
+                  employee.getAttendance());
         }
 
         if (i > -1 || j > -1) {

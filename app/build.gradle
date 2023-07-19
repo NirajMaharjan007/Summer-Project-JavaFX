@@ -28,7 +28,7 @@ dependencies {
     // This dependency is used by the application.
     implementation 'mysql:mysql-connector-java:8.0.15'
     implementation 'io.github.palexdev:materialfx:11.16.1'
-    implementation "org.testfx:testfx-junit5:4.0.16-alpha"
+    implementation 'org.jfree:jfreechart:1.0.18'
     implementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
 }
 
