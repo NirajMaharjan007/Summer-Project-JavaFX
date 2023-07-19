@@ -29,9 +29,8 @@ public class EmpDatabase {
     try {
       Statement statement = connection.createStatement();
       ResultSet resultSet = statement.executeQuery(
-        "SELECT COUNT(*) AS emp_count FROM employees where admin_id=" +
-        this.adminId
-      );
+          "SELECT COUNT(*) AS emp_count FROM employees where admin_id=" +
+              this.adminId);
       resultSet.next();
 
       int count = resultSet.getInt("emp_count");
@@ -45,10 +44,8 @@ public class EmpDatabase {
   public ResultSet getData() {
     try {
       Statement statement = connection.createStatement();
-      data =
-        statement.executeQuery(
-          "Select * from employees where admin_id=" + this.adminId
-        );
+      data = statement.executeQuery("Select * from employees where admin_id="
+          + this.adminId);
       return data;
     } catch (Exception e) {
       System.err.println(e.getMessage());
@@ -68,17 +65,15 @@ public class EmpDatabase {
   }
 
   public int updateEmployee(
-    int id,
-    String name,
-    String department,
-    String address,
-    String salary,
-    String gender,
-    String email,
-    String phone
-  ) {
-    String sql =
-      "UPDATE employees SET name = ?, department = ?, address= ?,salary = ?, gender = ?,email=?,phone=? WHERE emp_id = ?";
+      int id,
+      String name,
+      String department,
+      String address,
+      String salary,
+      String gender,
+      String email,
+      String phone) {
+    String sql = "UPDATE employees SET name = ?, department = ?, address= ?,salary = ?, gender = ?,email=?,phone=? WHERE emp_id = ?";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, name);
       statement.setString(2, department);
@@ -109,17 +104,15 @@ public class EmpDatabase {
   }
 
   public int setData(
-    String name,
-    String department,
-    String address,
-    String salary,
-    String gender
-  ) {
+      String name,
+      String department,
+      String address,
+      String salary,
+      String gender) {
     try {
-      String sql =
-        "INSERT INTO employees" +
-        "(name,department,address,salary,gender,emp_img,email,phone,admin_id)" +
-        " VALUES (?,?,?,?,?,?,?,?,?);";
+      String sql = "INSERT INTO employees" +
+          "(name,department,address,salary,gender,emp_img,email,phone,admin_id)" +
+          " VALUES (?,?,?,?,?,?,?,?,?);";
       PreparedStatement statement = connection.prepareStatement(sql);
       statement.setString(1, name);
       statement.setString(2, department);
@@ -138,8 +131,7 @@ public class EmpDatabase {
   }
 
   public int setStatus(String status, int id) {
-    String sql =
-      "INSERT INTO status(date_time,status,time_set,emp_id) VALUES (?,?,?,?)";
+    String sql = "INSERT INTO status(date_time,status,time_set,emp_id) VALUES (?,?,?,?)";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, dateString);
       statement.setString(2, status);
@@ -154,12 +146,11 @@ public class EmpDatabase {
   }
 
   public int updateStatus(String status, int id) {
-    String sql =
-      "UPDATE status SET status=?  where emp_id=" +
-      id +
-      " and date_time='" +
-      dateString +
-      "'";
+    String sql = "UPDATE status SET status=?  where emp_id=" +
+        id +
+        " and date_time='" +
+        dateString +
+        "'";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, status);
       System.out.println("EmpDatabase.setStatus()=> updated status");
@@ -172,17 +163,19 @@ public class EmpDatabase {
 
   public boolean isStatusEmpty(int id) {
     try (Statement statement = connection.createStatement()) {
-      String sql =
-        "Select count(*) from status where emp_id=" +
-        id +
-        " and date_time='" +
-        dateString +
-        "'";
+      String sql = "Select count(*) from status where emp_id=" +
+          id +
+          " and date_time='" +
+          dateString +
+          "'";
       ResultSet rs = statement.executeQuery(sql);
       rs.next();
       int rowCount = rs.getInt(1);
       System.out.println("Status: " + rowCount);
-      if (rowCount == 0) return false; else return true;
+      if (rowCount == 0)
+        return false;
+      else
+        return true;
     } catch (Exception e) {
       System.err.println(e.getMessage());
       return false;
@@ -191,11 +184,10 @@ public class EmpDatabase {
 
   public String getStatus(int id) {
     try (Statement statement = connection.createStatement()) {
-      String sql =
-        "Select * from status where date_time='" +
-        dateString +
-        "' and emp_id=" +
-        id;
+      String sql = "Select * from status where date_time='" +
+          dateString +
+          "' and emp_id=" +
+          id;
       ResultSet rs = statement.executeQuery(sql);
       String result = "";
       while (rs.next()) {
@@ -212,18 +204,16 @@ public class EmpDatabase {
     XYChart.Series<Number, Number> presentSeries = new XYChart.Series<>();
     presentSeries.setName("Present");
     try (Statement statement = connection.createStatement()) {
-      String query =
-        "SELECT date_time, count(categories) FROM status WHERE categories = 'Present'";
+      String query = "SELECT date_time, count(categories) FROM status WHERE categories = 'Present'";
       ResultSet resultSet = statement.executeQuery(query);
 
       // Fetch data from the result set and add it to the series
       while (resultSet.next()) {
         Date weekNumber = resultSet.getDate("date_time");
         // int attendance = resultSet.getInt("categories");
-
         presentSeries
-          .getData()
-          .add(new XYChart.Data<>(weekNumber.getDate(), 5));
+            .getData()
+            .add(new XYChart.Data<>(weekNumber.getTime(), 5));
       }
     } catch (Exception e) {
       System.err.println(e.getMessage());
