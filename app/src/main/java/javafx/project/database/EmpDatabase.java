@@ -30,7 +30,7 @@ public class EmpDatabase {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(
                     "SELECT COUNT(*) AS emp_count FROM employees where admin_id="
-                    + this.adminId);
+                            + this.adminId);
             resultSet.next();
 
             int count = resultSet.getInt("emp_count");
@@ -201,24 +201,25 @@ public class EmpDatabase {
         }
     }
 
-    public XYChart.Series<Number, Number> getPresent() {
-        XYChart.Series<Number, Number> presentSeries = new XYChart.Series<>();
+    public XYChart.Series<String, Number> getPresent() {
+        XYChart.Series<String, Number> presentSeries = new XYChart.Series<>();
         presentSeries.setName("Present");
         try (Statement statement = connection.createStatement()) {
-            String query = "SELECT date_time, count(categories) FROM status WHERE categories = 'Present'";
+            String query = "SELECT date_time, count(categories) as nums FROM status WHERE categories = 'Present'";
             ResultSet resultSet = statement.executeQuery(query);
 
             // Fetch data from the result set and add it to the series
             while (resultSet.next()) {
-                Date weekNumber = resultSet.getDate("date_time");
-                // int attendance = resultSet.getInt("categories");
+                Date date = resultSet.getDate("date_time");
+                int attendance = resultSet.getInt("nums");
                 presentSeries
                         .getData()
-                        .add(new XYChart.Data<>(weekNumber.getTime(), 5));
+                        .add(new XYChart.Data<>(date.toString(), attendance));
             }
+            return presentSeries;
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            return null;
         }
-        return presentSeries;
     }
 }

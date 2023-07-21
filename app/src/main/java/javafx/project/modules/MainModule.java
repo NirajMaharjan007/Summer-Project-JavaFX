@@ -3,6 +3,7 @@ package javafx.project.modules;
 import javafx.geometry.*;
 import javafx.project.components.*;
 import javafx.project.database.*;
+import javafx.project.enuma.Elements;
 import javafx.project.enuma.MainStyle;
 import javafx.project.panels.Dashboard;
 import javafx.scene.chart.*;
@@ -65,8 +66,25 @@ public class MainModule extends VBox {
             super.setPrefHeight(Dashboard.getStage().getHeight());
             VBox.setVgrow(this, Priority.ALWAYS);
             VBox.setMargin(this, new Insets(32, 8, 6, 8));
+            if (empData.getPresent() != null) {
+                this.init();
+            } else {
+                this.isNull();
+            }
+        }
 
-            this.init();
+        private void isNull() {
+            StackPane box = new StackPane();
+            StackPane.setMargin(box, new Insets(12, 6, 4, 6));
+            StackPane.setAlignment(box, Pos.CENTER);
+
+            Label label = new Label("No Attendance Data");
+            label.setStyle(Elements.HEADER2.getName());
+
+            box.getChildren().add(label);
+
+            box.autosize();
+            this.getChildren().add(box);
         }
 
         private void init() {
@@ -78,13 +96,8 @@ public class MainModule extends VBox {
             xAxis.setLabel("Date");
             yAxis.setLabel("Attendance");
 
-            XYChart.Series<String, Number> values = new XYChart.Series<>();
+            XYChart.Series<String, Number> values = empData.getPresent();
             values.setName("Present");
-            values.getData().add(new XYChart.Data<String, Number>("2000-01-01", 13.2));
-            values.getData().add(new XYChart.Data<String, Number>("2000-01-03", 14.1));
-            values.getData().add(new XYChart.Data<String, Number>("2000-01-04", 11.6));
-            values.getData().add(new XYChart.Data<String, Number>("2000-01-05", 0.0));
-            values.getData().add(new XYChart.Data<String, Number>("2000-01-06", 9.82));
 
             LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
             lineChart.setTitle("Attendance Chart");
