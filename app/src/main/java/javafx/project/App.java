@@ -12,30 +12,29 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class App extends Application {
+    protected Scene scene;
+    protected Stage stage;
 
-  protected Scene scene;
-  protected Stage stage;
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-  public static void main(String[] args) {
-    launch(args);
-  }
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
 
-  @Override
-  public void start(Stage primaryStage) throws Exception {
-    stage = primaryStage;
+        MainLogin login_layout = new MainLogin(stage);
+        Pane root = new Pane();
+        root.getChildren().add(login_layout);
 
-    MainLogin login_layout = new MainLogin(stage);
-    Pane root = new Pane();
-    root.getChildren().add(login_layout);
+        scene = new Scene(root);
 
-    scene = new Scene(root);
+        MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
-    MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
+        stage.setScene(scene);
 
-    stage.setScene(scene);
-
-    stage.centerOnScreen();
-    stage.setResizable(false);
-    stage.show();
-  }
+        stage.centerOnScreen();
+        stage.setResizable(false);
+        stage.show();
+    }
 }

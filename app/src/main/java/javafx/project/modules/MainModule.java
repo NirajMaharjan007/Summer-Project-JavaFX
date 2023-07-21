@@ -1,8 +1,5 @@
 package javafx.project.modules;
 
-import java.util.Date;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.*;
 import javafx.project.components.*;
 import javafx.project.database.*;
@@ -12,182 +9,181 @@ import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import org.jfree.chart.axis.DateAxis;
 
 public class MainModule extends VBox {
 
-  private int adminId = AdminDatabase.getInstance().getId();
+    private int adminId = AdminDatabase.getInstance().getId();
 
-  public MainModule() {
-    super();
-    super.setSpacing(16);
-    super.setPadding(new Insets(2, 4, 2, 4));
-    VBox.setMargin(this, new Insets(8));
+    public MainModule() {
+        super();
+        super.setSpacing(16);
+        super.setPadding(new Insets(2, 4, 2, 4));
+        VBox.setMargin(this, new Insets(8));
 
-    this.init();
-  }
-
-  private void init() {
-    this.getStylesheets().add(MainStyle.ALT_STYLESHEET.getLocation());
-
-    Label header1 = new Label("Dashboard");
-    header1.getStyleClass().add("header1");
-
-    Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png")
-        .getIcon();
-    refresh_icon.setPadding(new Insets(1, 8, 1, 4));
-
-    MainBtn refresh = new MainBtn("Refresh");
-
-    VBox box = new VBox(16, new Pane(), new GraphPane());
-    VBox.setVgrow(box, Priority.ALWAYS);
-    VBox.setMargin(box, new Insets(8, 4, 6, 4));
-
-    box.setAlignment(Pos.TOP_CENTER);
-
-    refresh.setAlignment(Pos.BASELINE_CENTER);
-    refresh.setGraphic(refresh_icon);
-    refresh.setBgColor("#36cee6");
-    refresh.setTextColor("#fff");
-    refresh.setRippleColor(Color.web("#84DED2"));
-    refresh.setOnAction(event -> {
-      System.out.println("Refreshed");
-      box.getChildren().clear();
-      box.getChildren().addAll(new Pane(), new GraphPane());
-    });
-
-    this.setMinHeight(512);
-    this.getChildren().addAll(header1, refresh, box);
-  }
-
-  private class GraphPane extends VBox {
-
-    private EmpDatabase empData = new EmpDatabase(adminId);
-
-    public GraphPane() {
-      super();
-      super.setPrefHeight(Dashboard.getStage().getHeight());
-      VBox.setVgrow(this, Priority.ALWAYS);
-      VBox.setMargin(this, new Insets(16, 2, 4, 2));
-
-      this.init();
+        this.init();
     }
 
     private void init() {
-      NumberAxis xAxis = new NumberAxis();
-      NumberAxis yAxis = new NumberAxis();
-      DateAxis dateAxis = new DateAxis();
+        this.getStylesheets().add(MainStyle.ALT_STYLESHEET.getLocation());
 
-      // Set the labels for the axes
-      dateAxis.setLabel("Days");
-      yAxis.setLabel("Attendance");
+        Label header1 = new Label("Dashboard");
+        header1.getStyleClass().add("header1");
 
-      ObservableList<XYChart.Series<Date, Number>> series = FXCollections.observableArrayList();
+        Label refresh_icon = new ImgIcon("src/main/resources/img/refresh.png")
+                .getIcon();
+        refresh_icon.setPadding(new Insets(1, 8, 1, 4));
 
-      // Create the line chart
-      LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-      lineChart.setTitle("Attendance Chart");
+        MainBtn refresh = new MainBtn("Refresh");
 
-      // Create the series for the line chart
-      XYChart.Series<Number, Number> presentSeries = empData.getPresent();
+        VBox box = new VBox(16, new Pane(), new GraphPane());
+        VBox.setVgrow(box, Priority.ALWAYS);
+        VBox.setMargin(box, new Insets(8, 4, 6, 4));
 
-      // Add the series to the line chart
+        box.setAlignment(Pos.TOP_CENTER);
 
-      lineChart.autosize();
+        refresh.setAlignment(Pos.BASELINE_CENTER);
+        refresh.setGraphic(refresh_icon);
+        refresh.setBgColor("#36cee6");
+        refresh.setTextColor("#fff");
+        refresh.setRippleColor(Color.web("#84DED2"));
+        refresh.setOnAction(event -> {
+            System.out.println("Refreshed");
+            box.getChildren().clear();
+            box.getChildren().addAll(new Pane(), new GraphPane());
+        });
 
-      StackPane box = new StackPane(lineChart);
-
-      StackPane.setMargin(box, new Insets(8, 4, 6, 4));
-      StackPane.setAlignment(box, Pos.TOP_CENTER);
-      box.autosize();
-
-      this.getChildren().add(box);
-    }
-  }
-
-  private class Pane extends FlowPane {
-
-    private BorderPane[] pane = new BorderPane[2];
-
-    private Card[] card = new Card[2];
-
-    final Insets PADDING = new Insets(4, 8, 6, 8);
-
-    public Pane() {
-      super();
-      super.setPadding(PADDING);
-      super.setOrientation(Orientation.HORIZONTAL);
-      super.getStylesheets().add(MainStyle.ALT_STYLESHEET.getLocation());
-
-      for (int i = 0; i < 2; i++) {
-        pane[i] = new BorderPane();
-        pane[i].setPadding(PADDING);
-
-        card[i] = new Card();
-        card[i].setPadding(PADDING);
-        card[i].setBgColor("#C7E0EA");
-      }
-
-      this.init();
-      super.autosize();
+        this.setMinHeight(512);
+        this.getChildren().addAll(header1, refresh, box);
     }
 
-    private void init() {
-      this.setHgap(32);
-      this.setAlignment(Pos.BASELINE_CENTER);
+    private class GraphPane extends VBox {
 
-      int count = new EmpDatabase(adminId).count();
+        private EmpDatabase empData = new EmpDatabase(adminId);
 
-      GridPane.setFillWidth(this, true);
+        public GraphPane() {
+            super();
+            super.setPrefHeight(Dashboard.getStage().getHeight());
+            VBox.setVgrow(this, Priority.ALWAYS);
+            VBox.setMargin(this, new Insets(32, 8, 6, 8));
 
-      ImgIcon icon = new ImgIcon("src/main/resources/img/staffs.png");
-      VBox box = new VBox(16);
-      box.setPadding(new Insets(4, 10, 2, 32));
-      box.setAlignment(Pos.CENTER);
+            this.init();
+        }
 
-      Label label = new Label("Total employees");
-      label.getStyleClass().add("header3");
+        private void init() {
+            NumberAxis yAxis = new NumberAxis();
+            // DateAxis dateAxis = new DateAxis();
+            CategoryAxis xAxis = new CategoryAxis();
 
-      Label label2 = new Label();
+            // Set the labels for the axes
+            xAxis.setLabel("Date");
+            yAxis.setLabel("Attendance");
 
-      if (count <= 0) {
-        label2.setText("No Employees Found");
-        label2.getStyleClass().add("header2");
-        box.getChildren().add(label2);
-      } else {
-        label2.setText("" + count);
-        label2.getStyleClass().add("header1");
-        box.getChildren().add(label2);
-        box.getChildren().add(label);
-      }
+            XYChart.Series<String, Number> values = new XYChart.Series<>();
+            values.setName("Present");
+            values.getData().add(new XYChart.Data<String, Number>("2000-01-01", 13.2));
+            values.getData().add(new XYChart.Data<String, Number>("2000-01-03", 14.1));
+            values.getData().add(new XYChart.Data<String, Number>("2000-01-04", 11.6));
+            values.getData().add(new XYChart.Data<String, Number>("2000-01-05", 0.0));
+            values.getData().add(new XYChart.Data<String, Number>("2000-01-06", 9.82));
 
-      // card[0].setPrefWidth(1024);
-      pane[0].setLeft(icon.getIcon());
-      pane[0].setCenter(box);
+            LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
+            lineChart.setTitle("Attendance Chart");
+            lineChart.getData().add(values);
+            lineChart.autosize();
 
-      VBox activeBox = new VBox(16);
-      activeBox.setAlignment(Pos.CENTER);
-      activeBox.setPadding(new Insets(8, 12, 8, 32));
+            StackPane box = new StackPane(lineChart);
 
-      Label label3 = new Label("30");
-      label3.getStyleClass().add("header1");
+            StackPane.setMargin(box, new Insets(8, 4, 6, 4));
+            StackPane.setAlignment(box, Pos.TOP_CENTER);
+            box.autosize();
 
-      Label label4 = new Label("Active Days");
-      label4.getStyleClass().add("header3");
-
-      activeBox.getChildren().add(label3);
-      activeBox.getChildren().add(label4);
-
-      Label label5 = new ImgIcon("src/main/resources/img/calendar.png")
-          .getIcon();
-      label5.setPadding(new Insets(12, 4, 2, 4));
-      pane[1].setLeft(label5);
-      pane[1].setCenter(activeBox);
-
-      for (int i = 0; i < 2; i++) {
-        card[i].getChildren().add(pane[i]);
-        this.getChildren().add(card[i]);
-      }
+            this.getChildren().add(box);
+        }
     }
-  }
+
+    private class Pane extends FlowPane {
+
+        private BorderPane[] pane = new BorderPane[2];
+
+        private Card[] card = new Card[2];
+
+        final Insets PADDING = new Insets(4, 8, 6, 8);
+
+        public Pane() {
+            super();
+            super.setPadding(PADDING);
+            super.setOrientation(Orientation.HORIZONTAL);
+            super.getStylesheets().add(MainStyle.ALT_STYLESHEET.getLocation());
+
+            for (int i = 0; i < 2; i++) {
+                pane[i] = new BorderPane();
+                pane[i].setPadding(PADDING);
+
+                card[i] = new Card();
+                card[i].setPadding(PADDING);
+                card[i].setBgColor("#C7E0EA");
+            }
+
+            this.init();
+            super.autosize();
+        }
+
+        private void init() {
+            this.setHgap(32);
+            this.setAlignment(Pos.BASELINE_CENTER);
+
+            int count = new EmpDatabase(adminId).count();
+
+            GridPane.setFillWidth(this, true);
+
+            ImgIcon icon = new ImgIcon("src/main/resources/img/staffs.png");
+            VBox box = new VBox(16);
+            box.setPadding(new Insets(4, 10, 2, 32));
+            box.setAlignment(Pos.CENTER);
+
+            Label label = new Label("Total employees");
+            label.getStyleClass().add("header3");
+
+            Label label2 = new Label();
+
+            if (count <= 0) {
+                label2.setText("No Employees Found");
+                label2.getStyleClass().add("header2");
+                box.getChildren().add(label2);
+            } else {
+                label2.setText("" + count);
+                label2.getStyleClass().add("header1");
+                box.getChildren().add(label2);
+                box.getChildren().add(label);
+            }
+
+            // card[0].setPrefWidth(1024);
+            pane[0].setLeft(icon.getIcon());
+            pane[0].setCenter(box);
+
+            VBox activeBox = new VBox(16);
+            activeBox.setAlignment(Pos.CENTER);
+            activeBox.setPadding(new Insets(8, 12, 8, 32));
+
+            Label label3 = new Label("30");
+            label3.getStyleClass().add("header1");
+
+            Label label4 = new Label("Active Days");
+            label4.getStyleClass().add("header3");
+
+            activeBox.getChildren().add(label3);
+            activeBox.getChildren().add(label4);
+
+            Label label5 = new ImgIcon("src/main/resources/img/calendar.png")
+                    .getIcon();
+            label5.setPadding(new Insets(12, 4, 2, 4));
+            pane[1].setLeft(label5);
+            pane[1].setCenter(activeBox);
+
+            for (int i = 0; i < 2; i++) {
+                card[i].getChildren().add(pane[i]);
+                this.getChildren().add(card[i]);
+            }
+        }
+    }
 }
