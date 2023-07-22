@@ -66,7 +66,7 @@ public class MainModule extends VBox {
             super.setPrefHeight(Dashboard.getStage().getHeight());
             VBox.setVgrow(this, Priority.ALWAYS);
             VBox.setMargin(this, new Insets(32, 8, 6, 8));
-            if (empData.getPresent() != null) {
+            if (empData.getPresent() != null && empData.getAbsent() != null) {
                 this.init();
             } else {
                 this.isNull();
@@ -96,12 +96,17 @@ public class MainModule extends VBox {
             xAxis.setLabel("Date");
             yAxis.setLabel("Attendance");
 
-            XYChart.Series<String, Number> values = empData.getPresent();
-            values.setName("Present");
+            XYChart.Series<String, Number> absent = empData.getAbsent();
+            absent.setName("Absent");
+
+            XYChart.Series<String, Number> present = empData.getPresent();
+            present.setName("Present");
 
             LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
             lineChart.setTitle("Attendance Chart");
-            lineChart.getData().add(values);
+            lineChart.getData().add(absent);
+            lineChart.getData().add(present);
+
             lineChart.autosize();
 
             StackPane box = new StackPane(lineChart);

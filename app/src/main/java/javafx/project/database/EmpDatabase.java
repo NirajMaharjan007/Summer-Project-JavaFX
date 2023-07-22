@@ -205,10 +205,13 @@ public class EmpDatabase {
         XYChart.Series<String, Number> presentSeries = new XYChart.Series<>();
         presentSeries.setName("Present");
         try (Statement statement = connection.createStatement()) {
-            String query = "SELECT date_time, count(categories) as nums FROM status WHERE categories = 'Present'";
+            String query = "SELECT date_time, count(categories) as nums FROM status " +
+                    "LEFT JOIN employees ON status.emp_id = employees.emp_id WHERE employees.admin_id = "
+                    + this.adminId
+                    + " AND categories = 'Present' "
+                    + "GROUP BY DATE(date_time) ORDER BY DATE(date_time)";
             ResultSet resultSet = statement.executeQuery(query);
 
-            // Fetch data from the result set and add it to the series
             while (resultSet.next()) {
                 Date date = resultSet.getDate("date_time");
                 int attendance = resultSet.getInt("nums");
@@ -217,6 +220,32 @@ public class EmpDatabase {
                         .add(new XYChart.Data<>(date.toString(), attendance));
             }
             return presentSeries;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public XYChart.Series<String, Number> getAbsent() {
+        XYChart.Series<String, Number> absentSeries = new XYChart.Series<>();
+        absentSeries.setName("Present");
+        try (Statement statement = connection.createStatement()) {
+            String query = "SELECT date_time, count(categories) as nums FROM status " +
+                    "LEFT JOIN employees ON status.emp_id = employees.emp_id WHERE employees.admin_id = "
+                    + this.adminId
+                    + " AND categories = 'Absent' "
+                    + "GROUP BY DATE(date_time) ORDER BY DATE(date_time)";
+            ResultSet resultSet = statement.executeQuery(query);
+
+            // Fetch data from the result set and add it to the series
+            while (resultSet.next()) {
+                Date date = resultSet.getDate("date_time");
+                int attendance = resultSet.getInt("nums");
+
+                absentSeries.getData()
+                        .add(new XYChart.Data<>(date.toString(), attendance));
+            }
+            return absentSeries;
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return null;
