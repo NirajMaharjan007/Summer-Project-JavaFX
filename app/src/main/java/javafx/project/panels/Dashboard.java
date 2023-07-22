@@ -1,17 +1,18 @@
 package javafx.project.panels;
 
 import io.github.palexdev.materialfx.css.themes.*;
-import javafx.geometry.*;
+
 import javafx.project.components.*;
 import javafx.project.enuma.*;
 import javafx.project.modules.*;
 import javafx.project.modules.submodules.AdminOption;
-import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
+
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.geometry.*;
 
 public class Dashboard extends BorderPane {
 
@@ -208,13 +209,14 @@ public class Dashboard extends BorderPane {
       Label emp_icon = new ImgIcon("src/main/resources/img/user.png").getIcon();
       emp_icon.setPadding(new Insets(4, 10, 4, 2));
 
-      Label dash_icon = new ImgIcon("src/main/resources/img/monitor.png")
-          .getIcon();
+      Label dash_icon = new ImgIcon("src/main/resources/img/monitor.png").getIcon();
       dash_icon.setPadding(new Insets(4, 8, 4, 2));
 
-      Label attend_icon = new ImgIcon("src/main/resources/img/attendence.png")
-          .getIcon();
+      Label attend_icon = new ImgIcon("src/main/resources/img/attendence.png").getIcon();
       attend_icon.setPadding(new Insets(4, 8, 4, 2));
+
+      Label todo_icon = new ImgIcon("src/main/resources/img/to-do-list.png").getIcon();
+      todo_icon.setPadding(new Insets(4, 8, 4, 2));
 
       btn[0].setGraphic(dash_icon);
       btn[0].setText("Dashboard");
@@ -225,12 +227,16 @@ public class Dashboard extends BorderPane {
       btn[2].setGraphic(attend_icon);
       btn[2].setText("Attenance");
 
-      navBar.getChildren().addAll(btn[0], btn[1], btn[2]);
+      btn[3].setGraphic(todo_icon);
+      btn[3].setText("To-Do List");
+
+      for (int index = 0; index < 4; index++)
+        navBar.getChildren().add(btn[index]);
 
       new SwitchNode(MainDash.container, btn[0]).switchNode(new MainModule());
-      new SwitchNode(MainDash.container, btn[1])
-          .switchNode(new EmployeeModule());
+      new SwitchNode(MainDash.container, btn[1]).switchNode(new EmployeeModule());
       new SwitchNode(MainDash.container, btn[2]).switchNode(new Attendence());
+      new SwitchNode(MainDash.container, btn[3]).switchNode(new TodoModule());
 
       scrollPane.setContent(navBar);
 
