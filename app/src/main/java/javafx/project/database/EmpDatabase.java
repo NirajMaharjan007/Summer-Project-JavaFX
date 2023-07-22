@@ -131,7 +131,7 @@ public class EmpDatabase {
     }
 
     public int setStatus(String status, int id) {
-        String sql = "INSERT INTO status(date_time,status,time_set,emp_id) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO status(date_time,categories,time_set,emp_id) VALUES (?,?,?,?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, dateString);
             statement.setString(2, status);
@@ -146,7 +146,7 @@ public class EmpDatabase {
     }
 
     public int updateStatus(String status, int id) {
-        String sql = "UPDATE status SET status=?  where emp_id="
+        String sql = "UPDATE status SET categories=?  where emp_id="
                 + id
                 + " and date_time='"
                 + dateString
