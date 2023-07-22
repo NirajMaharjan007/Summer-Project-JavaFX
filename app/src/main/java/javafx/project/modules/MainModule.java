@@ -16,8 +16,7 @@ public class MainModule extends VBox {
     private int adminId = AdminDatabase.getInstance().getId();
 
     public MainModule() {
-        super();
-        super.setSpacing(16);
+        super(16);
         super.setPadding(new Insets(2, 4, 2, 4));
         VBox.setMargin(this, new Insets(8));
 
