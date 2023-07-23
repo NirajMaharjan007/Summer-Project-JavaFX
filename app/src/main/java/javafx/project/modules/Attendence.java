@@ -24,6 +24,9 @@ public class Attendence extends VBox {
 
     public Attendence() {
         super(16);
+        super.setPadding(new Insets(2, 4, 2, 4));
+        VBox.setMargin(this, new Insets(8));
+
         startTime = LocalTime.of(10, 45);
         endTime = LocalTime.of(17, 30);
         now = LocalTime.now();

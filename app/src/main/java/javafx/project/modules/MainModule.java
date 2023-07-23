@@ -1,11 +1,12 @@
 package javafx.project.modules;
 
-import javafx.geometry.*;
 import javafx.project.components.*;
 import javafx.project.database.*;
 import javafx.project.enuma.Elements;
 import javafx.project.enuma.MainStyle;
 import javafx.project.panels.Dashboard;
+
+import javafx.geometry.*;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -16,8 +17,7 @@ public class MainModule extends VBox {
     private int adminId = AdminDatabase.getInstance().getId();
 
     public MainModule() {
-        super();
-        super.setSpacing(16);
+        super(16);
         super.setPadding(new Insets(2, 4, 2, 4));
         VBox.setMargin(this, new Insets(8));
 
@@ -66,7 +66,7 @@ public class MainModule extends VBox {
             super.setPrefHeight(Dashboard.getStage().getHeight());
             VBox.setVgrow(this, Priority.ALWAYS);
             VBox.setMargin(this, new Insets(32, 8, 6, 8));
-            if (empData.getPresent() != null) {
+            if (empData.getPresent() != null && empData.getAbsent() != null) {
                 this.init();
             } else {
                 this.isNull();
@@ -89,22 +89,28 @@ public class MainModule extends VBox {
 
         private void init() {
             NumberAxis yAxis = new NumberAxis();
-            // DateAxis dateAxis = new DateAxis();
             CategoryAxis xAxis = new CategoryAxis();
 
             // Set the labels for the axes
             xAxis.setLabel("Date");
             yAxis.setLabel("Attendance");
 
-            XYChart.Series<String, Number> values = empData.getPresent();
-            values.setName("Present");
+            XYChart.Series<String, Number> absent = empData.getAbsent();
+            absent.setName("Absent");
 
-            LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
-            lineChart.setTitle("Attendance Chart");
-            lineChart.getData().add(values);
-            lineChart.autosize();
+            XYChart.Series<String, Number> present = empData.getPresent();
+            present.setName("Present");
 
-            StackPane box = new StackPane(lineChart);
+            BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+            barChart.setTitle("Attendance Chart");
+            barChart.getData().add(absent);
+            barChart.getData().add(present);
+            barChart.setBarGap(4);
+            barChart.setCategoryGap(32);
+            barChart.setPrefWidth(10);
+            barChart.setMinWidth(8);
+
+            StackPane box = new StackPane(barChart);
 
             StackPane.setMargin(box, new Insets(8, 4, 6, 4));
             StackPane.setAlignment(box, Pos.TOP_CENTER);

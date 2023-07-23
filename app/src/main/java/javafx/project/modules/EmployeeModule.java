@@ -29,9 +29,8 @@ public class EmployeeModule extends VBox {
     public static MainBtn exit = new MainBtn("Exit");
 
     public EmployeeModule() {
-        super();
-        super.setSpacing(16);
-        super.setPadding(new Insets(2, 6, 4, 8));
+        super(16);
+        super.setPadding(new Insets(2, 4, 2, 4));
         VBox.setMargin(this, new Insets(8));
 
         scrollPanel = new ScrollPanel();
