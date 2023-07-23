@@ -212,6 +212,7 @@ public class EmpDatabase {
             while (resultSet.next()) {
                 Date date = resultSet.getDate("date_time");
                 int attendance = resultSet.getInt("nums");
+                System.out.println("EmpDatabase.getPresent()=> " + date + "\t" + attendance);
                 presentSeries
                         .getData()
                         .add(new XYChart.Data<>(date.toString(), attendance));
