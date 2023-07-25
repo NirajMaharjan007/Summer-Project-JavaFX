@@ -13,12 +13,10 @@ public class Database {
         if (conn == null) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                conn
-                        = DriverManager.getConnection(
-                                "jdbc:mysql://localhost:3306/hr_data",
-                                "root",
-                                ""
-                        );
+                conn = DriverManager.getConnection(
+                        "jdbc:mysql://bfgj93vkpswbuk9ozeav-mysql.services.clever-cloud.com:3306/bfgj93vkpswbuk9ozeav",
+                        "u6lzhdcupvy4tqcu",
+                        "QNALcQd7InDiAGwGSfSG");
             } catch (Exception e) {
                 System.err.println("Database.getConnection(); => " + e.getMessage());
             }
@@ -26,3 +24,13 @@ public class Database {
         return conn;
     }
 }
+
+/*
+ * 
+ * conn = DriverManager.getConnection(
+ * "jdbc:mysql://localhost:3306/hr_data",
+ * "root",
+ * ""
+ * );
+ * 
+ */
