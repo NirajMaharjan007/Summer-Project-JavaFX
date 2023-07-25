@@ -44,8 +44,7 @@ public class Attendence extends VBox {
                 .getIcon();
         refresh_icon.setPadding(new Insets(1, 8, 1, 4));
 
-        Label save_icon = new ImgIcon("src/main/resources/img/check-mark.png")
-                .getIcon();
+        Label save_icon = new ImgIcon("src/main/resources/img/check-mark.png").getIcon();
         save_icon.setPadding(new Insets(1, 8, 1, 4));
 
         refresh = new MainBtn("Refresh");

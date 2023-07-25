@@ -2,6 +2,7 @@ package javafx.project.modules;
 
 import javafx.geometry.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.control.*;
 
 import javafx.project.components.*;
@@ -11,6 +12,7 @@ import javafx.project.log.Log;
 public class TodoModule extends VBox {
     private Log log;
     private MainComboBox<String> combo_box;
+    private MainBtn add_btn;
 
     public TodoModule() {
         super(16);
@@ -18,7 +20,22 @@ public class TodoModule extends VBox {
         VBox.setMargin(this, new Insets(8));
 
         log = Log.getInstance();
+
+        Label add_icon = new ImgIcon("src/main/resources/img/add.png").getIcon();
+        add_icon.setPadding(new Insets(1, 8, 1, 2));
+
+        add_btn = new MainBtn("Add");
+        add_btn.setAlignment(Pos.CENTER);
+        add_btn.setGraphic(add_icon);
+        add_btn.setBgColor(Elements.SUCCESS_COLOR.getName());
+        add_btn.setTextColor("#fff");
+        add_btn.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
+
         combo_box = new MainComboBox<>();
+        combo_box.setAlignment(Pos.BASELINE_LEFT);
+        combo_box.setFloatingText("List");
+        combo_box.getItems().addAll("Notes", "Todos", "Done");
+        combo_box.getSelectionModel().selectFirst();
 
         this.init();
     }
@@ -43,8 +60,8 @@ public class TodoModule extends VBox {
         scrollPanel.setContent(pane);
 
         HBox layout = new HBox(8);
-        layout.getChildren().add(combo_box);
         layout.setAlignment(Pos.BASELINE_LEFT);
+        layout.getChildren().addAll(combo_box, add_btn);
 
         VBox box = new VBox(16);
         box.setPadding(new Insets(8, 4, 8, 4));
