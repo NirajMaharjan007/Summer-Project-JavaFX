@@ -8,10 +8,10 @@ import javafx.scene.control.*;
 import javafx.project.components.*;
 import javafx.project.enuma.Elements;
 import javafx.project.log.Log;
+import javafx.project.modules.submodules.TodoOption;
 
 public class TodoModule extends VBox {
     private Log log;
-    private MainComboBox<String> combo_box;
     private MainBtn add_btn;
 
     public TodoModule() {
@@ -30,12 +30,7 @@ public class TodoModule extends VBox {
         add_btn.setBgColor(Elements.SUCCESS_COLOR.getName());
         add_btn.setTextColor("#fff");
         add_btn.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
-
-        combo_box = new MainComboBox<>();
-        combo_box.setAlignment(Pos.BASELINE_LEFT);
-        combo_box.setFloatingText("List");
-        combo_box.getItems().addAll("Notes", "Todos", "Done");
-        combo_box.getSelectionModel().selectFirst();
+        add_btn.setOnAction(event -> new TodoOption().show());
 
         this.init();
     }
@@ -46,7 +41,9 @@ public class TodoModule extends VBox {
 
         FlowPane pane = new FlowPane(Orientation.HORIZONTAL);
         pane.setPadding(new Insets(8));
-        pane.getChildren().addAll(new Note());
+        pane.setHgap(32);
+        pane.setVgap(16);
+        pane.getChildren().addAll(new Note(), new Todos());
 
         ScrollPanel scrollPanel = new ScrollPanel(pane);
         VBox.setVgrow(scrollPanel, Priority.ALWAYS);
@@ -61,7 +58,7 @@ public class TodoModule extends VBox {
 
         HBox layout = new HBox(8);
         layout.setAlignment(Pos.BASELINE_LEFT);
-        layout.getChildren().addAll(combo_box, add_btn);
+        layout.getChildren().add(add_btn);
 
         VBox box = new VBox(16);
         box.setPadding(new Insets(8, 4, 8, 4));
@@ -71,10 +68,12 @@ public class TodoModule extends VBox {
         this.getChildren().addAll(header, box);
     }
 
-    private class Note extends Card {
-        private FlowPane flow;
+    private class Arrangement extends Card {
+        protected FlowPane flow;
 
-        public Note() {
+        protected Label label;
+
+        public Arrangement() {
             super();
             super.setMaxHeight(512);
             super.setPrefHeight(325);
@@ -89,12 +88,12 @@ public class TodoModule extends VBox {
         }
 
         private void initialization() {
-            this.setSpacing(8);
+            this.setSpacing(16);
             this.setPadding(new Insets(16));
 
             VBox box = new VBox(16);
 
-            Label label = new Label("Notes");
+            label = new Label();
             label.setStyle(Elements.HEADER2.getName());
 
             Separator separator = new Separator();
@@ -106,6 +105,23 @@ public class TodoModule extends VBox {
             flow.getChildren().add(box);
         }
 
+    }
+
+    private class Note extends Arrangement {
+        public Note() {
+            super();
+
+            label.setText("Note");
+        }
+
+    }
+
+    private class Todos extends Arrangement {
+        public Todos() {
+            super();
+
+            label.setText("Todos");
+        }
     }
 
 }
