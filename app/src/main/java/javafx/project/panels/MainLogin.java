@@ -110,6 +110,7 @@ public class MainLogin extends VBox {
     }
 
     protected void justDoIt() {
+        Session session = Session.getInstance();
         if (admin.setLogin(adminField.getText(), passwordField.getText())) {
             adminField.setText("");
             passwordField.setText("");
@@ -122,13 +123,14 @@ public class MainLogin extends VBox {
                     + " Id =>"
                     + AdminDatabase.getInstance().getId()
             );
-        } else if (data == null) {
-            System.err.println("Can't connect to the database");
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("Error!");
-            alert.setHeaderText("Cannot connect to the database");
-            alert.setContentText("Please try in another time");
-            alert.show();
+
+            if (session.isNull()) {
+                int i = session.setSection(AdminDatabase.getInstance().getId());
+                System.out.println("Section set ->" + i);
+            } else {
+                session.setLogin(AdminDatabase.getInstance().getId());
+            }
+
         } else {
             System.err.println("Not Logged In");
             Alert alert = new Alert(AlertType.ERROR);

@@ -6,14 +6,17 @@ package javafx.project;
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
 import io.github.palexdev.materialfx.css.themes.Themes;
 import javafx.application.Application;
+import javafx.project.database.Session;
 import javafx.project.panels.MainLogin;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class App extends Application {
-    protected Scene scene;
-    protected Stage stage;
+    private Scene scene;
+    private Stage stage;
+    private Pane root;
+    private Session session;
 
     public static void main(String[] args) {
         launch(args);
@@ -22,9 +25,10 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
+        session = Session.getInstance();
+        root = new Pane();
 
         MainLogin login_layout = new MainLogin(stage);
-        Pane root = new Pane();
         root.getChildren().add(login_layout);
 
         scene = new Scene(root);

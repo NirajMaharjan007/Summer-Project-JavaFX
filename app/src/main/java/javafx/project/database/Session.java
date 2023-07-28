@@ -19,24 +19,11 @@ public class Session {
         return instance;
     }
 
-    public void set(String name, String password) {
-        this.name = name;
-        this.password = password;
-        boolean flag = AdminDatabase.getInstance().setLogin(this.name, this.password);
-
-        if (!flag) {
-            throw new NullPointerException("Not fount admin-name and password");
-        }
-    }
-
-    public int setSection(String term, int admin_id) {
-        boolean flag = this.isNull();
+    public int setSection(int admin_id) {
         String sql = "INSERT INTO session(term,admin_id) values (?,?)";
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
-            if (!flag) {
-                statement.setString(1, term);
-                statement.setInt(2, admin_id);
-            }
+            statement.setString(1, "Yes");
+            statement.setInt(2, admin_id);
             return statement.executeUpdate();
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -44,22 +31,44 @@ public class Session {
         }
     }
 
-    public int setLogout(String term) {
-        boolean flag = this.isNull();
+    public void setLogin(int admin_id) {
+        String sql = "UPDATE session set term='Yes' where admin_id= " + admin_id;
+        try {
+            Statement statement = conn.createStatement();
+            statement.execute(sql);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void setLogout() {
         int admin_id = AdminDatabase.getInstance().getId();
-        String sql = "UPDATE session set term=? where admin_id=" + admin_id;
-        try (PreparedStatement statement = conn.prepareStatement(sql)) {
-            if (!flag) {
-                statement.setString(1, term);
-            }
-            return statement.executeUpdate();
-        } catch (Exception e) {
+        String sql = "UPDATE session set term='No' where admin_id= " + admin_id;
+        try {
+            Statement statement = conn.createStatement();
+            statement.execute(sql);
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
-            return -1;
         }
     }
 
-    protected boolean isNull() {
+    public String getTerm() {
+        int admin_id = AdminDatabase.getInstance().getId();
+        try (Statement statement = conn.createStatement()) {
+            String term = "";
+            String sql = "SELECT term FROM session where admin_id=" + admin_id;
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                term = rs.getString("term");
+            }
+            return term;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public boolean isNull() {
         int admin_id = AdminDatabase.getInstance().getId();
         try (Statement statement = conn.createStatement()) {
             String sql = "SELECT COUNT(*) FROM session where admin_id=" + admin_id;
