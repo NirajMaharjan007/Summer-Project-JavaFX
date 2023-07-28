@@ -90,3 +90,11 @@ VALUES (
         9813545029,
         1
     );
+
+
+Create table session (
+    id int primary key AUTO_INCREMENT,
+    term varchar(16),
+    admin_id int not null,
+    Foreign Key (admin_id) REFERENCES admin (id) ON DELETE CASCADE
+);

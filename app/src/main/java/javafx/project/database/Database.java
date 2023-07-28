@@ -2,6 +2,7 @@ package javafx.project.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Database {
     private static Connection conn;
@@ -9,7 +10,6 @@ public class Database {
     // private static final String host =
     // "jdbc:mysql://sql6.freemysqlhosting.net:3306/sql6635251",
     // username = "sql6635251", password = "QydUFrBAgz";
-
     private Database() {
     }
 
@@ -21,7 +21,7 @@ public class Database {
                         "root", "");
 
                 // conn = DriverManager.getConnection(host, username, password);
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | SQLException e) {
                 System.err.println("Database.getConnection(); => " + e.getMessage());
             }
         }
@@ -36,11 +36,11 @@ public class Database {
  * "root",
  * ""
  * );
- * 
+ *
  * 2.
  * conn = DriverManager.getConnection(
  * "jdbc:mysql://bfgj93vkpswbuk9ozeav-mysql.services.clever-cloud.com:3306/bfgj93vkpswbuk9ozeav",
  * "u6lzhdcupvy4tqcu",
  * "QNALcQd7InDiAGwGSfSG");
- * 
+ *
  */
