@@ -3,14 +3,26 @@ package javafx.project.database;
 import java.sql.*;
 
 public class Session {
-    private Connection conn = Database.getConnection();
+    private final Connection conn = Database.getConnection();
 
     private String name, password;
 
-    public Session(String name, String password) {
+    private static Session instance;
+
+    private Session() {
+    }
+
+    public static Session getInstance() {
+        if (instance == null) {
+            instance = new Session();
+        }
+        return instance;
+    }
+
+    public void set(String name, String password) {
         this.name = name;
         this.password = password;
-        boolean flag = AdminDatabase.getInstance().setLogin(name, password);
+        boolean flag = AdminDatabase.getInstance().setLogin(this.name, this.password);
 
         if (!flag) {
             throw new NullPointerException("Not fount admin-name and password");
