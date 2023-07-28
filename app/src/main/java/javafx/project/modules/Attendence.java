@@ -22,7 +22,16 @@ public class Attendence extends VBox {
 
     MainBtn refresh, save;
 
-    public Attendence() {
+    private static Attendence module;
+
+    public static Attendence getModule() {
+        if (module == null)
+            module = new Attendence();
+
+        return module;
+    }
+
+    private Attendence() {
         super(16);
         super.setPadding(new Insets(2, 4, 2, 4));
         VBox.setMargin(this, new Insets(8));

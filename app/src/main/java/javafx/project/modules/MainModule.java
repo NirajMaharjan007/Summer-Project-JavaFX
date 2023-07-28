@@ -13,10 +13,18 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 public class MainModule extends VBox {
-
     private int adminId = AdminDatabase.getInstance().getId();
 
-    public MainModule() {
+    private static MainModule module;
+
+    public static MainModule getModule() {
+        if (module == null)
+            module = new MainModule();
+
+        return module;
+    }
+
+    private MainModule() {
         super(16);
         super.setPadding(new Insets(2, 4, 2, 4));
         VBox.setMargin(this, new Insets(8));
@@ -205,4 +213,5 @@ public class MainModule extends VBox {
             }
         }
     }
+
 }

@@ -139,7 +139,7 @@ public class Dashboard extends BorderPane {
       VBox.setMargin(container, new Insets(8));
 
       container.getChildren().clear();
-      container.getChildren().add(new MainModule());
+      container.getChildren().add(MainModule.getModule());
 
       card.getChildren().add(container);
       card.setAlignment(Pos.TOP_CENTER);
@@ -233,9 +233,9 @@ public class Dashboard extends BorderPane {
       for (int index = 0; index < 4; index++)
         navBar.getChildren().add(btn[index]);
 
-      new SwitchNode(MainDash.container, btn[0]).switchNode(new MainModule());
-      new SwitchNode(MainDash.container, btn[1]).switchNode(new EmployeeModule());
-      new SwitchNode(MainDash.container, btn[2]).switchNode(new Attendence());
+      new SwitchNode(MainDash.container, btn[0]).switchNode(MainModule.getModule());
+      new SwitchNode(MainDash.container, btn[1]).switchNode(EmployeeModule.getModule());
+      new SwitchNode(MainDash.container, btn[2]).switchNode(Attendence.getModule());
       new SwitchNode(MainDash.container, btn[3]).switchNode(TodoModule.getModule());
 
       scrollPane.setContent(navBar);
