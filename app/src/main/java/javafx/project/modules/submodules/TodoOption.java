@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.project.components.MainComboBox;
 import javafx.project.enuma.Elements;
+import javafx.project.modules.TodoModule;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
@@ -52,18 +53,8 @@ public class TodoOption extends VBox {
         combo_box = new MainComboBox<>();
         combo_box.setAlignment(Pos.TOP_LEFT);
         combo_box.setFloatingText("List");
-        combo_box.getItems().addAll("Notes", "Todos", "Done");
+        combo_box.getItems().addAll("Very Important", "Less Important", "Not Important");
         combo_box.getSelectionModel().selectFirst();
-
-        HBox hbox = new HBox(8);
-        hbox.setAlignment(Pos.TOP_LEFT);
-        hbox.setPadding(new Insets(2, 4, 1, 4));
-        hbox.getChildren().add(combo_box);
-
-        field = new TextField();
-        field.setAlignment(Pos.TOP_LEFT);
-        field.setPromptText("Enter text");
-        field.setMinSize(320, 320);
 
         Label add_icon = new ImgIcon("src/main/resources/img/add.png").getIcon();
 
@@ -73,7 +64,17 @@ public class TodoOption extends VBox {
         add_btn.setBgColor(Elements.SUCCESS_COLOR.getName());
         add_btn.setTextColor("#fff");
         add_btn.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
-        add_btn.setOnAction(event -> new TodoOption().show());
+        add_btn.setOnAction(event -> TodoModule.getModule().justRefreshed());
+
+        HBox hbox = new HBox(8);
+        hbox.setAlignment(Pos.TOP_LEFT);
+        hbox.setPadding(new Insets(2, 4, 1, 4));
+        hbox.getChildren().addAll(combo_box, add_btn);
+
+        field = new TextField();
+        field.setAlignment(Pos.TOP_LEFT);
+        field.setPromptText("Enter text");
+        field.setMinSize(320, 320);
 
         box.getChildren().addAll(hbox, field);
 

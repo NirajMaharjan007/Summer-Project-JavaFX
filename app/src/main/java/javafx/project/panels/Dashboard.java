@@ -236,7 +236,7 @@ public class Dashboard extends BorderPane {
       new SwitchNode(MainDash.container, btn[0]).switchNode(new MainModule());
       new SwitchNode(MainDash.container, btn[1]).switchNode(new EmployeeModule());
       new SwitchNode(MainDash.container, btn[2]).switchNode(new Attendence());
-      new SwitchNode(MainDash.container, btn[3]).switchNode(new TodoModule());
+      new SwitchNode(MainDash.container, btn[3]).switchNode(TodoModule.getModule());
 
       scrollPane.setContent(navBar);
 

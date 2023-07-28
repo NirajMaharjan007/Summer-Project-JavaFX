@@ -11,16 +11,29 @@ import javafx.project.log.Log;
 import javafx.project.modules.submodules.TodoOption;
 
 public class TodoModule extends VBox {
-    private Log log;
+    private static TodoModule instance;
+    private VBox box;
 
-    public TodoModule() {
+    private TodoModule() {
         super(16);
         super.setPadding(new Insets(2, 4, 2, 4));
         VBox.setMargin(this, new Insets(8));
 
-        log = Log.getInstance();
-
         this.init();
+    }
+
+    public static TodoModule getModule() {
+        if (instance == null) {
+            instance = new TodoModule();
+        }
+        return instance;
+    }
+
+    public void justRefreshed() {
+        box.getChildren().clear();
+
+        System.out.println("TodoModule -> justRefreshed");
+        Log.getInstance().setNoteLog("Updated");
     }
 
     private void init() {
@@ -44,9 +57,8 @@ public class TodoModule extends VBox {
         scrollPanel.setFitToWidth(true);
         scrollPanel.setContent(pane);
 
-        VBox box = new VBox(16);
+        box = new VBox(16);
         box.setPadding(new Insets(8, 4, 8, 4));
-        box.setAlignment(Pos.TOP_CENTER);
         box.getChildren().add(scrollPanel);
 
         this.setAlignment(Pos.TOP_CENTER);

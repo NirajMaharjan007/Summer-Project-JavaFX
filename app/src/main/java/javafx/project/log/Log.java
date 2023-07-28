@@ -6,67 +6,82 @@ import java.util.Date;
 
 public class Log {
 
-  private static Log instance;
-  private File file;
+    private static Log instance;
+    private File file, note_file;
 
-  private SimpleDateFormat formatter;
-  private Date date;
-  private String dateString;
+    private SimpleDateFormat formatter;
+    private Date date;
+    private String dateString;
 
-  public static Log getInstance() {
-    if (instance == null) {
-      instance = new Log();
+    public static Log getInstance() {
+        if (instance == null) {
+            instance = new Log();
+        }
+        return instance;
     }
-    return instance;
-  }
 
-  private Log() {
-    formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    date = new Date();
-    dateString = formatter.format(date);
+    private Log() {
+        formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        date = new Date();
+        dateString = formatter.format(date);
 
-    try {
-      file = new File("src/main/resources/log/activity.log");
-      if (!file.exists()) {
-        if (file.createNewFile()) System.out.println(
-          "file created"
-        ); else System.out.println("Failed to create");
-      }
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
+        try {
+            note_file = new File("src/main/resources/log/note.log");
+            file = new File("src/main/resources/log/activity.log");
+            if (!file.exists() || !note_file.exists()) {
+                if (file.createNewFile()) {
+                    System.out.println("file created");
+                }
+                if (note_file.createNewFile()) {
+                    System.out.println("note file created");
+                } else {
+                    System.out.println("Failed to create");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
-  }
 
-  public void setLog(String text) {
-    try (FileWriter writer = new FileWriter(file, true)) {
-      writer.write(text + ";\tTime: " + dateString + "\n\n");
-      writer.close();
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
+    public void setLog(String text) {
+        try (FileWriter writer = new FileWriter(file, true)) {
+            writer.write(text + ";\tTime: " + dateString + "\n\n");
+            writer.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
-  }
 
-  public String getLog() {
-    try (FileReader reader = new FileReader(file)) {
-      StringBuilder builder = new StringBuilder();
-      int c;
-      while ((c = reader.read()) != -1) {
-        builder.append((char) c);
-      }
-      reader.close();
-      return builder.toString();
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
-      return null;
+    public void setNoteLog(String text) {
+        try (FileWriter writer = new FileWriter(file, true)) {
+            writer.write(text + ";\tTime: " + dateString + "\n\n");
+            writer.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
-  }
 
-  public void clear() {
-    try (FileWriter writer = new FileWriter(file, false)) {
-      writer.write("");
-      writer.close();
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
+    public String getLog() {
+        try (FileReader reader = new FileReader(file)) {
+            StringBuilder builder = new StringBuilder();
+            int c;
+            while ((c = reader.read()) != -1) {
+                builder.append((char) c);
+            }
+            reader.close();
+            return builder.toString();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
-  }
+
+    public void clear() {
+        try (FileWriter writer = new FileWriter(file, false)) {
+            writer.write("");
+            writer.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
 }
