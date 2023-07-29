@@ -26,18 +26,9 @@ public class EmployeeModule extends VBox {
     private ScrollPanel scrollPanel;
     private EmployeeBox emp_box;
 
-    private static EmployeeModule module;
-
     public static MainBtn exit = new MainBtn("Exit");
 
-    public static EmployeeModule getModule() {
-        if (module == null) {
-            module = new EmployeeModule();
-        }
-        return module;
-    }
-
-    private EmployeeModule() {
+    public EmployeeModule() {
         super(16);
         super.setPadding(new Insets(2, 4, 2, 4));
         VBox.setMargin(this, new Insets(8));

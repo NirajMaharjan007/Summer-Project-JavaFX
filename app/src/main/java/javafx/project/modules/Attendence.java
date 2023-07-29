@@ -22,16 +22,7 @@ public class Attendence extends VBox {
 
     MainBtn refresh, save;
 
-    private static Attendence module;
-
-    public static Attendence getModule() {
-        if (module == null)
-            module = new Attendence();
-
-        return module;
-    }
-
-    private Attendence() {
+    public Attendence() {
         super(16);
         super.setPadding(new Insets(2, 4, 2, 4));
         VBox.setMargin(this, new Insets(8));
@@ -205,9 +196,9 @@ public class Attendence extends VBox {
 
                     System.out.println(
                             "Employee with ID: "
-                                    + employee.getId()
-                                    + " for "
-                                    + employee.getAttendance());
+                            + employee.getId()
+                            + " for "
+                            + employee.getAttendance());
                 }
 
                 if (i > -1 || j > -1) {

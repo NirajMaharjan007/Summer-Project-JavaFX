@@ -11,22 +11,14 @@ import javafx.project.log.Log;
 import javafx.project.modules.submodules.TodoOption;
 
 public class TodoModule extends VBox {
-    private static TodoModule instance;
     private VBox box;
 
-    private TodoModule() {
+    public TodoModule() {
         super(16);
         super.setPadding(new Insets(2, 4, 2, 4));
         VBox.setMargin(this, new Insets(8));
 
         this.init();
-    }
-
-    public static TodoModule getModule() {
-        if (instance == null) {
-            instance = new TodoModule();
-        }
-        return instance;
     }
 
     public void justRefreshed() {

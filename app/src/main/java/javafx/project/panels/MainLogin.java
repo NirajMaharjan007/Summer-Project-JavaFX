@@ -1,12 +1,14 @@
 package javafx.project.panels;
 
 import java.sql.Connection;
-import javafx.event.*;
-import javafx.geometry.*;
+
 import javafx.project.components.*;
 import javafx.project.database.*;
 import javafx.project.enuma.Elements;
 import javafx.project.log.Log;
+
+import javafx.event.*;
+import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.*;
@@ -15,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class MainLogin extends VBox {
+    Session session;
 
     MainPasswordField passwordField;
     MainTextField adminField;
@@ -33,10 +36,19 @@ public class MainLogin extends VBox {
 
         this.stage = stage;
 
+        session = Session.getInstance();
+
         passwordField = new MainPasswordField();
         adminField = new MainTextField();
 
         if (data != null) {
+            if (session.isSetTerm()) {
+                this.stage.close();
+                if (admin.setLogin(session.getName(), session.getPassword())) {
+                    System.out.println(session.getId());
+                    new Dashboard(stage);
+                }
+            }
             init();
         } else {
             failed();
@@ -54,6 +66,7 @@ public class MainLogin extends VBox {
         cancel.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
         cancel.setAlignment(Pos.CENTER_RIGHT);
         cancel.setOnAction(e -> {
+            stage.close();
             System.exit(0);
         });
 
@@ -110,7 +123,6 @@ public class MainLogin extends VBox {
     }
 
     protected void justDoIt() {
-        Session session = Session.getInstance();
         if (admin.setLogin(adminField.getText(), passwordField.getText())) {
             adminField.setText("");
             passwordField.setText("");
@@ -121,14 +133,13 @@ public class MainLogin extends VBox {
                     "Logged in by admin: "
                     + adminField.getText()
                     + " Id =>"
-                    + AdminDatabase.getInstance().getId()
+                    + admin.getId()
             );
 
             if (session.isNull()) {
-                int i = session.setSection(AdminDatabase.getInstance().getId());
-                System.out.println("Section set ->" + i);
+                session.setSection(admin.getId());
             } else {
-                session.setLogin(AdminDatabase.getInstance().getId());
+                session.setLogin(admin.getId());
             }
 
         } else {

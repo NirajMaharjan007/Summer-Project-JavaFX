@@ -64,7 +64,6 @@ public class TodoOption extends VBox {
         add_btn.setBgColor(Elements.SUCCESS_COLOR.getName());
         add_btn.setTextColor("#fff");
         add_btn.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
-        add_btn.setOnAction(event -> TodoModule.getModule().justRefreshed());
 
         HBox hbox = new HBox(8);
         hbox.setAlignment(Pos.TOP_LEFT);
