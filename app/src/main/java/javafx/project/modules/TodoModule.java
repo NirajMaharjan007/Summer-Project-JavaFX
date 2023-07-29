@@ -49,6 +49,7 @@ public class TodoModule extends VBox {
         box.setAlignment(Pos.TOP_CENTER);
         box.getChildren().add(scrollPanel);
 
+        this.setAlignment(Pos.TOP_CENTER);
         this.getChildren().addAll(header, box);
     }
 
