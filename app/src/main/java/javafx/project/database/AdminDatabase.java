@@ -158,6 +158,10 @@ public class AdminDatabase {
         }
     }
 
+    public int updateTodos() {
+        return -1;
+    }
+
     public ResultSet getTodos() {
         try {
             Statement statement = conn.createStatement();

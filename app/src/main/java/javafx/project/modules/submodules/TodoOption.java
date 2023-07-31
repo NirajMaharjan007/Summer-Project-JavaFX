@@ -8,10 +8,10 @@ import javafx.stage.*;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-
-import javafx.project.components.MainComboBox;
+import javafx.project.database.AdminDatabase;
 import javafx.project.enuma.Elements;
 import javafx.project.components.*;
 import javafx.project.modules.TodoModule;
@@ -24,9 +24,11 @@ public class TodoOption extends VBox {
     private TextField field;
     private MainBtn add_btn;
     private VBox box;
+    private TodoModule.Diary pane;
 
-    public TodoOption() {
+    public TodoOption(TodoModule.Diary pane) {
         super();
+        this.pane = pane;
 
         scene = new Scene(this, 400, 400);
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
@@ -44,6 +46,11 @@ public class TodoOption extends VBox {
 
     public void show() {
         stage.show();
+    }
+
+    private int insert(String title, String description) {
+        AdminDatabase admin = AdminDatabase.getInstance();
+        return admin.setTodos(title, description);
     }
 
     private void initialize() {
@@ -65,6 +72,34 @@ public class TodoOption extends VBox {
         add_btn.setBgColor(Elements.SUCCESS_COLOR.getName());
         add_btn.setTextColor("#fff");
         add_btn.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
+        add_btn.setOnAction(e -> {
+            Alert alert = new Alert(null);
+            if (!field.getText().isEmpty()) {
+                int i = this.insert(combo_box.getSelectedItem().toString(), field.getText());
+                if (i > -1) {
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText("Todo Added");
+                    alert.setContentText("Todo Added Successfully");
+                    alert.show();
+                    field.clear();
+                    pane.refresh();
+                } else {
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Failed");
+                    alert.setHeaderText("Failed");
+                    alert.setContentText("Failed to insert");
+                    alert.show();
+                    pane.refresh();
+                }
+            } else {
+                alert.setAlertType(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText("Failed");
+                alert.setContentText("Text field is empty");
+                alert.show();
+            }
+        });
 
         HBox hbox = new HBox(8);
         hbox.setAlignment(Pos.TOP_LEFT);
