@@ -5,7 +5,7 @@ import java.sql.*;
 public class Session {
     private final Connection conn = Database.getConnection();
 
-//    private String name, password;
+    // private String name, password;
     private static Session instance;
 
     private Session() {
@@ -64,7 +64,6 @@ public class Session {
             System.out.println(e.getMessage());
             return -1;
         }
-//        return 0;
     }
 
     public void setSection(int admin_id) {

@@ -45,7 +45,10 @@ public class MainLogin extends VBox {
             if (session.isSetTerm()) {
                 this.stage.close();
                 if (admin.setLogin(session.getName(), session.getPassword())) {
-                    System.out.println(session.getId());
+                    log.setLog("Session Logged in by admin: "
+                            + admin.getName()
+                            + " Id =>"
+                            + admin.getId());
                     new Dashboard(stage);
                 }
             }
@@ -131,10 +134,9 @@ public class MainLogin extends VBox {
             stage.close();
             log.setLog(
                     "Logged in by admin: "
-                    + adminField.getText()
-                    + " Id =>"
-                    + admin.getId()
-            );
+                            + adminField.getText()
+                            + " Id =>"
+                            + admin.getId());
 
             if (session.isNull()) {
                 session.setSection(admin.getId());

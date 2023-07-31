@@ -19,16 +19,19 @@ public class AdminDatabase {
         return instances;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public int getId() {
         try {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(
                     "SELECT * FROM admin where name = '"
-                    + this.name
-                    + "' and password = '"
-                    + this.password
-                    + "'"
-            );
+                            + this.name
+                            + "' and password = '"
+                            + this.password
+                            + "'");
             while (rs.next()) {
                 this.id = rs.getInt(1);
             }
@@ -95,8 +98,7 @@ public class AdminDatabase {
     public int updateAdminDetail(String name, String email, String phone)
             throws SQLException {
         int id = new Random().nextInt(16, Integer.MAX_VALUE);
-        String sql
-                = "update admin_detail set id=?, picture=?,name=?,email=?,phone=? where admin_id=?";
+        String sql = "update admin_detail set id=?, picture=?,name=?,email=?,phone=? where admin_id=?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, id);
         statement.setString(2, "src/main/resources/img/uploads/default-pic.png");
@@ -123,8 +125,7 @@ public class AdminDatabase {
 
     public boolean isNullAdminDetail() {
         try (Statement statement = conn.createStatement()) {
-            String sql
-                    = "SELECT COUNT(*) FROM admin_detail where admin_id=" + getId();
+            String sql = "SELECT COUNT(*) FROM admin_detail where admin_id=" + getId();
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
             int rowCount = rs.getInt(1);
@@ -139,6 +140,32 @@ public class AdminDatabase {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return false;
+        }
+    }
+
+    public int setTodos(String title, String text) {
+        String sql = "INSERT INTO todos (title, description,created_date,created_time,admin_id) VALUES (?,?,?,?,?)";
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, title);
+            statement.setString(2, text);
+            statement.setDate(3, new Date(System.currentTimeMillis()));
+            statement.setTime(4, new Time(System.currentTimeMillis()));
+            statement.setInt(5, this.getId());
+            return statement.executeUpdate();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return -1;
+        }
+    }
+
+    public ResultSet getTodos() {
+        try {
+            Statement statement = conn.createStatement();
+            String sql = "SELECT * FROM todos where admin_id=" + this.getId();
+            return statement.executeQuery(sql);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
         }
     }
 }

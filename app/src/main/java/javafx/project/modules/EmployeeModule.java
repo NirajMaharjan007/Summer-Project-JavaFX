@@ -192,8 +192,7 @@ public class EmployeeModule extends VBox {
                     card.setMinWidth(200);
                     card.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                     card.setPadding(new Insets(16));
-                    card
-                            .getChildren()
+                    card.getChildren()
                             .addAll(id, name, department, address, salary, gender, box);
                     card_list.add(card);
                 }

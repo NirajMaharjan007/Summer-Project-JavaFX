@@ -134,13 +134,11 @@ public class Attendence extends VBox {
             table.getColumns().add(nameCol);
             table.getColumns().add(departmentCol);
             table.getColumns().add(attent);
-            table
-                    .getColumns()
-                    .forEach(column -> {
-                        column.setMinWidth(32);
-                        column.setEditable(false);
-                        column.setStyle("-fx-alignment: CENTER");
-                    });
+            table.getColumns().forEach(column -> {
+                column.setMinWidth(32);
+                column.setEditable(false);
+                column.setStyle("-fx-alignment: CENTER");
+            });
             table.setSelectionModel(null);
             table.autosize();
 
@@ -172,11 +170,8 @@ public class Attendence extends VBox {
             });
 
             save.setOnAction(event -> {
-                List<Employee> selectedEmployees = table
-                        .getItems()
-                        .stream()
-                        .filter(Employee::isSelected)
-                        .collect(Collectors.toList());
+                List<Employee> selectedEmployees = table.getItems().stream()
+                        .filter(Employee::isSelected).collect(Collectors.toList());
 
                 Alert alert = new Alert(null);
                 alert.setTitle("Notifications");
@@ -194,8 +189,7 @@ public class Attendence extends VBox {
                         j = empData.updateStatus(employee.getAttendance(), employee.getId());
                     }
 
-                    System.out.println(
-                            "Employee with ID: "
+                    System.out.println("Employee with ID: "
                             + employee.getId()
                             + " for "
                             + employee.getAttendance());

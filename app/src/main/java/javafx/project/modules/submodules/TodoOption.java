@@ -4,21 +4,22 @@ import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
 import io.github.palexdev.materialfx.css.themes.Themes;
 
 import javafx.geometry.*;
-import javafx.project.components.ImgIcon;
-import javafx.project.components.MainBtn;
 import javafx.stage.*;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.project.components.MainComboBox;
-import javafx.project.enuma.Elements;
-import javafx.project.modules.TodoModule;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
+import javafx.project.components.MainComboBox;
+import javafx.project.enuma.Elements;
+import javafx.project.components.*;
+import javafx.project.modules.TodoModule;
+
 public class TodoOption extends VBox {
-    private Stage stage;
-    private Scene scene;
+    private final Stage stage;
+    private final Scene scene;
+
     private MainComboBox<String> combo_box;
     private TextField field;
     private MainBtn add_btn;

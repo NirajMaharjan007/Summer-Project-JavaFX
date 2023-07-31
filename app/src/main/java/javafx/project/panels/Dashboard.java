@@ -41,6 +41,7 @@ public class Dashboard extends BorderPane {
         init();
 
         newStage.centerOnScreen();
+        newStage.requestFocus();
         newStage.setResizable(true);
         newStage.setTitle("Dashboard");
         newStage.setScene(scene);
@@ -111,8 +112,8 @@ public class Dashboard extends BorderPane {
     private class MainDash extends VBox {
 
         /*
-     * public MainModule module = new MainModule();
-     * public EmployeeModule employeeModule = new EmployeeModule();
+         * public MainModule module = new MainModule();
+         * public EmployeeModule employeeModule = new EmployeeModule();
          */
         public static VBox container = new VBox();
 

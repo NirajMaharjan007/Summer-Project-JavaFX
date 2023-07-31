@@ -91,10 +91,21 @@ VALUES (
         1
     );
 
+Create table
+    session (
+        id int primary key AUTO_INCREMENT,
+        term varchar(16),
+        admin_id int not null,
+        Foreign Key (admin_id) REFERENCES admin (id) ON DELETE CASCADE
+    );
 
-Create table session (
-    id int primary key AUTO_INCREMENT,
-    term varchar(16),
-    admin_id int not null,
-    Foreign Key (admin_id) REFERENCES admin (id) ON DELETE CASCADE
-);
+CREATE TABLE
+    todos(
+        id int primary key AUTO_INCREMENT,
+        title varchar(32),
+        description TEXT,
+        created_date date,
+        created_time time,
+        admin_id int not null,
+        Foreign Key (admin_id) REFERENCES admin(id) on delete CASCADE
+    );
