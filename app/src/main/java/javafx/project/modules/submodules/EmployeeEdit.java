@@ -23,12 +23,12 @@ public class EmployeeEdit extends BorderPane {
 
   ToggleGroup genderToggleGroup;
 
-  private EmpDatabase data = new EmpDatabase(
-    AdminDatabase.getInstance().getId()
-  );
+  private EmpDatabase data = new EmpDatabase(AdminDatabase.getInstance().getId());
+  private EmployeeModule.CreateEmployee pane;
 
-  public EmployeeEdit() {
+  public EmployeeEdit(EmployeeModule.CreateEmployee pane) {
     super();
+    this.pane = pane;
     this.init();
   }
 
@@ -62,14 +62,14 @@ public class EmployeeEdit extends BorderPane {
     female.setToggleGroup(genderToggleGroup);
 
     genderToggleGroup
-      .selectedToggleProperty()
-      .addListener((observable, oldValue, newValue) -> {
-        if (newValue != null) {
-          RadioButton selectedRadioButton = (RadioButton) newValue;
-          gender_text = selectedRadioButton.getText();
-          System.out.println("Selected radio button: " + gender_text);
-        }
-      });
+        .selectedToggleProperty()
+        .addListener((observable, oldValue, newValue) -> {
+          if (newValue != null) {
+            RadioButton selectedRadioButton = (RadioButton) newValue;
+            gender_text = selectedRadioButton.getText();
+            System.out.println("Selected radio button: " + gender_text);
+          }
+        });
     HBox radioBox = new HBox(male, female);
     radioBox.setSpacing(16);
     radioBox.setAlignment(Pos.BASELINE_CENTER);
@@ -84,16 +84,11 @@ public class EmployeeEdit extends BorderPane {
 
     save.setOnAction(event -> {
       if (this.isEmpty()) {
-        if (
-          data.setData(
-            name.getText(),
+        if (data.setData(name.getText(),
             department.getText(),
             address.getText(),
             salary.getText(),
-            gender_text
-          ) >
-          -1
-        ) {
+            gender_text) > -1) {
           Alert alert = new Alert(AlertType.INFORMATION);
           alert.setTitle("Succeed");
           alert.setHeaderText("successfully added employee");
@@ -113,6 +108,7 @@ public class EmployeeEdit extends BorderPane {
           alert.show();
         }
       }
+      pane.refresh();
     });
 
     MainBtn cancel = new MainBtn("Cancel");
@@ -127,9 +123,8 @@ public class EmployeeEdit extends BorderPane {
 
     box.setPadding(new Insets(25, 16, 12, 16));
     box.setAlignment(Pos.CENTER);
-    box
-      .getChildren()
-      .addAll(name, department, address, salary, gender_box, hbox);
+    box.getChildren()
+        .addAll(name, department, address, salary, gender_box, hbox);
 
     card.setPadding(new Insets(10));
     card.getChildren().add(box);

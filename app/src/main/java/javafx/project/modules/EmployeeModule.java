@@ -247,9 +247,9 @@ public class EmployeeModule extends VBox {
         }
     }
 
-    private class CreateEmployee extends VBox {
+    public class CreateEmployee extends VBox {
 
-        EmployeeEdit edit = new EmployeeEdit();
+        EmployeeEdit edit = new EmployeeEdit(this);
 
         public CreateEmployee() {
             super(16);
@@ -273,6 +273,10 @@ public class EmployeeModule extends VBox {
 
         public void show() {
             stage.show();
+        }
+
+        public void refresh() {
+            justRefresh();
         }
     }
 }
