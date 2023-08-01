@@ -5,12 +5,14 @@ package javafx.project;
 
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
 import io.github.palexdev.materialfx.css.themes.Themes;
+
 import javafx.application.Application;
-import javafx.project.database.Session;
-import javafx.project.panels.MainLogin;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import javafx.project.panels.MainLogin;
+import javafx.project.database.Session;
 
 public class App extends Application {
     private Scene scene;
@@ -25,8 +27,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
-        session = Session.getInstance();
         root = new Pane();
+        session = Session.getInstance();
 
         MainLogin login_layout = new MainLogin(stage);
         root.getChildren().add(login_layout);
@@ -39,6 +41,13 @@ public class App extends Application {
 
         stage.centerOnScreen();
         stage.setResizable(false);
-        stage.show();
+
+        System.out.println(session.isSetTerm());
+
+        if (session.isSetTerm()) {
+            stage.close();
+        } else {
+            stage.show();
+        }
     }
 }

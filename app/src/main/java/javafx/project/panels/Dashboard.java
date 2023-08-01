@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.geometry.*;
+
 import javafx.project.database.Session;
 
 public class Dashboard extends BorderPane {
@@ -40,6 +41,7 @@ public class Dashboard extends BorderPane {
         init();
 
         newStage.centerOnScreen();
+        newStage.requestFocus();
         newStage.setResizable(true);
         newStage.setTitle("Dashboard");
         newStage.setScene(scene);
@@ -100,7 +102,6 @@ public class Dashboard extends BorderPane {
             HBox logoSide = new HBox();
             logoSide.setPadding(new Insets(8));
             logoSide.setSpacing(16);
-            // logoSide.getChildren().add(new Label("Logo"));
             logoSide.getChildren().add(new ImgIcon("src/main/resources/img/logolaxprinter.png").getIcon());
 
             this.setRight(box);
@@ -111,8 +112,8 @@ public class Dashboard extends BorderPane {
     private class MainDash extends VBox {
 
         /*
-     * public MainModule module = new MainModule();
-     * public EmployeeModule employeeModule = new EmployeeModule();
+         * public MainModule module = new MainModule();
+         * public EmployeeModule employeeModule = new EmployeeModule();
          */
         public static VBox container = new VBox();
 
@@ -144,7 +145,7 @@ public class Dashboard extends BorderPane {
             VBox.setMargin(container, new Insets(8));
 
             container.getChildren().clear();
-            container.getChildren().add(MainModule.getModule());
+            container.getChildren().add(new MainModule());
 
             card.getChildren().add(container);
             card.setAlignment(Pos.TOP_CENTER);
@@ -239,10 +240,10 @@ public class Dashboard extends BorderPane {
                 navBar.getChildren().add(btn[index]);
             }
 
-            new SwitchNode(MainDash.container, btn[0]).switchNode(MainModule.getModule());
-            new SwitchNode(MainDash.container, btn[1]).switchNode(EmployeeModule.getModule());
-            new SwitchNode(MainDash.container, btn[2]).switchNode(Attendence.getModule());
-            new SwitchNode(MainDash.container, btn[3]).switchNode(TodoModule.getModule());
+            new SwitchNode(MainDash.container, btn[0]).switchNode(new MainModule());
+            new SwitchNode(MainDash.container, btn[1]).switchNode(new EmployeeModule());
+            new SwitchNode(MainDash.container, btn[2]).switchNode(new Attendence());
+            new SwitchNode(MainDash.container, btn[3]).switchNode(new TodoModule());
 
             scrollPane.setContent(navBar);
 

@@ -1,151 +1,128 @@
 package javafx.project.modules;
 
+import java.sql.ResultSet;
+import java.util.*;
+
 import javafx.geometry.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.control.*;
 
 import javafx.project.components.*;
+import javafx.project.database.AdminDatabase;
 import javafx.project.enuma.Elements;
 import javafx.project.log.Log;
 import javafx.project.modules.submodules.TodoOption;
 
 public class TodoModule extends VBox {
-    private static TodoModule instance;
-    private VBox box;
+    private final Log log;
+    private final AdminDatabase admin;
 
-    private TodoModule() {
+    private MainBtn addBtn;
+    private ScrollPanel scrollPanel;
+    private Diary diary;
+
+    public TodoModule() {
         super(16);
         super.setPadding(new Insets(2, 4, 2, 4));
         VBox.setMargin(this, new Insets(8));
 
+        log = Log.getInstance();
+        admin = AdminDatabase.getInstance();
+
         this.init();
-    }
-
-    public static TodoModule getModule() {
-        if (instance == null) {
-            instance = new TodoModule();
-        }
-        return instance;
-    }
-
-    public void justRefreshed() {
-        box.getChildren().clear();
-
-        System.out.println("TodoModule -> justRefreshed");
-        Log.getInstance().setNoteLog("Updated");
     }
 
     private void init() {
         Label header = new Label("To-Do List");
         header.setStyle(Elements.HEADER1.getName());
 
-        FlowPane pane = new FlowPane(Orientation.HORIZONTAL);
-        pane.setPadding(new Insets(8));
-        pane.setHgap(32);
-        pane.setVgap(16);
-        pane.getChildren().addAll(new Note(), new Todos(), new Done());
+        Label add_icon = new ImgIcon("src/main/resources/img/add.png").getIcon();
+        add_icon.setPadding(new Insets(1, 8, 1, 2));
 
-        ScrollPanel scrollPanel = new ScrollPanel(pane);
+        addBtn = new MainBtn("Add Todos List");
+        addBtn.setGraphic(add_icon);
+        addBtn.setAlignment(Pos.CENTER);
+        addBtn.setBgColor(Elements.SUCCESS_COLOR.getName());
+        addBtn.setTextColor("#fff");
+        addBtn.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
+
+        diary = new Diary();
+        scrollPanel = new ScrollPanel(diary);
         VBox.setVgrow(scrollPanel, Priority.ALWAYS);
-        HBox.setHgrow(scrollPanel, Priority.ALWAYS);
+        HBox.setHgrow(add_icon, Priority.ALWAYS);
         scrollPanel.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPanel.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPanel.setMinViewportWidth(450);
-        scrollPanel.setMinViewportHeight(420);
+        scrollPanel.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPanel.setMinViewportWidth(420);
+        scrollPanel.setMinViewportHeight(450);
         scrollPanel.setFitToHeight(true);
         scrollPanel.setFitToWidth(true);
-        scrollPanel.setContent(pane);
 
-        box = new VBox(16);
-        box.setPadding(new Insets(8, 4, 8, 4));
-        box.getChildren().add(scrollPanel);
-
-        this.setAlignment(Pos.TOP_CENTER);
-        this.getChildren().addAll(header, box);
+        this.setAlignment(Pos.TOP_LEFT);
+        this.getChildren().addAll(header, addBtn, scrollPanel);
     }
 
-    private class Arrangement extends Card {
-        protected FlowPane flow;
-        protected Label label;
-        private MainBtn add_btn;
+    public class Diary extends FlowPane {
+        private List<Card> card_list;
 
-        public Arrangement() {
+        public Diary() {
             super();
-            super.setMaxHeight(325);
-            super.setPrefHeight(315);
+            super.setHgap(64);
+            super.setVgap(32);
 
-            super.setMinWidth(256);
-            super.setPrefWidth(300);
+            card_list = new ArrayList<>();
+            addBtn.setOnAction(event -> new TodoOption(this).show());
 
-            flow = new FlowPane(Orientation.VERTICAL);
-
-            this.initialization();
-            this.getChildren().add(flow);
+            this.initialize();
         }
 
-        private void initialization() {
-            this.setSpacing(16);
+        public void refresh() {
+            System.out.println("Refreshing");
+            diary.getChildren().clear();
+            scrollPanel.setContent(new Diary());
+        }
+
+        private void initialize() {
             this.setPadding(new Insets(16));
-            this.setAlignment(Pos.TOP_CENTER);
-
-            VBox box = new VBox(16);
-
-            label = new Label();
-            label.setStyle(Elements.HEADER2.getName());
-
-            Separator separator = new Separator();
-            separator.setPrefWidth(300);
-            separator.setHalignment(HPos.CENTER);
-            separator.setValignment(VPos.CENTER);
-
-            Label add_icon = new ImgIcon("src/main/resources/img/add.png").getIcon();
-            add_icon.setPadding(new Insets(0.25, 8, 0.25, 0));
-
-            add_btn = new MainBtn("Add");
-            add_btn.setAlignment(Pos.CENTER);
-            add_btn.setGraphic(add_icon);
-            add_btn.setBgColor(Elements.SUCCESS_COLOR.getName());
-            add_btn.setTextColor("#fff");
-            add_btn.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
-            add_btn.setOnAction(event -> new TodoOption().show());
-
-            BorderPane layout = new BorderPane();
-            BorderPane.setMargin(add_btn, new Insets(0, 8, 0, 0));
-            BorderPane.setMargin(label, new Insets(0, 0, 0, 8));
-
-            layout.setPadding(new Insets(8, 2, 4, 2));
-            layout.setLeft(label);
-            layout.setRight(add_btn);
-
-            box.getChildren().addAll(layout, separator);
-            flow.getChildren().add(box);
+            this.setMinSize(350, 350);
+            this.fetch();
         }
 
-    }
+        private void fetch() {
+            try (ResultSet rs = admin.getTodos()) {
+                while (rs.next()) {
+                    BorderPane panel = new BorderPane();
+                    Card card = new Card(panel);
+                    card.setSpacing(16);
+                    card.setPadding(new Insets(8, 6, 4, 6));
+                    card.setMaxSize(256, 256);
+                    card.setMinSize(128, 128);
 
-    private class Note extends Arrangement {
-        public Note() {
-            super();
+                    VBox vbox = new VBox(16);
+                    VBox.setVgrow(vbox, Priority.ALWAYS);
+                    vbox.setPadding(new Insets(8));
 
-            label.setText("Note");
-        }
+                    HBox hbox = new HBox(16);
+                    HBox.setHgrow(hbox, Priority.ALWAYS);
+                    hbox.setPadding(new Insets(8));
 
-    }
+                    Label title = new Label(rs.getString("title"));
+                    Label description = new Label(rs.getString("description"));
+                    Label date = new Label(rs.getString("created_date"));
+                    Label time = new Label(rs.getString("created_time"));
 
-    private class Todos extends Arrangement {
-        public Todos() {
-            super();
+                    hbox.getChildren().addAll(date, time);
+                    vbox.getChildren().addAll(title, description);
 
-            label.setText("Todos");
-        }
-    }
+                    panel.setTop(hbox);
+                    panel.setCenter(vbox);
 
-    private class Done extends Arrangement {
-        public Done() {
-            super();
-
-            label.setText("Done");
+                    card_list.add(card);
+                }
+                this.getChildren().addAll(card_list);
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 
