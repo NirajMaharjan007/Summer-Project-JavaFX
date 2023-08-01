@@ -85,12 +85,7 @@ public class Dashboard extends BorderPane {
             logout.setTextColor("White");
             logout.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
 
-            logout.setOnAction(event -> {
-                stage.setTitle("Login Panel");
-                stage.show();
-                newStage.close();
-                session.setLogout();
-            });
+            logout.setOnAction(event -> doLogout());
 
             Button btn = new ImgIcon("src/main/resources/img/settings.png").getBtnIcon();
             btn.setOnAction(event -> {
@@ -106,6 +101,23 @@ public class Dashboard extends BorderPane {
 
             this.setRight(box);
             this.setLeft(logoSide);
+        }
+
+        private void doLogout() {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Logout");
+            alert.setHeaderText("Are you sure you want to logout?");
+            alert.setContentText("You will be logged out of the application.");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    stage.setTitle("Login Panel");
+                    stage.show();
+                    newStage.close();
+                    session.setLogout();
+                } else
+                    alert.close();
+            });
+
         }
     }
 

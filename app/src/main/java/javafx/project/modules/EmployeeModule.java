@@ -137,23 +137,21 @@ public class EmployeeModule extends VBox {
                 alert.setTitle("Confirmation Dialog");
                 alert.setHeaderText("Are you sure about that? ");
                 alert.setContentText("You are deleting the Id " + this.id);
-                alert
-                        .showAndWait()
-                        .ifPresent(response -> {
-                            if (response == ButtonType.OK) {
-                                if (empData.deleteEmployee(String.valueOf(this.id)) > -1) {
-                                    Alert info = new Alert(Alert.AlertType.INFORMATION);
-                                    info.setTitle("Information");
-                                    info.setHeaderText(
-                                            "Employee Id: " + this.id + " has been deleted");
-                                    info.show();
-                                    System.out.println(this.id + ":Id is deleted");
-                                    justRefresh();
-                                }
-                            } else {
-                                alert.close();
-                            }
-                        });
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        if (empData.deleteEmployee(String.valueOf(this.id)) > -1) {
+                            Alert info = new Alert(Alert.AlertType.INFORMATION);
+                            info.setTitle("Information");
+                            info.setHeaderText(
+                                    "Employee Id: " + this.id + " has been deleted");
+                            info.show();
+                            System.out.println(this.id + ":Id is deleted");
+                            justRefresh();
+                        }
+                    } else {
+                        alert.close();
+                    }
+                });
             }
         }
 

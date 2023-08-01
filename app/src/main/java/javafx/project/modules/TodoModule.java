@@ -55,7 +55,7 @@ public class TodoModule extends VBox {
         scrollPanel.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPanel.setMinViewportWidth(420);
         scrollPanel.setMinViewportHeight(450);
-        scrollPanel.setFitToHeight(true);
+        // scrollPanel.setFitToHeight(true);
         scrollPanel.setFitToWidth(true);
 
         this.setAlignment(Pos.TOP_LEFT);
