@@ -5,7 +5,7 @@ import java.sql.*;
 public class Session {
     private final Connection conn = Database.getConnection();
 
-    private String name, password;
+    // private String name, password;
 
     private static Session instance;
 
