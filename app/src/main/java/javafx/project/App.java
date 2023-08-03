@@ -49,5 +49,7 @@ public class App extends Application {
         } else {
             stage.show();
         }
+
+        stage.setOnCloseRequest(event -> System.exit(0));
     }
 }

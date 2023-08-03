@@ -169,7 +169,7 @@ public class EmployeeModule extends VBox {
                     Label salary = new Label("Salary: " + data.getString(5));
                     Label gender = new Label("Gender: " + data.getString(6));
 
-                    MainBtn view = new MainBtn("view detail");
+                    MainBtn view = new MainBtn("View detail");
                     view.setBgColor("#17a2b8");
                     view.setTextColor("#FFF");
                     view.setRippleColor(Color.web("#AFD3E2"));

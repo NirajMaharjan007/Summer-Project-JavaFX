@@ -11,11 +11,9 @@ import javafx.scene.control.*;
 import javafx.project.components.*;
 import javafx.project.database.AdminDatabase;
 import javafx.project.enuma.Elements;
-import javafx.project.log.Log;
 import javafx.project.modules.submodules.TodoOption;
 
 public class TodoModule extends VBox {
-    private final Log log;
     private final AdminDatabase admin;
 
     private MainBtn addBtn;
@@ -27,7 +25,6 @@ public class TodoModule extends VBox {
         super.setPadding(new Insets(2, 4, 2, 4));
         VBox.setMargin(this, new Insets(8));
 
-        log = Log.getInstance();
         admin = AdminDatabase.getInstance();
 
         this.init();
@@ -64,6 +61,7 @@ public class TodoModule extends VBox {
 
     public class Diary extends FlowPane {
         private List<Card> card_list;
+        private MainBtn updateBtn, deleteBtn, doneBtn;
 
         public Diary() {
             super();
@@ -71,6 +69,7 @@ public class TodoModule extends VBox {
             super.setVgap(32);
 
             card_list = new ArrayList<>();
+
             addBtn.setOnAction(event -> new TodoOption(this).show());
 
             this.initialize();
@@ -91,37 +90,70 @@ public class TodoModule extends VBox {
         private void fetch() {
             try (ResultSet rs = admin.getTodos()) {
                 while (rs.next()) {
-                    BorderPane panel = new BorderPane();
-                    Card card = new Card(panel);
-                    card.setSpacing(16);
-                    card.setPadding(new Insets(8, 6, 4, 6));
-                    card.setMaxSize(256, 256);
-                    card.setMinSize(128, 128);
-
-                    VBox vbox = new VBox(16);
-                    VBox.setVgrow(vbox, Priority.ALWAYS);
-                    vbox.setPadding(new Insets(8));
-
-                    HBox hbox = new HBox(16);
-                    HBox.setHgrow(hbox, Priority.ALWAYS);
-                    hbox.setPadding(new Insets(8));
-
                     Label title = new Label(rs.getString("title"));
                     Label description = new Label(rs.getString("description"));
+
                     Label date = new Label(rs.getString("created_date"));
+                    date.setStyle("-fx-font-weight: bold");
+
                     Label time = new Label(rs.getString("created_time"));
+                    time.setStyle("-fx-font-weight: bold");
 
-                    hbox.getChildren().addAll(date, time);
-                    vbox.getChildren().addAll(title, description);
+                    updateBtn = new MainBtn("Edit");
+                    updateBtn.setBgColor("#17a2b8");
+                    updateBtn.setTextColor("#FFF");
+                    updateBtn.setRippleColor(Color.web("#AFD3E2"));
 
-                    panel.setTop(hbox);
-                    panel.setCenter(vbox);
+                    deleteBtn = new MainBtn("Delete");
+                    deleteBtn.setBgColor(Elements.DANGER_COLOR.getName());
+                    deleteBtn.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
+                    deleteBtn.setTextColor("White");
+
+                    doneBtn = new MainBtn("Done");
+                    doneBtn.setBgColor(Elements.SUCCESS_COLOR.getName());
+                    doneBtn.setTextColor("#fff");
+                    doneBtn.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
+
+                    BorderPane main_layout = new BorderPane();
+
+                    Card card = new Card(main_layout);
+                    VBox.setVgrow(card, Priority.ALWAYS);
+                    HBox.setHgrow(card, Priority.ALWAYS);
+                    card.setSpacing(8);
+                    card.setPadding(new Insets(8, 16, 8, 16));
+                    // card.setMaxSize(512, 512);
+                    // card.setMinSize(256, 256);
+                    card.autosize();
+
+                    Separator separator = new Separator(Orientation.HORIZONTAL);
+                    separator.setHalignment(HPos.CENTER);
+                    separator.setValignment(VPos.CENTER);
+                    separator.setPadding(new Insets(16, 2, 4, 2));
+
+                    VBox vbox = new VBox(8);
+                    vbox.getChildren().addAll(separator, title, description);
+
+                    BorderPane borderPane = new BorderPane();
+                    borderPane.setLeft(date);
+                    borderPane.setRight(time);
+
+                    HBox hbox = new HBox(16);
+                    hbox.setAlignment(Pos.BASELINE_CENTER);
+                    hbox.setPadding(new Insets(16, 2, 8, 2));
+                    hbox.getChildren().addAll(updateBtn, deleteBtn, doneBtn);
+
+                    // main_layout.getChildren().addAll(borderPane, separator, vbox, hbox);
+                    main_layout.setTop(borderPane);
+                    main_layout.setCenter(vbox);
+                    main_layout.setBottom(hbox);
 
                     card_list.add(card);
                 }
-                this.getChildren().addAll(card_list);
             } catch (Exception e) {
                 System.err.println(e.getMessage());
+            } finally {
+                System.out.println("TodoModule.Diary.fetch() : Good");
+                this.getChildren().addAll(card_list);
             }
         }
     }

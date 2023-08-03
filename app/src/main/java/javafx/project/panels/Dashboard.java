@@ -13,8 +13,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.geometry.*;
-
+import javafx.project.database.AdminDatabase;
 import javafx.project.database.Session;
+import javafx.project.log.Log;
 
 public class Dashboard extends BorderPane {
     public static VBox container = MainDash.container;
@@ -46,6 +47,8 @@ public class Dashboard extends BorderPane {
         newStage.setTitle("Dashboard");
         newStage.setScene(scene);
         newStage.show();
+
+        newStage.setOnCloseRequest(event -> System.exit(0));
     }
 
     public static Stage getStage() {
@@ -104,6 +107,8 @@ public class Dashboard extends BorderPane {
         }
 
         private void doLogout() {
+            AdminDatabase admin = AdminDatabase.getInstance();
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Logout");
             alert.setHeaderText("Are you sure you want to logout?");
@@ -113,6 +118,8 @@ public class Dashboard extends BorderPane {
                     stage.setTitle("Login Panel");
                     stage.show();
                     newStage.close();
+                    Log.getInstance().setLog("Logout by: admin-> " + admin.getName()
+                            + " Id: " + admin.getId());
                     session.setLogout();
                 } else
                     alert.close();

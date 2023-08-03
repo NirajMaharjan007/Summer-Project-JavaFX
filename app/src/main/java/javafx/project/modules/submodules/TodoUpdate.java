@@ -2,24 +2,29 @@ package javafx.project.modules.submodules;
 
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
 import io.github.palexdev.materialfx.css.themes.Themes;
-
-import javafx.geometry.*;
-import javafx.stage.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.project.components.ImgIcon;
+import javafx.project.components.MainBtn;
+import javafx.project.components.MainComboBox;
+import javafx.project.enuma.Elements;
+import javafx.project.modules.TodoModule;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.project.database.AdminDatabase;
-import javafx.project.enuma.Elements;
-import javafx.project.components.*;
-import javafx.project.modules.EmployeeModule;
-import javafx.project.modules.TodoModule;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-public class TodoOption extends VBox {
+public class TodoUpdate extends VBox {
     private final Stage stage;
     private final Scene scene;
+
+    private int id;
 
     private MainComboBox<String> combo_box;
     private TextField field;
@@ -27,9 +32,10 @@ public class TodoOption extends VBox {
     private VBox box;
     private TodoModule.Diary pane;
 
-    public TodoOption(TodoModule.Diary pane) {
+    public TodoUpdate(TodoModule.Diary pane, int id) {
         super();
         this.pane = pane;
+        this.id = id;
 
         scene = new Scene(this, 400, 460);
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
@@ -45,13 +51,8 @@ public class TodoOption extends VBox {
         this.initialize();
     }
 
-    public void show() {
-        stage.show();
-    }
-
-    private int insert(String title, String description) {
-        AdminDatabase admin = AdminDatabase.getInstance();
-        return admin.setTodos(title, description);
+    private int update(String title, String description) {
+        return -1;
     }
 
     private void initialize() {
@@ -77,12 +78,12 @@ public class TodoOption extends VBox {
         add_btn.setOnAction(e -> {
             Alert alert = new Alert(null);
             if (!field.getText().isEmpty()) {
-                int i = this.insert(combo_box.getSelectedItem().toString(), field.getText());
+                int i = this.update(combo_box.getSelectedItem().toString(), field.getText());
                 if (i > -1) {
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");
                     alert.setHeaderText("Todo Added");
-                    alert.setContentText("Todo Added Successfully");
+                    alert.setContentText("Todo Update Successfully");
                     alert.show();
                     field.clear();
                     pane.refresh();
@@ -90,7 +91,7 @@ public class TodoOption extends VBox {
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setTitle("Failed");
                     alert.setHeaderText("Failed");
-                    alert.setContentText("Failed to insert");
+                    alert.setContentText("Failed to Update");
                     alert.show();
                     pane.refresh();
                 }
