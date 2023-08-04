@@ -23,7 +23,6 @@ public class TodoUpdate extends VBox {
 
     private MainComboBox<String> combo_box;
     private TextField field;
-    private MainBtn add_btn;
     private VBox box;
     private TodoModule.Diary pane;
     private AdminDatabase admin;
@@ -56,7 +55,7 @@ public class TodoUpdate extends VBox {
     }
 
     private int update(String title, String description) {
-        return -1;
+        return admin.updateTodos(title, description, id);
     }
 
     private void initialize() {
@@ -70,17 +69,13 @@ public class TodoUpdate extends VBox {
             combo_box.setMinWidth(160);
             combo_box.setFloatingText("List");
             combo_box.getItems().addAll("Very Important", "Less Important", "Not Important");
-            combo_box.getSelectionModel().selectFirst();
 
-            Label add_icon = new ImgIcon("src/main/resources/img/add.png").getIcon();
-
-            add_btn = new MainBtn("Add");
-            add_btn.setAlignment(Pos.CENTER);
-            add_btn.setGraphic(add_icon);
-            add_btn.setBgColor(Elements.SUCCESS_COLOR.getName());
-            add_btn.setTextColor("#fff");
-            add_btn.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
-            add_btn.setOnAction(e -> showAlert());
+            MainBtn update_btn = new MainBtn("Update");
+            update_btn.setAlignment(Pos.CENTER);
+            update_btn.setBgColor(Elements.SUCCESS_COLOR.getName());
+            update_btn.setTextColor("#fff");
+            update_btn.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
+            update_btn.setOnAction(e -> showAlert());
 
             MainBtn cancel = new MainBtn("Cancel");
             cancel.setBgColor(Elements.DANGER_COLOR.getName());
@@ -101,7 +96,7 @@ public class TodoUpdate extends VBox {
             HBox hbox = new HBox(8);
             hbox.setAlignment(Pos.BASELINE_LEFT);
             hbox.setPadding(new Insets(8));
-            hbox.getChildren().addAll(add_btn, cancel);
+            hbox.getChildren().addAll(update_btn, cancel);
 
             String title = "", description = "";
 
@@ -109,11 +104,7 @@ public class TodoUpdate extends VBox {
                 title = rs.getString("title");
                 description = rs.getString("description");
             }
-
-            for (String str : combo_box.getItems()) {
-                if (str.equalsIgnoreCase(title))
-                    combo_box.setValue(str);
-            }
+            combo_box.selectItem(title);
             field.setText(description);
 
             box.getChildren().addAll(flow_pane, field, hbox);
@@ -124,7 +115,6 @@ public class TodoUpdate extends VBox {
             this.setAlignment(Pos.CENTER);
             this.getChildren().addAll(box);
         }
-
     }
 
     private void showAlert() {

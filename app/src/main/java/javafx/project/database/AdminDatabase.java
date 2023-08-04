@@ -159,7 +159,7 @@ public class AdminDatabase {
     }
 
     public int updateTodos(String title, String text, int id) {
-        String sql = "Update todos set title = ?, text = ?,created_date=?,created_time=? "
+        String sql = "Update todos set title = ?, description = ?,created_date=?,created_time=? "
                 + "where id=?";
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, title);
