@@ -28,9 +28,12 @@ public class TodoUpdate extends VBox {
     private TodoModule.Diary pane;
     private AdminDatabase admin;
 
-    public TodoUpdate(TodoModule.Diary pane) {
+    private int id;
+
+    public TodoUpdate(TodoModule.Diary pane, int id) {
         super();
         this.pane = pane;
+        this.id = id;
 
         admin = AdminDatabase.getInstance();
 
@@ -101,11 +104,10 @@ public class TodoUpdate extends VBox {
             hbox.getChildren().addAll(add_btn, cancel);
 
             String title = "", description = "";
-            int id = 0;
+
             while (rs.next()) {
                 title = rs.getString("title");
                 description = rs.getString("description");
-                id = rs.getInt("id");
             }
 
             for (String str : combo_box.getItems()) {

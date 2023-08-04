@@ -184,4 +184,15 @@ public class AdminDatabase {
             return null;
         }
     }
+
+    public ResultSet getTodos(int id) {
+        try {
+            Statement statement = conn.createStatement();
+            String sql = "SELECT * FROM todos where id=" + id;
+            return statement.executeQuery(sql);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
 }

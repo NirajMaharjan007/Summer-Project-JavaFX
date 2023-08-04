@@ -91,6 +91,8 @@ public class TodoModule extends VBox {
         private void fetch() {
             try (ResultSet rs = admin.getTodos()) {
                 while (rs.next()) {
+                    int id = rs.getInt("id");
+
                     Label title = new Label(rs.getString("title"));
                     Label description = new Label(rs.getString("description"));
 
@@ -104,7 +106,7 @@ public class TodoModule extends VBox {
                     updateBtn.setBgColor("#17a2b8");
                     updateBtn.setTextColor("#FFF");
                     updateBtn.setRippleColor(Color.web("#AFD3E2"));
-                    updateBtn.setOnAction(event -> new TodoUpdate(this).show());
+                    updateBtn.setOnAction(event -> new TodoUpdate(this, id).show());
 
                     deleteBtn = new MainBtn("Delete");
                     deleteBtn.setBgColor(Elements.DANGER_COLOR.getName());
