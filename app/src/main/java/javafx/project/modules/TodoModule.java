@@ -81,6 +81,9 @@ public class TodoModule extends VBox {
             scrollPanel.setContent(new Diary());
         }
 
+        private void justDelete() {
+        }
+
         private void initialize() {
             this.setPadding(new Insets(16));
             this.setMinSize(350, 350);
@@ -90,6 +93,8 @@ public class TodoModule extends VBox {
         private void fetch() {
             try (ResultSet rs = admin.getTodos()) {
                 while (rs.next()) {
+                    int id = rs.getInt("id");
+
                     Label title = new Label(rs.getString("title"));
                     Label description = new Label(rs.getString("description"));
 
