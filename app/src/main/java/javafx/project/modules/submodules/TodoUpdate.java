@@ -60,7 +60,7 @@ public class TodoUpdate extends VBox {
     }
 
     private void initialize() {
-        try (ResultSet rs = admin.getTodos()) {
+        try (ResultSet rs = admin.getTodos(id)) {
             box = new VBox(8);
             box.setAlignment(Pos.TOP_CENTER);
             box.setPadding(new Insets(16, 8, 4, 8));

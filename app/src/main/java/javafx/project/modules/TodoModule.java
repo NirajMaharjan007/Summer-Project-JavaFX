@@ -82,6 +82,9 @@ public class TodoModule extends VBox {
             scrollPanel.setContent(new Diary());
         }
 
+        private void justDelete() {
+        }
+
         private void initialize() {
             this.setPadding(new Insets(16));
             this.setMinSize(350, 350);
@@ -144,7 +147,7 @@ public class TodoModule extends VBox {
                     HBox hbox = new HBox(16);
                     hbox.setAlignment(Pos.BASELINE_CENTER);
                     hbox.setPadding(new Insets(16, 2, 8, 2));
-                    hbox.getChildren().addAll(updateBtn, deleteBtn, doneBtn);
+                    hbox.getChildren().addAll(deleteBtn, doneBtn);
 
                     // main_layout.getChildren().addAll(borderPane, separator, vbox, hbox);
                     main_layout.setTop(borderPane);
