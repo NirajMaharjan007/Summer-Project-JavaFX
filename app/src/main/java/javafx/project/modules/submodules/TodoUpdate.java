@@ -126,8 +126,10 @@ public class TodoUpdate extends VBox {
                 alert.setTitle("Success");
                 alert.setHeaderText("Todo Added");
                 alert.setContentText("Todo Update Successfully");
-                alert.show();
-                field.clear();
+                alert.showAndWait().ifPresent(event -> {
+                    if (event == ButtonType.OK)
+                        stage.close();
+                });
                 pane.refresh();
             } else {
                 alert.setAlertType(Alert.AlertType.ERROR);
@@ -135,7 +137,6 @@ public class TodoUpdate extends VBox {
                 alert.setHeaderText("Failed");
                 alert.setContentText("Failed to Update");
                 alert.show();
-                pane.refresh();
             }
         } else {
             alert.setAlertType(Alert.AlertType.WARNING);

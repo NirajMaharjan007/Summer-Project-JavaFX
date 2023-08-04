@@ -174,6 +174,17 @@ public class AdminDatabase {
         }
     }
 
+    public int deleteTodo(int id) {
+        String sql = "DELETE FROM todos WHERE id=? ";
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            return statement.executeUpdate();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return -1;
+        }
+    }
+
     public ResultSet getTodos() {
         try {
             Statement statement = conn.createStatement();

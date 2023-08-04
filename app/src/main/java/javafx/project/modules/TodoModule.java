@@ -82,7 +82,34 @@ public class TodoModule extends VBox {
             scrollPanel.setContent(new Diary());
         }
 
-        private void justDelete() {
+        private void delete(int id) {
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle("Confirm deletion");
+            confirm.setContentText("Are you sure you want to delete");
+            confirm.setHeaderText("Confirmations");
+
+            confirm.showAndWait().ifPresent(event -> {
+                Alert alert = new Alert(null);
+                int i = admin.deleteTodo(id);
+                if (event == ButtonType.OK) {
+                    if (i > -1) {
+                        alert.setAlertType(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Success");
+                        alert.setHeaderText("Deleted");
+                        alert.setContentText("Deletion Successfully");
+                        alert.show();
+                        this.refresh();
+                    } else {
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Failed");
+                        alert.setHeaderText("Failed");
+                        alert.setContentText("Failed to Delete");
+                        alert.show();
+                    }
+                } else
+                    alert.close();
+            });
+
         }
 
         private void initialize() {
@@ -115,6 +142,7 @@ public class TodoModule extends VBox {
                     deleteBtn.setBgColor(Elements.DANGER_COLOR.getName());
                     deleteBtn.setRippleColor(Color.web(Elements.DANGER_ALT_COLOR.getName()));
                     deleteBtn.setTextColor("White");
+                    deleteBtn.setOnAction(event -> delete(id));
 
                     doneBtn = new MainBtn("Done");
                     doneBtn.setBgColor(Elements.SUCCESS_COLOR.getName());
