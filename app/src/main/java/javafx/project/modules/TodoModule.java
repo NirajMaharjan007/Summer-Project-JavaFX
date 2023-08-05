@@ -6,6 +6,7 @@ import java.util.*;
 import javafx.geometry.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.control.*;
 
 import javafx.project.components.*;
@@ -114,7 +115,8 @@ public class TodoModule extends VBox {
 
         private void initialize() {
             this.setPadding(new Insets(16));
-            this.setMinSize(350, 350);
+            this.setMinSize(256, 256);
+            // this.setMaxSize(512, 512);
             this.fetch();
         }
 
@@ -124,7 +126,13 @@ public class TodoModule extends VBox {
                     int id = rs.getInt("id");
 
                     Label title = new Label(rs.getString("title"));
+                    title.setStyle("-fx-font-weight: bold");
+
                     Label description = new Label(rs.getString("description"));
+                    description.setWrapText(true);
+                    description.setMinWidth(128);
+                    description.setMaxWidth(256);
+                    description.setTextAlignment(TextAlignment.JUSTIFY);
 
                     Label date = new Label(rs.getString("created_date"));
                     date.setStyle("-fx-font-weight: bold");
@@ -151,36 +159,36 @@ public class TodoModule extends VBox {
 
                     BorderPane main_layout = new BorderPane();
 
-                    Card card = new Card(main_layout);
-                    VBox.setVgrow(card, Priority.ALWAYS);
-                    HBox.setHgrow(card, Priority.ALWAYS);
+                    Card card = new Card();
+                    card.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                     card.setSpacing(8);
                     card.setPadding(new Insets(8, 16, 8, 16));
-                    // card.setMaxSize(512, 512);
-                    // card.setMinSize(256, 256);
-                    card.autosize();
 
                     Separator separator = new Separator(Orientation.HORIZONTAL);
                     separator.setHalignment(HPos.CENTER);
-                    separator.setValignment(VPos.CENTER);
-                    separator.setPadding(new Insets(16, 2, 4, 2));
-
-                    VBox vbox = new VBox(8);
-                    vbox.getChildren().addAll(separator, title, description);
+                    separator.setValignment(VPos.TOP);
+                    separator.setPadding(new Insets(8, 2, 4, 2));
 
                     BorderPane borderPane = new BorderPane();
                     borderPane.setLeft(date);
                     borderPane.setRight(time);
+
+                    VBox vbox = new VBox(8);
+                    vbox.getChildren().addAll(separator, title, description);
 
                     HBox hbox = new HBox(16);
                     hbox.setAlignment(Pos.BASELINE_CENTER);
                     hbox.setPadding(new Insets(16, 2, 8, 2));
                     hbox.getChildren().addAll(updateBtn, deleteBtn, doneBtn);
 
-                    // main_layout.getChildren().addAll(borderPane, separator, vbox, hbox);
+                    main_layout.setMinHeight(256);
+                    main_layout.setMaxHeight(512);
+
                     main_layout.setTop(borderPane);
                     main_layout.setCenter(vbox);
                     main_layout.setBottom(hbox);
+
+                    card.getChildren().add(main_layout);
 
                     card_list.add(card);
                 }

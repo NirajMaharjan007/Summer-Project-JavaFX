@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 
 import javafx.project.database.AdminDatabase;
@@ -22,7 +23,7 @@ public class TodoOption extends VBox {
     private final Scene scene;
 
     private MainComboBox<String> combo_box;
-    private TextField field;
+    private TextArea field;
     private MainBtn add_btn;
     private VBox box;
     private TodoModule.Diary pane;
@@ -119,8 +120,8 @@ public class TodoOption extends VBox {
         hbox.setPadding(new Insets(8));
         hbox.getChildren().addAll(add_btn, cancel);
 
-        field = new TextField();
-        field.setAlignment(Pos.TOP_LEFT);
+        field = new TextArea();
+        field.setWrapText(true);
         field.setPromptText("Enter text");
         field.setMinSize(320, 320);
 

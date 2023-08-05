@@ -22,7 +22,7 @@ public class TodoUpdate extends VBox {
     private final Scene scene;
 
     private MainComboBox<String> combo_box;
-    private TextField field;
+    private TextArea field;
     private VBox box;
     private TodoModule.Diary pane;
     private AdminDatabase admin;
@@ -83,8 +83,8 @@ public class TodoUpdate extends VBox {
             cancel.setTextColor("White");
             cancel.setOnAction(event -> stage.close());
 
-            field = new TextField();
-            field.setAlignment(Pos.TOP_LEFT);
+            field = new TextArea();
+            field.setWrapText(true);
             field.setPromptText("Enter text");
             field.setMinSize(320, 320);
 

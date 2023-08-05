@@ -42,7 +42,7 @@ public class App extends Application {
         stage.centerOnScreen();
         stage.setResizable(false);
 
-        System.out.println(session.isSetTerm());
+        System.out.println("Session:" + session.isSetTerm());
 
         if (session.isSetTerm()) {
             stage.close();
