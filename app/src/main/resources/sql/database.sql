@@ -106,6 +106,7 @@ CREATE TABLE
         description TEXT,
         created_date date,
         created_time time,
+        stat VARCHAR(32),
         admin_id int not null,
         Foreign Key (admin_id) REFERENCES admin(id) on delete CASCADE
     );
