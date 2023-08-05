@@ -189,6 +189,14 @@ public class TodoModule extends VBox {
                     main_layout.setBottom(hbox);
 
                     card.getChildren().add(main_layout);
+                    doneBtn.setOnAction(event -> {
+                        main_layout.getTop().setDisable(true);
+                        main_layout.getCenter().setDisable(true);
+                        hbox.getChildren().get(0).setDisable(true);
+                        hbox.getChildren().get(1).setDisable(true);
+                        MainBtn btn = (MainBtn) hbox.getChildren().get(2);
+                        btn.setText("Undone");
+                    });
 
                     card_list.add(card);
                 }
