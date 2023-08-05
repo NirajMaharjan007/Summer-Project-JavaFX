@@ -158,8 +158,20 @@ public class AdminDatabase {
         }
     }
 
-    public int updateTodos() {
-        return -1;
+    public int updateTodos(String title, String text, int id) {
+        String sql = "Update todos set title = ?, text = ?,created_date=?,created_time=? "
+                + "where id=?";
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, title);
+            statement.setString(2, text);
+            statement.setDate(3, new Date(System.currentTimeMillis()));
+            statement.setTime(4, new Time(System.currentTimeMillis()));
+            statement.setInt(5, id);
+            return statement.executeUpdate();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return -1;
+        }
     }
 
     public ResultSet getTodos() {

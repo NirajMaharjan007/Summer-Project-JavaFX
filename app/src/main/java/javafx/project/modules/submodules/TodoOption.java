@@ -11,10 +11,10 @@ import javafx.scene.layout.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+
 import javafx.project.database.AdminDatabase;
 import javafx.project.enuma.Elements;
 import javafx.project.components.*;
-import javafx.project.modules.EmployeeModule;
 import javafx.project.modules.TodoModule;
 
 public class TodoOption extends VBox {

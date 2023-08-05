@@ -129,12 +129,11 @@ public class AdminOption extends Pane {
 
       try (ResultSet resultSet = AdminDatabase.getInstance().getDetail()) {
         while (resultSet.next()) {
-          detail =
-            new String[] {
+          detail = new String[] {
               resultSet.getString("name"),
               resultSet.getString("email"),
               resultSet.getString("phone"),
-            };
+          };
         }
 
         for (int i = 0; i < detail_label.length; i++) {
@@ -230,7 +229,7 @@ public class AdminOption extends Pane {
       label.setAlignment(Pos.CENTER);
 
       Label icon = new ImgIcon("src/main/resources/img/check-mark.png")
-        .getIcon();
+          .getIcon();
       icon.setPadding(new Insets(1, 8, 1, 2));
 
       MainBtn save = new MainBtn("Save");
@@ -242,11 +241,10 @@ public class AdminOption extends Pane {
         Alert alert = new Alert(null);
         try {
           String admin = textField.getText(), password = passwordField.getText();
-          boolean flag =
-            admin != null &&
-            password != null &&
-            !admin.isBlank() &&
-            !password.isBlank();
+          boolean flag = admin != null &&
+              password != null &&
+              !admin.isBlank() &&
+              !password.isBlank();
           if (flag) {
             int i = AdminDatabase.getInstance().updateAdmin(admin, password);
             if (i > -1) {
@@ -268,8 +266,7 @@ public class AdminOption extends Pane {
             alert.setTitle("Failed");
             alert.setHeaderText("Failed to Update");
             alert.setContentText(
-              "Either admin field is blank or password field is blank"
-            );
+                "Either admin field is blank or password field is blank");
             System.out.println("Blank");
           }
         } catch (Exception e) {
@@ -304,7 +301,7 @@ public class AdminOption extends Pane {
       label.setAlignment(Pos.CENTER);
 
       Label icon = new ImgIcon("src/main/resources/img/check-mark.png")
-        .getIcon();
+          .getIcon();
       icon.setPadding(new Insets(1, 8, 1, 2));
 
       MainBtn save = new MainBtn("Save");
@@ -317,14 +314,11 @@ public class AdminOption extends Pane {
         String name_text = name.getText(), email_text = email.getText(), phone_text = phone.getText();
         try {
           int i = -1;
-          if (
-            !name_text.isBlank() &&
-            !email_text.isBlank() &&
-            !phone_text.isBlank()
-          ) {
+          if (!name_text.isBlank() &&
+              !email_text.isBlank() &&
+              !phone_text.isBlank()) {
             if (AdminDatabase.getInstance().isNullAdminDetail() == false) {
-              i =
-                AdminDatabase
+              i = AdminDatabase
                   .getInstance()
                   .insertAdminDetail(name_text, email_text, phone_text);
               if (i > -1) {
@@ -342,8 +336,7 @@ public class AdminOption extends Pane {
                 System.out.println("Failed");
               }
             } else {
-              i =
-                AdminDatabase
+              i = AdminDatabase
                   .getInstance()
                   .updateAdminDetail(name_text, email_text, phone_text);
               if (i > -1) {
@@ -401,7 +394,7 @@ public class AdminOption extends Pane {
       label.setStyle(Elements.HEADER1.getName());
 
       Label clear_icon = new ImgIcon("src/main/resources/img/bin.png")
-        .getIcon();
+          .getIcon();
       clear_icon.setPadding(new Insets(1, 8, 1, 2));
 
       MainBtn clear = new MainBtn("Clear");
@@ -415,20 +408,20 @@ public class AdminOption extends Pane {
         alert.setHeaderText("Confomation alert");
         alert.setContentText("Are you sure about that");
         alert
-          .showAndWait()
-          .ifPresent(response -> {
-            if (response == ButtonType.OK) {
-              Alert info = new Alert(Alert.AlertType.INFORMATION);
-              info.setTitle("Information");
-              info.setHeaderText("You have cleared the Log File");
-              info.setContentText("Cleared");
-              textArea.setText("");
-              log.clear();
-              info.show();
-            } else {
-              alert.close();
-            }
-          });
+            .showAndWait()
+            .ifPresent(response -> {
+              if (response == ButtonType.OK) {
+                Alert info = new Alert(Alert.AlertType.INFORMATION);
+                info.setTitle("Information");
+                info.setHeaderText("You have cleared the Log File");
+                info.setContentText("Cleared");
+                textArea.setText("");
+                log.clear();
+                info.show();
+              } else {
+                alert.close();
+              }
+            });
       });
 
       header_box.getChildren().addAll(label, clear);
@@ -499,26 +492,24 @@ public class AdminOption extends Pane {
         btn[i].setBgColor("#C7E0EA");
         btn[i].setRippleColor(Color.web("#ddecf2"));
         btn[i].setTextColor(
-            "#484b6a; -fx-font-weight: bold; -fx-font-size:14px"
-          );
+            "#484b6a; -fx-font-weight: bold; -fx-font-size:14px");
         btn[i].buttonTypeProperty()
-          .set(io.github.palexdev.materialfx.enums.ButtonType.RAISED);
+            .set(io.github.palexdev.materialfx.enums.ButtonType.RAISED);
         btn[i].depthLevelProperty()
-          .set(io.github.palexdev.materialfx.effects.DepthLevel.LEVEL1);
+            .set(io.github.palexdev.materialfx.effects.DepthLevel.LEVEL1);
       }
 
       Label detail_icon = new ImgIcon(
-        "src/main/resources/img/administration.png"
-      )
-        .getIcon();
+          "src/main/resources/img/administration.png")
+          .getIcon();
       detail_icon.setPadding(new Insets(4, 10, 4, 2));
 
       Label update_icon = new ImgIcon("src/main/resources/img/briefcase.png")
-        .getIcon();
+          .getIcon();
       update_icon.setPadding(new Insets(4, 8, 4, 2));
 
       Label log_icon = new ImgIcon("src/main/resources/img/history.png")
-        .getIcon();
+          .getIcon();
       log_icon.setPadding(new Insets(4, 8, 4, 2));
 
       btn[0].setGraphic(detail_icon);
@@ -531,9 +522,9 @@ public class AdminOption extends Pane {
       btn[2].setText("Activity");
 
       new SwitchNode(AdminOption.container, btn[0])
-        .switchNode(new AdminDetail());
+          .switchNode(new AdminDetail());
       new SwitchNode(AdminOption.container, btn[1])
-        .switchNode(new AdminUpdate());
+          .switchNode(new AdminUpdate());
       new SwitchNode(AdminOption.container, btn[2]).switchNode(new Activity());
 
       navBar.getChildren().addAll(btn[0], btn[1], btn[2]);

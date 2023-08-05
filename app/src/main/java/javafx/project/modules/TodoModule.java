@@ -12,6 +12,7 @@ import javafx.project.components.*;
 import javafx.project.database.AdminDatabase;
 import javafx.project.enuma.Elements;
 import javafx.project.modules.submodules.TodoOption;
+import javafx.project.modules.submodules.TodoUpdate;
 
 public class TodoModule extends VBox {
     private final AdminDatabase admin;
@@ -103,6 +104,7 @@ public class TodoModule extends VBox {
                     updateBtn.setBgColor("#17a2b8");
                     updateBtn.setTextColor("#FFF");
                     updateBtn.setRippleColor(Color.web("#AFD3E2"));
+                    updateBtn.setOnAction(event -> new TodoUpdate(this).show());
 
                     deleteBtn = new MainBtn("Delete");
                     deleteBtn.setBgColor(Elements.DANGER_COLOR.getName());
