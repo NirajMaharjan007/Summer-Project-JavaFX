@@ -206,4 +206,26 @@ public class AdminDatabase {
             return null;
         }
     }
+
+    public void setDone(int id, boolean done) {
+        String sql = "";
+        if (done)
+            sql = "Update todos set stat = 'done' where id=?";
+        else
+            sql = "Update todos set stat = 'undone' where id=?";
+
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            System.out.println(sql);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            if (done)
+                System.out.println("AdminDatabase.setDone() -> done");
+            else
+                System.out.println("AdminDatabase.setDone() -> un-done");
+        }
+    }
+
 }

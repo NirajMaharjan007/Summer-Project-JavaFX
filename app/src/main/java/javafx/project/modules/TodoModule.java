@@ -64,6 +64,7 @@ public class TodoModule extends VBox {
     public class Diary extends FlowPane {
         private List<Card> card_list;
         private MainBtn updateBtn, deleteBtn, doneBtn;
+        private boolean flag = false;
 
         public Diary() {
             super();
@@ -124,6 +125,12 @@ public class TodoModule extends VBox {
             try (ResultSet rs = admin.getTodos()) {
                 while (rs.next()) {
                     int id = rs.getInt("id");
+                    String stat = rs.getString("stat");
+
+                    if (stat.equalsIgnoreCase("undone"))
+                        flag = false;
+                    else
+                        flag = true;
 
                     Label title = new Label(rs.getString("title"));
                     title.setStyle("-fx-font-weight: bold");
@@ -189,18 +196,28 @@ public class TodoModule extends VBox {
                     main_layout.setBottom(hbox);
 
                     card.getChildren().add(main_layout);
+
                     doneBtn.setOnAction(event -> {
-                        main_layout.getTop().setDisable(true);
-                        main_layout.getCenter().setDisable(true);
-                        hbox.getChildren().get(0).setDisable(true);
-                        hbox.getChildren().get(1).setDisable(true);
+                        flag = !flag;
+                        borderPane.setDisable(flag);
+                        vbox.setDisable(flag);
+                        hbox.getChildren().get(0).setDisable(flag);
+                        hbox.getChildren().get(1).setDisable(flag);
                         MainBtn btn = (MainBtn) hbox.getChildren().get(2);
-                        btn.setText("Undone");
+                        if (flag)
+                            btn.setText("Undone");
+                        else
+                            btn.setText("Done");
+
+                        btn.autosize();
+                        admin.setDone(id, flag);
                     });
 
                     card_list.add(card);
                 }
-            } catch (Exception e) {
+            } catch (
+
+            Exception e) {
                 System.err.println(e.getMessage());
             } finally {
                 System.out.println("TodoModule.Diary.fetch() : Good");
