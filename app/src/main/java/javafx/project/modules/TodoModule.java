@@ -127,11 +127,6 @@ public class TodoModule extends VBox {
                     int id = rs.getInt("id");
                     String stat = rs.getString("stat");
 
-                    if (stat.equalsIgnoreCase("undone"))
-                        flag = false;
-                    else
-                        flag = true;
-
                     Label title = new Label(rs.getString("title"));
                     title.setStyle("-fx-font-weight: bold");
 
@@ -196,6 +191,24 @@ public class TodoModule extends VBox {
                     main_layout.setBottom(hbox);
 
                     card.getChildren().add(main_layout);
+
+                    if (stat.equalsIgnoreCase("undone")) {
+                        flag = false;
+                        borderPane.setDisable(flag);
+                        vbox.setDisable(flag);
+                        hbox.getChildren().get(0).setDisable(flag);
+                        hbox.getChildren().get(1).setDisable(flag);
+                        MainBtn btn = (MainBtn) hbox.getChildren().get(2);
+                        btn.setText("Done");
+                    } else {
+                        flag = true;
+                        borderPane.setDisable(flag);
+                        vbox.setDisable(flag);
+                        hbox.getChildren().get(0).setDisable(flag);
+                        hbox.getChildren().get(1).setDisable(flag);
+                        MainBtn btn = (MainBtn) hbox.getChildren().get(2);
+                        btn.setText("Undone");
+                    }
 
                     doneBtn.setOnAction(event -> {
                         flag = !flag;

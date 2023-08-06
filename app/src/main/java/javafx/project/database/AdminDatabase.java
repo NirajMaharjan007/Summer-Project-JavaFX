@@ -144,13 +144,14 @@ public class AdminDatabase {
     }
 
     public int setTodos(String title, String text) {
-        String sql = "INSERT INTO todos (title, description,created_date,created_time,admin_id) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO todos (title, description,created_date,created_time,stat,admin_id) VALUES (?,?,?,?,?,?)";
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, title);
             statement.setString(2, text);
             statement.setDate(3, new Date(System.currentTimeMillis()));
             statement.setTime(4, new Time(System.currentTimeMillis()));
-            statement.setInt(5, this.getId());
+            statement.setString(5, "undone");
+            statement.setInt(6, this.getId());
             return statement.executeUpdate();
         } catch (Exception e) {
             System.err.println(e.getMessage());
