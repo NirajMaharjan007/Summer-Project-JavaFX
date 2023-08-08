@@ -74,7 +74,13 @@ public class TodoOption extends VBox {
         add_btn.setRippleColor(Color.web(Elements.SUCCESS_ALT_COLOR.getName()));
         add_btn.setOnAction(e -> {
             Alert alert = new Alert(null);
-            if (!field.getText().isEmpty()) {
+            if (field.getText().length() > 350) {
+                alert.setAlertType(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText("Failed");
+                alert.setContentText("Text field greater than 350 characters");
+                alert.show();
+            } else if (!field.getText().isEmpty()) {
                 int i = this.insert(combo_box.getSelectedItem().toString(), field.getText());
                 if (i > -1) {
                     alert.setAlertType(Alert.AlertType.INFORMATION);

@@ -228,9 +228,7 @@ public class TodoModule extends VBox {
 
                     card_list.add(card);
                 }
-            } catch (
-
-            Exception e) {
+            } catch (Exception e) {
                 System.err.println(e.getMessage());
             } finally {
                 System.out.println("TodoModule.Diary.fetch() : Good");
