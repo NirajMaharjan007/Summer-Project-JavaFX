@@ -81,7 +81,7 @@ public class TodoOption extends VBox {
                 alert.setContentText("Text field greater than 350 characters");
                 alert.show();
             } else if (!field.getText().isEmpty()) {
-                int i = this.insert(combo_box.getSelectedItem().toString(), field.getText());
+                int i = this.insert(combo_box.getSelectedItem(), field.getText());
                 if (i > -1) {
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");
